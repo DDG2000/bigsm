@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>报价</title>
+</head>
+<body>
+<form action="/index.php?act=shop&m=requirecommodity&w=add" method="post">
+<table>
+<tr class="tr1">
+	
+	<td>采购编号</td>
+	<td>发布时间</td>
+	<td>截止时间</td>
+	<td>采购人</td>
+	<td>采购单位</td>
+	<td>采购状态</td>
+	<td>报价状态</td>
+	
+	
+</tr>
+<tr class="tr1">
+	{$v=$data.offerinfo}
+	<input type="hidden" name="id" value="{$v.id}"/>
+	<input type="hidden" name="cid" value="{$v.I_commodityID}"/>
+	<td>{$v.Vc_orderSn}</td>
+	<td>{function="formatTime($v['Createtime'],'Y-m-d')"}</td>
+	<td>{function="formatTime($v['D_end'],'Y-m-d')"}</td>
+	<td>{$v.Vc_contact}</td>
+	<td>{$v.Vc_company}</td>
+	<td>
+	{if="$v.I_publish_status==5"}
+	    	已成交
+   {else}
+    		 未成交
+	{/if}
+	</td>
+	<td>
+	
+	{if="$v.I_offer_status==1"}
+	    已报价
+   {elseif="$v.I_offer_status==2"}
+未报价
+   {elseif="$v.I_offer_status==3"}
+  请确认订货函
+   {elseif="$v.I_offer_status==4"}
+ 已成交
+	{/if}
+	</td>
+	<!-- <td>{$v.offertime}</td> -->
+	
+</tr>
+
+</table>
+<table>
+<tr class="tr1">
+	
+	<td>品名</td>
+	<td>材质</td>
+	<td>规格</td>
+	<td>数量</td>
+	<td>单位</td>
+	<td>钢厂</td>
+	<td>含税报价（单价/元）</td>
+	<td>出库费</td>
+	<td>库房</td>
+	<td>备注</td>
+	
+	
+</tr>
+
+{loop="data.commoditylist"}
+{$vo=$value}
+<tr data="it" >
+	<input type="hidden" name="corderID[]" value="{$vo.id}"/>
+	<td>{$vo.Vc_item}</td>
+	<td>{$vo.Vc_stuff}</td>
+	<td>{$vo.Vc_specification}</td>
+	<td>{$vo.N_amount}</td>
+	<td>
+	{if="$vo.I_unitType==1"}
+	        件
+   {elseif="$vo.I_unitType==2"}
+		根
+   {elseif="$vo.I_unitType==3"}
+		吨
+  
+	{/if}
+	</td>
+	<td>
+	{if="is_array($vo.Vc_factorys)"}
+		{loop="$vo.Vc_factorys"}
+  		{$f=$value}
+	
+	<input name="factorys[{$vo.id}][]" type="text" value="{$f}" style="border:none"readonly="readonly">
+	{/loop}
+	
+	{/if}
+	
+	</td>
+	<td>
+	{loop="$vo.Vc_factorys"}
+
+	<input name="price[{$vo.id}][]" type="text">
+		{/loop}
+	</td>
+	<td>
+	{loop="$vo.Vc_factorys"}
+	<select name="outType[{$vo.id}][]">
+	  <option value="1">包出</option>
+	  <option value="2">自提</option>
+	</select>
+	
+	{/loop}
+	</td>
+	<td>
+	{loop="$vo.Vc_factorys"}
+	<input name="warehouse[{$vo.id}][]" type="text">
+	
+	{/loop}
+	</td>
+	<td>
+	{loop="$vo.Vc_factorys"}
+	<input name="memo[{$vo.id}][]" type="text">
+	{/loop}
+	</td>
+</tr>
+{/loop}
+<tr>
+    <input name="submit" type="submit"  value="提交">
+</tr>
+
+
+
+</table>
+</form>
+</body>
+</html>

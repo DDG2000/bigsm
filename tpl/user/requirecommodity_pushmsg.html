@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>短信推送</title>
+</head>
+<body>
+ 
+ <table>
+ <input name="id" type="hidden" value="{$id}">
+ <input name="Vc_name" type="hidden" value="{$name}">
+ <tr><td><input name="pushType" type="radio" value="1" checked/>按产品类型推送</td></tr>
+ <tr>
+ <td>
+ {loop="data"}
+ {$vo=$value}
+ <input name="Vc_itemClassIds" type="checkbox" value="{$vo.id}">{$vo.Vc_name}
+ {/loop}
+ </td>
+ </tr>
+ 
+ 
+ 
+ <tr><td><input name="pushType" type="radio" value="2"/>按商家推送</td></tr>
+ <tr><td><input name="Vc_shopIds" type="text" ></td></tr>
+
+ 
+ </table>
+ 
+<form method="post" action="/index.php?act=user&m=requirecommodity&w=pushmsg" >
+ 
+     
+           <input name="submit" type="submit"  value="提交" />
+</form>
+</body>
+</html>

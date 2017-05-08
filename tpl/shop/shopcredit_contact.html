@@ -1,0 +1,44 @@
+	{include="inc/css"}
+    <title>商铺联系方式</title>
+</head>
+<body>
+    {include="inc/shop/header"}
+    <!-- banner -->
+    {include="inc/shop/banner"}
+    <!-- banner -->
+    <!-- 中间内容部分 -->
+    <div id="container">
+		<div class="c w1100">
+			<!-- 商铺首页导航 -->
+			{include="inc/shop/nav"}
+			<!-- 商铺首页导航 -->
+			<div class="cb w">
+				<!-- 首页中间部分 -->
+				<div class="fl main-left">
+					<div class="page">
+						<div class="page-title">
+							<h2>联系方式</h2>
+						</div>
+						{$v=$shopinfo}
+						<div class="page-content page-content-contact">
+							<p>电话：{$v.Vc_contact_phone}</p>
+							<p>传真：{$v.Vc_fax}</p>
+							<p>公司地址：{if="$v.proname==$v.cityname"}
+								{$v.proname}{$v.disname}{$v.Vc_address}
+								{else}
+								{$v.proname}{$v.cityname}{$v.disname}{$v.Vc_address}
+								
+								{/if}
+							</p>
+						</div>
+					</div>
+				</div>
+				<!-- 首页中间部分 -->
+				{include="inc/shop/company"}
+				<!-- 首页右侧 -->
+			</div>
+		</div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

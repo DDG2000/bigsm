@@ -1,0 +1,176 @@
+	{include="inc/usercenter/css"}
+    <title>订单管理 - 订单详情</title>
+</head>
+<body>
+   {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">交易管理</a><a href="#">我的订单</a><span class="current">订单详情</span>
+        		</div>
+        		<div class="myorder-detail">
+        			<p class="cb table-title">我的订单</p>
+					{if condition="$data.I_status==10"}
+						{$space = "";$status = "等待审核";}
+					{elseif condition="$data.I_status==20"}
+						{$space = "";$status = "已完成";}
+					{elseif condition="$data.I_status==70"}
+						{$space = "";$status = "已评价";}
+					{elseif condition="$data.I_status==60"}
+						{$space = "";$status = "已取消";}
+					{/if}
+        			<div class="order-detail-info">
+        				<p>订单号：<span>{$data.Vc_orderNO}</span></p>
+        				<p>下单时间：{$data.Createtime}</p>
+        				<p>订单状态：{$status}</p>
+        				<p>订单总计：￥{$data.N_amount_price}</p>
+        				<p>支付方式：线下交易</p>
+        			</div>
+        			<p class="cb table-title">收货单位信息</p>
+        			<div class="order-detail-info">
+        				<p>收货单位：{$data.Vc_consignee_company}</p>
+        				<p>收货地址：{$data.Vc_consignee_address}</p>
+        				<p>联&nbsp; 系&nbsp;人：{$data.Vc_consignee}</p>
+        				<p>联系电话：{$data.Vc_consignee_phone}</p>
+        			</div>
+					{if condition="!($data.I_status == 60)"}
+						<p class="cb table-title">电子订货函</p>
+						<div class="myorder-letter">
+							<table>
+								<thead>
+									<tr>
+										<th width="93">品名</th>
+										<th width="103">材质</th>
+										<th width="105">规格</th>
+										<th width="74">产地</th>
+										<th width="73">仓库</th>
+										<th width="94">数量（件）</th>
+										<th width="115">重量（吨）</th>
+										<th width="115">销售单价</th>
+										<th width="123">销售金额</th>
+									</tr>
+								</thead>
+								{if condition="$err == 0"}
+									{loop="$data.goods"}
+									<tr>
+										<td class="name">{$value.itemname}</td>
+										<td>{$value.stuffname}</td>
+										<td>{$value.specificationname}</td>
+										<td>{$value.factoryname}</td>
+										<td>{$value.warehouse}</td>
+										<td>{$value.N_amount}</td>
+										<td>{$value.N_weight}吨</td>
+										<td>￥{$value.N_price}</td>
+										<td>￥{$value.N_amount_price}</td>
+									</tr>
+									{/loop}
+									<tr>
+										<td colspan="9" class="counter">
+											结算总价<span>￥{$data.N_amount_price}</span>
+										</td>
+									</tr>
+								{else}
+									<p>无数据...</p>
+								{/if}
+							</table>
+						</div>
+						{if="$I_status==20"}
+							<p class="cb table-title">电子确认函</p>
+							<div class="myorder-letter">
+								<table>
+									<thead>
+										<tr>
+											<th width="93">品名</th>
+											<th width="103">材质</th>
+											<th width="105">规格</th>
+											<th width="74">产地</th>
+											<th width="73">仓库</th>
+											<th width="94">数量（件）</th>
+											<th width="115">重量（吨）</th>
+											<th width="115">销售单价</th>
+											<th width="123">销售金额</th>
+										</tr>
+									</thead>
+									{if condition="$err == 0"}
+										{loop="$data.goods"}
+										<tr>
+											<td class="name">{$value.itemname}</td>
+											<td>{$value.stuffname}</td>
+											<td>{$value.specificationname}</td>
+											<td>{$value.factoryname}</td>
+											<td>{$value.warehouse}</td>
+											<td>{$value.N_amount}</td>
+											<td>{$value.N_weight}吨</td>
+											<td>￥{$value.N_price}</td>
+											<td>￥{$value.N_amount_price}</td>
+										</tr>
+										{/loop}
+										<tr>
+											<td colspan="9" class="counter">
+												结算总价<span>￥{$data.N_amount_price}</span>
+											</td>
+										</tr>
+									{else}
+										<p>无数据...</p>
+									{/if}
+								</table>
+							</div>
+						{/if}
+						
+						{if="$I_status==20 && $I_isapp ==2"}
+							<p class="cb table-title">我的评价</p>
+							<div class="compare-wrapper-my">
+								<ul class="cb fl-li">
+									<li>产品质量：
+										<div class="compare-my-item ib">
+											<div class="inner pa star{$app.quality}"></div>
+											<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+										</div>
+									</li>
+									<li>物流及时性：
+										<div class="compare-my-item ib">
+											<div class="inner pa star{$app.timely}"></div>
+											<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+										</div>
+									</li>
+									<li>服务态度：
+										<div class="compare-my-item ib">
+											<div class="inner pa star{$app.server}"></div>
+											<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+										</div>
+									</li>
+									<li>发票及时性：
+										<div class="compare-my-item ib">
+											<div class="inner pa star{$app.invoice}"></div>
+											<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+										</div>
+									</li>
+								</ul>
+								<p class="cb compare-content-header">评论：&nbsp;&nbsp;&nbsp;{$app.Vc_text}<span class="date fr">2016-9-1 11:13</span></p>
+								<div class="compare-content" style="margin-left:45px;">
+									{if condition="$app.T_images"}
+										{loop="$app.T_images"}
+											<img src="{$value}#" style="max-width:95%">
+										{/loop}
+									{/if}
+								</div>
+							</div>
+						{elseif="$I_status==20&&$I_isapp==1"}
+							<p class="cb table-title">我的评价</p>
+							<div class="compare-wrapper-my tac">
+								<a href="/index.php?act=user&m=order&w=appraise&id={$data.id}" class="appBtn">立即评价</a>
+							</div>
+						{/if}
+					{/if}
+        		</div>
+    		</div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

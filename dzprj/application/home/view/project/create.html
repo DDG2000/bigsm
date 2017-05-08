@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        {include file='public/head'}
+        <title>云采网 - 创建项目</title>
+    </head>
+<body>
+    {include file="public/top-copy"}
+    <!-- content -->
+    <div class="content project-content">
+        <div class="w1200 cc inner">
+            <ul class="process-line w1100 cc tac ib-li">
+                <li class="active">
+                    <div class="bg">
+                        <span>1</span>
+                    </div>
+                    <p>创建项目</p>
+                </li>
+                <li>
+                    <div class="bg">
+                        <span>2</span>
+                    </div>
+                    <p>等待审核</p>
+                </li>
+                <li>
+                    <div class="bg">
+                        <span>3</span>
+                    </div>
+                    <p>项目下单</p>
+                </li>
+                <li>
+                    <div class="bg">
+                        <span>4</span>
+                    </div>
+                    <p>提货</p>
+                </li>
+            </ul>
+            <!--form-->
+            <div class="project-form cc form">
+                <form class="form cc ajaxForm" method="post" action="{:url('project/beforesave')}">
+                    <input type="hidden" name="uid" value="{$uid}"/>
+                    <div class="category">
+                        <div class="category-title">基础信息</div>
+                        <div class="form-items">
+                            <span class="form-items-title"><em class="warring">*</em> 项目名称</span>
+                            <div class="item-wrap">
+                                <input type="text" name="Vc_name" value="{if condition='(isset($form))'}{$form.Vc_name}{/if}" class="big" placeholder="请输入项目名称" maxlength="20" tabindex="1"/>
+                            </div>
+                            <div class="item-wrap company">
+                                <span class="form-items-title">企业类型</span>
+                                <select name="I_project_org_classID" class="other" tabindex="2">
+                					 {volist name="$orgclass" id="vo"}
+                					    <option value="{$vo.id}" {if condition='(isset($form) && $vo.id==$form.I_project_org_classID)'}selected{/if}>{$vo.Vc_name}</option>
+                                    {/volist}
+            					</select>
+                            </div>
+                        </div>
+                        <div class="form-items" :controller="select">
+                            <span class="form-items-title"><em class="warring">*</em> 项目地址</span>
+                            <div class="item-wrap">
+                                <input type="hidden" name="province" value="{if condition='(isset($form))'}{$form.province}{/if}">
+                                <select name="I_provinceID" class="address change_add_name" id="provinceID" data-id="{if condition='(isset($form))'}{$form|output='I_provinceID'}{/if}" tabindex="3"></select>
+                            </div>
+                            <div class="item-wrap">
+                                <input type="hidden" name="city" value="{if condition='(isset($form))'}{$form.city}{/if}">
+                                <select name="I_cityID" class="address change_add_name" id="cityID" data-id="{if condition='(isset($form))'}{$form|output='I_cityID'}{/if}" tabindex="4"></select>
+                            </div>
+                            <div class="item-wrap">
+                                <input type="hidden" name="district" value="{if condition='(isset($form))'}{$form.district}{/if}">
+                                <select name="I_districtID" id="districtID" class="address change_add_name" data-id="{if condition='(isset($form))'}{$form|output='I_districtID'}{/if}" tabindex="5"></select>
+                            </div>
+                            <div class="item-wrap">
+                                <input type="text" name="Vc_address" value="{if condition='(isset($form))'}{$form.Vc_address}{/if}" class="address-detail" placeholder="详细地址" tabindex="6" maxlength="20"/>
+								<span></span>
+                            </div>
+                        </div>
+                        <div class="form-items">
+                            <span class="form-items-title"><em class="warring">*</em> 项目周期</span>
+                            <div class="item-wrap">
+                                <input type="text" name="D_start" class="date" value="{if condition='(isset($form))'}{$form.D_start}{/if}" datepicker placeholder="请选择项目开始时间" tabindex="7"/>
+                            </div>
+                            <div class="item-wrap space">—</div>
+                            <div class="item-wrap">
+                                <input type="text" name="D_end" value="{if condition='(isset($form))'}{$form.D_end}{/if}" class="date" datepicker placeholder="请选择项目结束时间" tabindex="8"/>
+								<span></span>
+                            </div>
+                        </div>
+                        <div class="form-items">
+                            <span class="form-items-title"><em class="warring">*</em> 开发面积</span>
+                            <input type="text" name="N_usearea" value="{if condition='(isset($form))'}{$form.N_usearea}{/if}" class="small" float tabindex="9"/>
+                            <span class="unit">㎡</span>
+                        </div>
+                        <div class="form-items">
+                            <span class="form-items-title"><em class="warring">*</em> 预计用量</span>
+                            <input type="text" name="N_weight" value="{if condition='(isset($form))'}{$form.N_weight}{/if}" class="small" float tabindex="10"/>
+                            <span class="unit">吨</span>
+                        </div>
+                    </div>
+                    <div class="category pt9">
+                        <div class="category-title">垫资信息</div>
+                        <div class="form-items">
+                            <span class="form-items-title"><em class="warring">*</em> 申请额度</span>
+                            <input type="text" name="N_loan_amount" class="money" value="{if condition='(isset($form))'}{$form.N_loan_amount}{/if}" float tabindex="11"/>
+                            <span class="unit">万</span>
+                            <input type="text" name="I_loan_life" class="days" value="{if condition='(isset($form))'}{$form.I_loan_life}{/if}" number tabindex="12"/>
+                            <span class="unit">天</span>
+                        </div>
+                    </div>
+                    <div class="category pt9">
+                        {if condition="(isset($projcontact))"}
+                        <div class="category-title">联系方式</div>
+                        {volist name="projcontact" id="vo"}
+                        <div class="form-items">
+                            <span class="form-items-title"><em class="warring">*</em> 联系人</span>
+                            <input type="text" name="Vc_contactName[]" value="{$vo.Vc_contactName}" class="name" placeholder="请输入联系人" maxlength="15" tabindex="13"/>
+                            <input type="text" name="Vc_phone[]" value="{$vo.Vc_phone}" class="mobile" maxlength="11" placeholder="请输入手机号" tel maxlength="11" tabindex="14"/>
+                            <a href="javascript:;" class="menu add"></a>
+                            <a href="javascript:;" class="menu delete"></a>
+                        </div>
+                        {/volist}
+                        {else}
+                        <div class="category-title">联系方式</div>
+                        <div class="form-items">
+                            <span class="form-items-title"><em class="warring">*</em> 联系人</span>
+                            <input type="text" name="Vc_contactName[]" class="name" placeholder="请输入联系人" maxlength="15" tabindex="15" value="{$Vc_applicantName}"/>
+                            <input type="text" name="Vc_phone[]" class="mobile" maxlength="11" placeholder="请输入手机号" tel tabindex="16" value="{$_SESSION['user']['Vc_mobile']}"/>
+                            <a href="javascript:;" class="menu add"></a>
+                            <a href="javascript:;" class="menu delete"></a>
+                        </div>
+                        {/if}
+                       
+                    </div>
+                </form>
+            </div>
+            <!--/form-->
+        </div>
+        <div class="form-submit tac">
+            <a href="javascript:;" class="form-submit-menu" id="submit">创建项目</a>
+        </div>
+    </div>
+    <!-- content -->
+    {include file="public/foot-bg"}
+    <script type="text/javascript">
+		$().autoSelectData({
+			'#provinceID':{
+				url:'/comm/getprovince',
+				level:0
+			},
+			'#cityID':{
+				url:'/comm/getCity?pid=',
+				level:1
+			},
+			'#districtID':{
+				url:'/comm/getDistrict?pid=',
+				level:2
+			}
+		});
+
+		$(".ajaxForm").ajaxForm({
+			button:"#submit",
+			noTips:true,
+			success: function (res) {
+				// layer.closeAll();
+				location.href=res.url;
+			}
+		});
+
+		$(document).on("click","a.add", function(){
+			
+			if ($('.form-items').filter(function(){
+	            return $(this).find(".add").length
+	        }).length < 5 ) {
+				var $parent = $(this).closest('.form-items'),
+	                html = [
+						'<div class="form-items">',
+	                        '<span class="form-items-title"><em class="warring">*</em> 联系人</span>',
+	                        '<input type="text" name="Vc_contactName[]" class="name" maxlength="15" placeholder="请输入联系人">',
+	                        '<input type="text" name="Vc_phone[]" maxlength="11" class="mobile" tel placeholder="请输入手机号">',
+	                        '<a href="javascript:;" class="menu add"></a>',
+	                        '<a href="javascript:;" class="menu delete"></a>',
+	                    '</div>'
+					].join("");
+				
+		        $parent.after(html);
+			} else {
+				layer.msg("最多五位联系人",{time:1500});
+			}
+			
+	    });
+
+		//
+	    $(document).on("click","a.delete", function(){
+	
+	        if ($(".form-items").filter(function(){
+	            return $(this).find("a.delete").length
+	        }).length > 1 ) {
+	            $(this).closest('.form-items').fadeOut("fast", function(){
+	                $(this).remove();
+	            });
+	        } else {
+	            layer.msg("最少一位联系人",{time:1500});
+	        }
+	    });
+
+        try {
+
+            if($("input[datepick]").length) {
+                $("input[datepick]").each(function(index, el) {
+                    $(this).attr("id","laydate"+index)
+                });
+                console.log($("#laydate0").data("time") !== 'undefined'? 'YYYY-MM-DD hh:mm' : 'YYYY-MM-DD');
+                laydate.skin("yahui");
+                var start = {
+                    elem: '#laydate0',
+                    format:$("#laydate0").data("time") !== 'undefined'? 'YYYY-MM-DD' : 'YYYY-MM-DD',
+                    min: laydate.now(), //设定最小日期为当前日期
+                    max: '2099-06-16 23:59:59', //最大日期
+                    istime: true,
+                    fixed: false,
+                    istoday: true,
+                    choose: function(datas){
+                        try {
+                            end.min = datas; //开始日选好后，重置结束日的最小日期
+                            end.start = datas //将结束日的初始值设定为开始日
+                        } catch (e) {
+
+                        }
+                    }
+                };
+                laydate(start);
+                if($("input[datepick]").length >1) {
+                    var end = {
+                        elem: '#laydate1',
+                        format: $("#laydate1").data("time") !== 'undefined'? 'YYYY-MM-DD' : 'YYYY-MM-DD',
+                        min: laydate.now(),
+                        max: '2099-06-16 23:59:59',
+                        istime: true,
+                        fixed: false,
+                        istoday: true,
+                        choose: function(datas){
+                            start.max = datas; //结束日选好后，重置开始日的最大日期
+                        }
+                    };
+                    laydate(end);
+                }
+            }
+        } catch (e) {
+
+        }
+    </script>
+</body>
+</html>

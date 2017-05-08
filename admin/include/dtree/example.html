@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<title>Destroydrop &raquo; Javascripts &raquo; Tree</title>
+<!--使用例子：调用方法开始-->
+	<link rel="StyleSheet" href="dtree.css" type="text/css" />
+	<script type="text/javascript" src="SCDtree.js"></script>
+<!--调用结束-->
+</head>
+<body>
+<h1><a href="/">Destroydrop</a> &raquo; <a href="/javascripts/">Javascripts</a> &raquo; <a href="/javascripts/tree/">Tree</a></h1>
+<h2>Example</h2>
+<div class="dtree">
+	<p><a onclick="javascript: d.openAll();">open all</a> | <a onclick="javascript: d.closeAll();">close all</a></p>
+<!--使用开始-->
+	<script type="text/javascript">
+		<!--
+		d = new dTree('d');
+		
+		//默认为无选择框即菜单或者如下设定
+		//d.config.checkType = null;
+		//设定为单选框
+		d.config.checkType = 1; 
+		//设定为复选框
+		//d.config.checkType = 2;
+
+		/*
+		添加节点函数：
+		dTree.prototype.add = function(id, pid, name, url, title, target, icon, iconOpen, open, checkValue, checkChecked)
+		主要参数说明:
+		ID：主键
+		PID：父类ID
+		NAME：结点名称
+		URL：结点连接的URL
+		TITLE：类似ALT的一种结点显示内容
+		TARGET：连接打开的目标
+		ICON：图片文件，没有指定将使用默认的图片
+		ICONOPEN：打开结点后的图片文件，没有指定将使用默认的图片
+		OPEN：boolean类型，结点是否打开。
+		checkValue: 选择框值
+		checkChecked: 选择框状态
+		
+		如：
+			d.add(1, 0, 'Node 1', 'example01.html', 'node title', 'mainframe', 'img/musicfolder.gif');
+		使用时：参数可多可少，但id,pid,name一般不可省；且要按次序使用，中间没赋值的必须留下位置。
+		
+		另外，调用d.openAll();可以打开所有结点。
+		调用d.closeAll();可以关闭所有结点。
+		调用d.openTo(id);可以打开指定ID的结点
+		*/
+		d.add(0,-1,'My example tree');                                   //根结点id一般为0，父节点为-1；
+		d.add(1,0,'Node 1','');
+		d.add(2,0,'Node 2','example01.html');
+		d.add(3,1,'Node 1.1','example01.html');
+		d.add(4,0,'Node 3','example01.html');
+		d.add(5,3,'Node 1.1.1','example01.html');
+		d.add(6,5,'Node 1.1.1.1','example01.html');
+		d.add(7,0,'Node 4','example01.html');
+		d.add(8,1,'Node 1.2','example01.html');
+		d.add(9,0,'My Pictures','example01.html','Pictures I\'ve taken over the years','','','img/imgfolder.gif');
+		
+		d.add(10,9,'The trip to Iceland','example_zj.html','Pictures of Gullfoss and Geysir','','','','','1','');
+		d.add(11,9,'Mom\'s birthday','example_zj.html','','','','','','2','');
+		d.add(12,0,'Recycle Bin','example_zj.html','','','img/trash.gif','','','3','');
+		
+		//写出树语句
+		document.write(d);
+
+		//-->
+	</script>
+<!--使用结束-->
+</div>
+<p><a href="mailto&#58;drop&#64;destroydrop&#46;com">&copy;2002-2003 Geir Landr&ouml;</a></p>
+</body>
+</html>

@@ -1,0 +1,111 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+<div class="x_content">
+   <br>
+   <form id="adminuserform" class="form-horizontal form-label-left adminuserform" novalidate>
+
+     <div class="item form-group">
+         <label class="control-label col-md-3 col-sm-3 col-xs-12">商品 <span class="">&nbsp;</span></label>
+         <div class="col-md-6 col-sm-6 col-xs-12">
+             <div class="checkbox temple-checkbox">{$model->getHtml('goodsSyncTask')}</div>
+         </div>
+     </div>
+     <hr/>
+     <div class="item form-group">
+         <label class="control-label col-md-3 col-sm-3 col-xs-12">业务员 <span class="">&nbsp;</span></label>
+         <div class="col-md-6 col-sm-6 col-xs-12">
+             <div class="checkbox temple-checkbox">{$model->getHtml('employeeSyncTask')}</div>
+         </div>
+     </div>
+     <hr/>
+     <div class="item form-group">
+         <label class="control-label col-md-3 col-sm-3 col-xs-12">产地 <span class="">&nbsp;</span></label>
+         <div class="col-md-6 col-sm-6 col-xs-12">
+             <div class="checkbox temple-checkbox">{$model->getHtml('placeSyncTask')}</div>
+         </div>
+     </div>
+     <hr/>
+     <div class="item form-group">
+         <label class="control-label col-md-3 col-sm-3 col-xs-12">公司 <span class="">&nbsp;</span></label>
+         <div class="col-md-6 col-sm-6 col-xs-12">
+             <div class="checkbox temple-checkbox">{$model->getHtml('companySyncTask')}</div>
+         </div>
+     </div>
+     <hr/>
+     <div class="item form-group">
+         <label class="control-label col-md-3 col-sm-3 col-xs-12">销售提单 <span class="">&nbsp;</span></label>
+         <div class="col-md-6 col-sm-6 col-xs-12">
+             <div class="checkbox temple-checkbox">{$model->getHtml('purchaseProofSyncTask')}</div>
+         </div>
+     </div>
+     <hr/>
+     <div class="item form-group">
+         <label class="control-label col-md-3 col-sm-3 col-xs-12">账单 <span class="">&nbsp;</span></label>
+         <div class="col-md-6 col-sm-6 col-xs-12">
+             <div class="checkbox temple-checkbox">{$model->getHtml('billSyncTask')}</div>
+         </div>
+     </div>
+     <hr/>
+     <div class="item form-group">
+         <label class="control-label col-md-3 col-sm-3 col-xs-12">项目 <span class="">&nbsp;</span></label>
+         <div class="col-md-6 col-sm-6 col-xs-12">
+             <div class="checkbox temple-checkbox">{$model->getHtml('projectSyncTask')}</div>
+         </div>
+     </div>
+     <hr/>
+     <div class="form-group">
+       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+           <span style="color:red;">请不要频繁修改设置，也不要将同步间隔设置过短，否则会增加服务器负担。</span>
+       </div>
+     </div>
+     <div class="ln_solid"></div>
+     <div class="form-group">
+       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+         <button type="submit" class="btn btn-success">确认</button>
+       </div>
+     </div>
+   </form>
+</div>
+
+{include file='public/rightEnd,public/footer' /}
+
+
+<script type="text/javascript">
+$(function(){
+    var url = "{:url('erpsync/getConfig')}" , isSubmitting = false ,
+        submitUrl = "{:url('erpsync/saveConfig')}" ,btn = $('button[type=submit]') ,
+        removeUrl = "{$removeUrl}" ;;
+    $.getJSON(url).success(setValues) ;
+    function setValues (data) {
+        data = data.data ;
+        $.each(data,function(){
+            $("input[name='"+this.Vc_type+"[]'][value='"+this.Vc_sync_hour+"']")
+                .prop('checked',true).parent('div').addClass('checked');
+        })
+    }
+
+    $('form').on('submit',function(e){
+        e.preventDefault() ;
+        if (!isSubmitting) {
+            setBtn(1) ;
+            var data = $('form').serialize() ;
+            $.post(submitUrl,data).success(function(result){
+                setTimeout(function(){
+                    layer.msg(result.msg) ;
+                    setBtn(0);
+                },3000) ;
+            }) ;
+        }
+    });
+
+
+    function setBtn (status) {
+        if (1 == status) {
+            btn.attr('disabled','disabled') ;
+        } else {
+            btn.removeAttr('disabled') ;
+        }
+        isSubmitting = 1 === status ;
+    }
+})
+</script>

@@ -1,0 +1,113 @@
+#content,
+#header,
+#footer {
+  background: #F6F5F5;
+}
+#header.index {
+  background: #F8FBFB;
+}
+.top a {
+  color: #666;
+}
+.top a:hover,
+.header-con-nav a:hover {
+  color: #c00;
+}
+.header-con {
+  background: #1279C5;
+}
+.header-con.index {
+  background: #fff;
+}
+.footer-abt {
+  background: #464646;
+}
+.footer-abt-links .fl a {
+  color: #b2b2b2;
+}
+.footer-abt-links .fl {
+  color: #b2b2b2;
+}
+.footer-abt-links {
+  border-bottom: 1px solid #7D7D7D;
+}
+.footer-nav dl a {
+  color: #666;
+}
+.footer-abt-links .fl a:hover,
+.footer-abt-links .fr a:hover,
+.footer-abt-cprt a:hover,
+.footer-nav dl a:hover,
+.m-form-full a.btn:hover {
+  color: #c00;
+}
+.footer-abt-links .fr a,
+.footer-abt-cprt a,
+.footer-abt-cprt {
+  color: #fff;
+}
+.content-side li {
+  color: #222;
+}
+.content-side-submenu a .content-side-submenu a {
+  color: #666;
+}
+.content-side-submenu a:hover {
+  color: #c00;
+}
+.content-side-submenu a:hover:before {
+  color: #c00;
+}
+.wg-checkbox {
+  margin-right: 13px;
+  position: relative;
+  padding-left: 26px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #666;
+} /**
+ * @example:<label class="wg-checkbox selected"><input type="checkbox"/>品名</label>
+ * @descption 统一整站自定义checkbox样式,需引用skin.css
+ * @date 2016.05.20
+ * @author tang
+ * 
+ */
+.wg-checkbox input {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+.wg-checkbox:before,
+.wg-checkbox:after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 13px;
+}
+.wg-checkbox:after {
+  left: 3px;
+  top: 2px;
+  content: "√";
+  line-height: 13px;
+  color: #c00;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  transition: all 0.3s linear;
+  -webkit-transition: all 0.3s linear;
+}
+.wg-checkbox:before {
+  top: 1px;
+  left: 0;
+  width: 13px;
+  content: "";
+  border: 1px solid #dfdfdf;
+  border-radius: 1px;
+}
+.wg-checkbox.selected:after {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.wg-checkbox.selected:before {
+  border-color: #c00;
+}
+/*# sourceMappingURL=skin.css.map */

@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss"}
+{if="isset($extend.js)"}
+	{$extend.js}
+{/if}
+<style type="text/css">
+.table_np_left{float: left; min-width:80px;max-width: 150px;max-height: 440px; overflow: hidden;}
+.table_np_right{display:inline-block;overflow: hidden;}
+.table_np_right th , .table_np_right td{width:100px;overflow: hidden;/* word-break:keep-all;white-space:nowrap;text-overflow: none; */ }
+.table_np_right table{width: 100%;border-width: 0;border-collapse: collapse;table-layout:fixed}
+.table_np_right_1{background-color:#e6e6e6;padding-right: 15px;}
+.table_np_right_2{max-height: 420px;overflow-x:scroll;}
+.tr_bt{white-space: nowrap;}
+</style>
+<script type="text/javascript">
+$(function(){
+	resizewindowto();
+
+	$(document).on('click','input[action="checkToReturn"]',function(){
+		var id = $(this).val() ;
+		var inputName = $("#returnInput").val();
+		parent.$("input[name='"+inputName+"']").val(id) ;
+		parent.hidePopWin();
+	}) ;
+	
+	/*
+	$("a[name='submit_tree']").click(function(){
+		var IdList='',inputName = $("#returnInput").val();
+		if($("#Type").val()==2){
+			$(":input[type=checkbox]").each(function(){
+				if($(this).attr("checked")){
+					IdList += (IdList==''?'':',')+$(this).val();
+				}
+			});
+		}else{
+			IdList = $(":input[type=radio][checked]").val();
+		}
+		if(IdList=='') {alert('至少选择一项才能提交');return false;}
+		parent.$("input[name='"+inputName+"']").val(IdList).removeAttr("disabled");
+		parent.hidePopWin();
+	});
+	*/
+});
+
+function resizewindowto(){
+	var left_1,left_2;
+	$(".table_np_left_1 td").each(function(i){
+		left_1 = $(this);
+		left_2 = $(".table_np_left_2 tr").eq(0).find("td").eq(i);
+		if(left_1.width() > left_2.width()){
+			left_2.width(left_1.width());
+		}else{
+			left_1.width(left_2.width());
+		}
+	});
+	$(".table_np_right").width($(".table_np").width()-$(".table_np_left").width()-5);
+	var left_h ,right_h ;
+	$(".table_np_right tr").each(function(i){
+		left_h = $(".table_np_left tr").eq(i).find("td").eq(0);
+		right_h = $(this).find("td").eq(0);
+		if(left_h.height() > right_h.height()){
+			right_h.height(left_h.height());
+		}else{
+			left_h.height(right_h.height());
+		}
+	});
+	
+	if($(".table_np_right_2").height() < 400){
+		$(this).attr("style","overflow-y:scroll");
+	}
+
+	$(".table_np_right_2").scroll(function(){   
+		$(".table_np_right_1").css("marginLeft","-"+$(this).scrollLeft()+"px");
+		$(".table_np_left_2").css("marginTop","-"+$(this).scrollTop()+"px")
+	});
+}
+</script>
+</head>
+
+<body onResize="resizewindowto()">
+<div id="main" class="not_set">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.innerHtml}</a>
+			 {/if}
+		{/loop}
+	</div>
+	{if="isset($extend.marks)"}
+	<div class="mbt">
+		{$extend.marks}
+	</div>
+	{else}
+		<!--<div class="mbt"><a class="cur">{$title}</a></div>-->
+	{/if}
+	{if="!empty($sTypes)"}
+	<div class="table">
+	<div class="tr_bt b_line"><strong>搜索</strong></div>
+	<form name="search" method="post" action="?" check="1">
+	<div class="b_line1" style="padding:8px;">
+		<span class="lsi">查询类型：<select name="sType" class="sel_put1 chzn-select-no-single">
+		{loop="sTypes"}
+			{if="$value!=''"}
+			<option value="{$key}" {if="$key==$sType"}selected="selected"{/if}>{$value}</option>
+			{/if}
+		{/loop}
+		</select></span>
+		<span class="lsi">
+		<span class="spancheck defaultcheck">查询内容：<input name="sKey" type="text" class="txt_put1" value="{$sKey}" maxlength="50"/></span>
+		</span>
+		{if="isset($extend.sTypes)"}
+			{loop="extend.sTypes"}
+		<span class="lsi">{$value}</span>
+			{/loop}
+		{/if}
+		<a name="submit" class="buta" style="display:inline-block;float:none;"/>搜索</a>
+		{loop="hides"}
+		<input type="hidden" name="{$key}" value="{$value}">
+		{/loop}
+	</div>
+	</form>	
+	</div>
+	{/if}
+	<div class="search_sum">
+		<div class="sum">共 [<font class="green">{$extend.rscount|0}</font>] 条记录</div>
+		<!--<a href="#" class="but ck_fan" rel="IdList">反选</a>-->
+		{loop="btns"}
+			{$value}
+		{/loop}
+	</div>
+	<div class="table_np">
+	{if="count($thsl)>0"}
+	<div class="table_np_left">
+	<div class="table_np_left_1">
+	<table>
+	<tr class="tr_bt">
+		{if="!isset($extend.fan)"}
+		<td>&nbsp;</td>
+		{/if}
+		{loop="thsl"}
+		<td width="{$value.wid}">{$value.val}</td>
+		{/loop}
+	</tr>
+	</table>
+	</div>
+	<div style="overflow: hidden;">
+	<div class="table_np_left_2">
+	<table>
+	{loop="tdsl"}
+	<tr>
+		{if="!isset($extend.fan)"}
+		<td width="25"><input action="checkToReturn" {if="isset($checked) && $checked==$key"} checked="checked" {/if} name="selectedId" type="radio" value="{$key}"/></td>
+		{/if}
+		{$value}
+	</tr>
+	{else}
+	<tr><td>&nbsp;</td></tr>
+	{/loop}
+	</table>
+	</div>
+	</div>
+	</div>
+	{/if}
+	<div class="table_np_right">
+	<div class="table_np_right_1">
+	<table>
+	<tr class="tr_bt">
+		{loop="ths"}
+		<td width="{$value.wid}" style="{$value.sty}">{$value.val}</td>
+		{/loop}
+	</tr>
+	</table>
+	</div>
+	<div class="table_np_right_2">
+	<table>
+	{loop="tds"}
+	<tr>
+		{$value}
+	</tr>
+	{else}
+	<tr><td colspan="7" align="center">暂无相关数据</td><td colspan="10"></td></tr>
+	{/loop}
+	</table>
+	</div>
+	</div>
+	</div>
+	<div class="page">
+		<script type="text/javascript">var plb=new PageListBar({$pagelistparam});document.write(plb);</script>
+	</div>
+	{if="!isset($extend.nohelps)"}
+	<div class="table">
+	<table>
+	{if="!empty($sTypes)&&array_unshift($helps,'搜索：可根据设置的条件进行搜索查询，任一条件为空默认搜索所有记录')"}{/if}
+	{loop="helps"}
+	<tr><td>{$key+1}.{$value}</td></tr>
+	{/loop}
+	</table>
+	</div>
+	{/if}
+	<input type = 'hidden' id="returnInput" value="{$returnInput}" />
+</div>
+</body>
+</html>
+

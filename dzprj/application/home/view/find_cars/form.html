@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    {include file='public/head'}
+    <link rel="stylesheet" href="/static/js/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <title>找车下单（表单页）</title>
+</head>
+<body>
+{include file="public/top-copy"}
+<!-- content -->
+<div class="content project-content">
+    <div class="w1200 cc inner">
+        <ul class="process-line process-line-three w1100 cc tac ib-li">
+            <li class="active">
+                <div class="bg">
+                    <span>1</span>
+                </div>
+                <p>填写订单</p>
+            </li>
+            <li>
+                <div class="bg">
+                    <span>2</span>
+                </div>
+                <p>平台联系物流</p>
+            </li>
+            <li>
+                <div class="bg">
+                    <span>3</span>
+                </div>
+                <p>装车发货<p>
+            </li>
+        </ul>
+        <!--form-->
+        <div class="order-form find-form cc form">
+            {if condition="(isset($_SESSION['user']))"}
+            <form class="cc ajaxForm" action="/find_cars/submitAdd" method="post">
+            {else}
+            <form class="cc ajaxForm" action="/index/findCarsIndex" method="post">
+            {/if}
+                <div class="category">
+                    {if condition='(isset($order.id))'}
+                    <input type="hidden" name="id" value="{$order.id}">
+                    <input type="hidden" name="Vc_orderSn" value="{$order.Vc_orderSn}">
+                    {/if}
+                    <div class="category-title">订单信息</div>
+                    <div class="form-items">
+                        <span class="form-items-title"><em class="warring">*</em>发货地址</span>
+                        <div class="item-wrap">
+                            <input name="proname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.proname1}{/if}">
+                            <select name="I_sent_provinceID" id="provinceID" data-name="proname" class="address normal change_add_name" data-id="{if condition='(isset($order))'}{$order.I_sent_provinceID}{/if}" tabindex="1"><option value="" >请选择</option></select>
+                        </div>
+                        <div class="item-wrap">
+                            <input name="cityname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.cityname1}{/if}">
+                            <select name="I_sent_cityID" data-name="cityname" id="cityID" class="address normal change_add_name" data-id="{if condition='(isset($order))'}{$order.I_sent_cityID}{/if}" tabindex="2"><option value="">请选择</option></select>
+                        </div>
+                        <div class="item-wrap">
+                            <input name="areaname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.areaname1}{/if}">
+                            <select name="I_sent_districtID" data-name="areaname" id="districtID" class="address normal change_add_name" data-id="{if condition='(isset($order))'}{$order.I_sent_districtID}{/if}" tabindex="3"><option value="">请选择</option></select>
+                        </div>
+                        <div class="item-wrap">
+                            <input type="text" name="Vc_sent_address" maxlength="30" value="{if condition='(isset($order))'}{$order.Vc_sent_address}{/if}" class="address-detail" placeholder="详细地址" tabindex="4" />
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="form-items">
+                        <span class="form-items-title title-small"><em class="warring">*</em>发货人</span>
+                        <input type="text" name="Vc_senter" maxlength="15" value="{if condition='(isset($order))'}{$order.Vc_senter}{/if}" placeholder="请输入姓名" class="normal name" tabindex="5"/>
+                        <input type="text" name="Vc_sent_tel" id="" value="{if condition='(isset($order))'}{$order.Vc_sent_tel}{/if}" placeholder="请输入联系号码" class="normal-middle" tel tabindex="6" maxlength="11"/>
+                        <span></span>
+                    </div>
+                    {if condition="(isset($goods))"}
+                    {volist name='$goods' id='vo'}
+                    <div class="form-items">
+                        <span class="form-items-title title-small"><em class="warring">*</em>货物</span>
+                        <input type="hidden" class="goodsSel" name="Vc_goods_code[]" value="{$vo.Vc_goods_code}">
+                        <input type="text" readonly name="Vc_goods_name[]" class="normal-big citySel" value="{$vo.Vc_goods_breed.','.$vo.Vc_goods_material.','.$vo.Vc_goods_spec}" tabindex="7"/>
+                        <div class="item-wrap-select">
+                            <input type="text" name="N_plan_weight[]" placeholder="输入数量" class="goodsNum number_form" value="{$vo.Vc_unit=='件'?intval($vo.N_plan_weight):$vo.N_plan_weight}"{if condition='($vo.Vc_unit=="吨")'} float{else} number{/if} tabindex="8"/>
+                            <select name="Vc_unit[]" class="unit_select" tabindex="9">
+                                <option value="吨" {if condition='($vo.Vc_unit=="吨")'}selected{/if}>吨</option>
+                                <option value="件" {if condition='($vo.Vc_unit=="件")'}selected{/if}>件</option>
+                            </select>
+                        </div>
+                        <a href="javascript:;" class="menu add"></a>
+                        <a href="javascript:;" class="menu delete"></a>
+                    </div>
+                    {/volist}
+                    {else}
+                    <div class="form-items">
+                        <span class="form-items-title title-small"><em class="warring">*</em>货物</span>
+                        <input type="hidden" class="goodsSel" name="Vc_goods_code[]" value="00000034">
+                        <input type="text" readonly name="Vc_goods_name[]" class="normal-big citySel" value="" tabindex="7"/>
+                        <div class="item-wrap-select">
+                            <input type="text" name="N_plan_weight[]" placeholder="输入数量" class="goodsNum number_form" value="1" float tabindex="8"/>
+                            <select name="Vc_unit[]" class="unit_select" tabindex="9">
+                                <option value="吨">吨</option>
+                                <option value="件">件</option>
+                            </select>
+                        </div>
+                        <a href="javascript:;" class="menu add"></a>
+                        <a href="javascript:;" class="menu delete"></a>
+                    </div>
+                    {/if}
+                </div>
+                <div class="category pt9">
+                    <div class="category-title">收货清单</div>
+                    <div class="form-items">
+                        <span class="form-items-title"><em class="warring">*</em>收货地址</span>
+                        <div class="item-wrap">
+                            <input name="proname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.proname2}{/if}">
+                            <select name="I_receive_provinceID" id="province" data-name="proname" class="address normal change_add_name" data-id="{if condition='(isset($order))'}{$order|output='I_receive_provinceID'}{/if}" tabindex="10"><option value="" >请选择</option></select>
+                        </div>
+                        <div class="item-wrap">
+                            <input name="cityname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.cityname2}{/if}">
+                            <select name="I_receive_cityID" id="city" data-name="cityname" class="address normal change_add_name" data-id="{if condition='(isset($order))'}{$order|output='I_receive_cityID'}{/if}" tabindex="11"><option value="">请选择</option></select>
+                        </div>
+                        <div class="item-wrap">
+                            <input name="areaname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.areaname2}{/if}">
+                            <select name="I_receive_districtID" data-name="areaname" id="district" class="address normal change_add_name" data-id="{if condition='(isset($order))'}{$order|output='I_receive_districtID'}{/if}" tabindex="12"><option value="">请选择</option></select>
+                        </div>
+                        <div class="item-wrap">
+                            <input type="text" name="Vc_receive_address" maxlength="30" value="{if condition='(isset($order))'}{$order|output='Vc_receive_address'}{/if}" class="address-detail" placeholder="详细地址" tabindex="13"/>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="form-items">
+                        <span class="form-items-title title-small"><em class="warring">*</em>收货人</span>
+                        <input type="text" name="Vc_receiver" maxlength="15" value="{if condition='(isset($order))'}{$order|output='Vc_receiver'}{/if}" placeholder="请输入姓名" class="normal name" tabindex="14"/>
+                        <input type="text" name="Vc_receiver_tel" id="" value="{if condition='(isset($order))'}{$order|output='Vc_receiver_tel'}{/if}" placeholder="联系电话" class="normal-middle" tel style="position:relative;left:-1px;" tabindex="15"/>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="category pt9">
+                    <div class="category-title">运输要求</div>
+                    <div class="form-items">
+                        <span class="form-items-title title-small"><em class="warring">*</em>期望价格</span>
+                        <label for="price1" class="radio{if condition='(isset($order) && $order.I_offertype==1)'} active{/if}" data-type="radio" >单价</label>
+                        <input type="radio" name="I_offertype" id="price1" value="1" {if condition='(isset($order) && $order.I_offertype==1)'}checked{/if} tabindex="16"/>
+
+                        <label for="price2" class="radio {if condition='(isset($order) && $order.I_offertype==2)'}active{/if}" data-type="radio" >一口价</label>
+                        <input type="radio" name="I_offertype" id="price2" value="2" {if condition='(isset($order) && $order.I_offertype==2)'}checked{/if} tabindex="17"/>
+
+                        <input type="text" name="N_expectprice" id="" value="{if condition='(isset($order))'}{$order.N_expectprice}{/if}" class="small" float tabindex="18"/>
+                        <span class="fl">&nbsp;&nbsp;<em id="priceUnit">{if condition='(isset($order)) && $order.I_offertype==1'}元/吨{elseif condition="(isset($order))"}元{/if}</em></span>
+
+                        <label for="t1" class="checkbox checker {if condition='(isset($order) && $order.I_plus_tax==1)'}active{/if}" data-type="checkbox">含税</label>
+                        <input type="checkbox" name="I_plus_tax" id="t1" value="1" {if condition='(isset($order) && $order.I_plus_tax==1)'}checked{/if} tabindex="19"/>
+
+                        <label for="t2" class="checkbox checker {if condition='(isset($order) && $order.I_plus_dumper==1)'}active{/if}" data-type="checkbox">自卸车</label>
+                        <input type="checkbox" name="I_plus_dumper" id="t2" value="1" {if condition='(isset($order) && $order.I_plus_dumper==1)'}checked{/if} tabindex="20"/>
+
+                        <label for="t3" class="checkbox checker {if condition='(isset($order) && $order.I_plus_deliveryfee==1)'}active{/if}" data-type="checkbox">垫出库费</label>
+                        <input type="checkbox" name="I_plus_deliveryfee" id="t3" value="1" {if condition='(isset($order) && $order.I_plus_deliveryfee==1)'}checked{/if} tabindex="21"/>
+                    </div>
+                    <div class="form-items">
+                        <span class="form-items-title title-small"><em class="warring">*</em>期望到货日期</span>
+                        <input type="text" name="D_arrived_start" value="{if condition='(isset($order))'}{$order.D_arrived_start|strtotime|date='Y-m-d H:i',###}{/if}" datepicker data-time class="normal" tabindex="22"/>
+                        <!-- <select name="I_hour" id="" class="form-item-time">
+                            {for start="0" end="24" name="i"}
+                                <option value="{$i<=9?'0':''}{$i}:00">{$i<=9?'0':''}{$i}:00</option>
+                            {/for}
+                        </select> -->
+                        <span></span>
+                    </div>
+                    <div class="form-items">
+                        <span class="form-items-title">备注</span>
+                        <textarea maxlength="200" name="T_note" rows="" cols="" placeholder="如果有什么需求请告诉我们，字数小于200字" class="comment" tabindex="23">{if condition='(isset($order))'}{$order|output='T_note'}{/if}</textarea>
+                        <span></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--/form-->
+    </div>
+    <div id="menuContent" class="menuContent">
+        <ul id="ztree" class="ztree"></ul>
+    </div>
+    <div class="form-submit tac">
+        <a href="javascript:;" class="form-submit-menu" id="submit">提交订单</a>
+    </div>
+</div>
+<!-- content -->
+{include file="public/foot-bg"}
+<script type="text/javascript" src="/static/js/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="/static/js/ztree/js/jquery.ztree.excheck.js"></script>
+<script>
+
+    $("label.radio").Checker({
+        checked: function(){
+            if($(this).data("type") == "radio" && $(this).text() == "单价") {
+                $("#priceUnit").text("元/吨");
+            } else if($(this).data("type") == "radio"){
+                $("#priceUnit").text("元");
+            }
+        }
+    });
+
+    $().autoSelectData({
+        '#provinceID':{
+            url:'/comm/getprovince',
+            level:0
+        },
+        '#cityID':{
+            url:'/comm/getCity?pid=',
+            level:1
+        },
+        '#districtID':{
+            url:'/comm/getDistrict?pid=',
+            level:2
+        }
+    });
+    
+    $(".ajaxForm").ajaxForm({
+        button:"#submit",
+        noTips:true,
+        success: function (res) {
+            layer.closeAll();
+            location.href=res.url;
+        },
+        beforeSubmit: function(){
+            window.notReload = true;
+            showLogin();
+        }
+    });
+
+    $(document).on("click","a.add", function(){
+        
+        if ($('.form-items').filter(function(){
+            return $(this).find(".add").length
+        }).length < 10 ) {
+            var $parent = $(this).closest('.form-items'),
+                html = [
+                    '<div class="form-items">',
+                        '<span class="form-items-title title-small"><em class="warring">*</em>货物</span>',
+                        '<input type="hidden" class="goodsSel" name="Vc_goods_code[]" value="">',
+                        '<input type="text" readonly="" name="Vc_goods_name[]" class="normal-big citySel" value="" tabindex="7">',
+                        '<div class="item-wrap-select">',
+                            '<input type="text" name="N_plan_weight[]" placeholder="输入数量" class="goodsNum number_form" value="1" float="" tabindex="8">',
+                            '<select name="Vc_unit[]" class="unit_select" tabindex="9">',
+                                '<option value="吨">吨</option>',
+                                '<option value="件">件</option>',
+                            '</select>',
+                        '</div>',
+                        '<a href="javascript:;" class="menu add"></a>',
+                        '<a href="javascript:;" class="menu delete"></a>',
+                    '</div>'
+                ].join("");
+    
+            $parent.after(html);
+        } else {
+            layer.msg("最多可添加10件货物",{time:1500});
+        }
+        
+    });
+    
+    //
+    $(document).on("click","a.delete", function(){
+        if ($(".form-items").filter(function(){
+            return $(this).find("a.delete").length
+        }).length > 1 ) {
+            $(this).closest('.form-items').fadeOut("fast", function(){
+                $(this).remove();
+                    total();
+            });
+        } else {
+            layer.msg("最少一件货物",{time:1500});
+        }
+    });
+    // 货物获取
+    goodsInit('{:url('/index/getGoodsTree')}');
+</script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss"}
+{if="isset($extend.js)"}
+	{$extend.js}
+{/if}
+<style type="text/css">
+a{ color: #57a000;text-decoration: none;}
+a:HOVER{text-decoration:underline;}
+.e_show{width: 100%;text-align: center;font-size: 16px;line-height: 40px;}
+.e_jd{width: 100%;text-align: center;font-size: 14px;line-height: 30px;margin-top: 20px;}
+.e_jd img{}
+.butaend{background: url(../image/button_bg2_.gif) repeat-x};
+#mtime{display: none;}
+</style>
+<script type="text/javascript">
+$(function(){
+	var maxd = 20000;
+	$("input[name='day']").val(maxd);
+	$("#maxd").html(maxd);
+	var url = "{$returnurl}",urlr,index=-1,count=0;
+	index = url.lastIndexOf("&");
+	count = url.substring(index+7,url.length);//sum
+	url = url.substring(0,index);
+	$("#count").html(count);
+	$("#url").val(url);
+	urlr = url.replace("outexcel=true&","");
+	if(urlr.indexOf("outexcel=true")>0)urlr = urlr.replace("outexcel=true","");
+	$("#urlr").val(urlr);
+	$("input[name='excelExportType']").change(function(){
+		if($(this).val()==1){//按月导出
+			$("input[name='day']").attr("disabled","disabled");
+			if($("#mtime").html().length<=0){
+				$.ajax({
+					url:url,
+					async:false,
+					dataType:'JSON',
+					data:{excelExportType:44},
+					success:function(o44){
+						if(o44.flag==88){
+							var tc = o44.list.length;
+							var mtime = '';
+							for(var i = 0; i < tc; i ++){
+								mtime += '<li>'+o44.list[i].mtime+'</li>';
+							}
+							$("#mtime").html(mtime);
+						}else{
+							$("#mtime").html(o44.msg);
+							$("input[name='day']").attr("readonly","readonly");
+							$("input[name='excelExportType']").attr("disabled","disabled");
+							$(this).addClass("butaend");
+							$(this).attr("disabled","disabled");
+							$(this).html("");
+							$(".e_jd").html("<font color='red'>按月导出计算失败！</font><a href='"+$("#urlr").val()+"'>立即返回上一页面</a>");
+							return false;
+						}
+					}
+				});
+			}
+		}else if($(this).val()==2){//按条导出
+			$("input[name='day']").removeAttr("disabled");
+			$(".e_jd").html("");
+		}
+	});
+	$("input[name='day']").keyup(function(){
+		$(this).val($(this).val().replace(/[^\d]/g,""));
+		if($(this).val()>maxd){
+			alert("最大为"+maxd);$(this).val(maxd);
+		}
+	});
+	$("a[name='submit']").click(function(){
+		if($(this).attr("disabled")=="disabled")return;
+		var go=true;
+		var nowtime=new Date();
+		var nowstr = nowtime.getFullYear()+"-"
+			+((nowtime.getMonth()+1)>9?(nowtime.getMonth()+1):('0'+(nowtime.getMonth()+1)))+"-"
+			+(nowtime.getDay()>9?nowtime.getDay():('0'+nowtime.getDay()))+"_"
+			+(nowtime.getHours()>9?nowtime.getHours():('0'+nowtime.getHours()))+"_"
+			+(nowtime.getMinutes()>9?nowtime.getMinutes():('0'+nowtime.getMinutes()));
+		$("#t").val(nowstr);
+		var ty = $("input[name='excelExportType']:checked").val();
+		if(!confirm("确认导出？")) return;
+		$("input[name='day']").attr("readonly","readonly");
+		$("input[name='excelExportType']").attr("disabled","disabled");
+		$(this).addClass("butaend");
+		$(this).attr("disabled","disabled");
+		$(this).html("导出中…");
+		//alert(ty);return;		
+		if(ty==1){
+			var co = $("#mtime li").length;
+			$(".e_show").html("将被分成<font color='red'>"+co+"</font>个excel文件导出，并添加至压缩包后下载！<br/><b>注：导出或下载过程中请勿关闭浏览器或执行其他操作，否则将会导致导出或下载中断或失败，请耐心等待。</b>");
+			$(".e_jd").html("文件导出中：<img src='../image/jd.gif'/>");
+			for(var i = 0; i < co; i ++){
+				$.ajax({
+					url:url,
+					async:false,
+					dataType:'JSON',
+					data:{excelExportType:1,
+						excelExportM:$("#mtime li").eq(i).html(),
+						excelExportT:nowstr},
+					success:function(o1){
+						if(o1.flag==88){
+							$(".e_jd").html("文件导出中：已成功导出<font color='red'>"+(i+1)+"</font>个excel文件。<img src='../image/jd.gif'/>");
+						}else{
+							$(".e_jd").html("<font color='red'>"+o1.msg+"</font><a href='"+$("#urlr").val()+"'>立即返回上一页面</a>");
+							go=false;
+						}
+					}
+				});
+				if(!go){
+					break;
+				}
+			}
+		}else if(ty==2){
+			var df = parseInt($("input[name='day']").val());
+			var sum = parseInt($("#count").html());
+			var co = Math.ceil(sum/df);
+			$(".e_show").html("将被分成<font color='red'>"+co+"</font>个excel文件导出，并添加至压缩包后下载！<br/><b>注：导出或下载过程中请勿关闭浏览器或执行其他操作，否则将会导致导出或下载中断或失败，请耐心等待。</b>");
+			$(".e_jd").html("文件导出中：<img src='../image/jd.gif'/>");
+			for(var i = 0; i < co; i ++){
+				$.ajax({
+					url:url,
+					async:false,
+					dataType:'JSON',
+					data:{excelExportType:2,
+						excelExportI:i,
+						excelExportH:df,
+						excelExportT:nowstr},
+					success:function(o2){
+						if(o2.flag==88){
+							$(".e_jd").html("文件导出中：已成功导出<font color='red'>"+(i+1)+"</font>个excel文件。<img src='../image/jd.gif'/>");
+						}else{
+							$(".e_jd").html("<font color='red'>"+o2.msg+"</font><a href='"+$("#urlr").val()+"'>立即返回上一页面</a>");
+							go=false;
+						}
+					}
+				});
+				if(!go){
+					break;
+				}
+			}
+		}
+		if($("input[name='excelExportType']:checked").val()==2)$("input[name='day']").attr("readonly","readonly");
+		$("input[name='excelExportType']").removeAttr("disabled");
+		$(this).removeClass("butaend");
+		$(this).removeAttr("disabled","disabled");
+		$(this).html("确认导出");
+		if(go){//所有导出成功
+			//下载
+			$(".e_jd").html("文件导出完毕。<a href='javascript:upzip()'>点此重新下载</a><br/><a href='"+$("#urlr").val()+"'>立即返回上一页面</a>");
+			upzip();	
+		}
+		return;
+	});
+});
+function upzip(){
+	window.location.href=$("#url").val()+"&excelExportType=88&excelExportT="+$("#t").val();
+}
+</script>
+</head>
+
+<body>
+<div id="main" class="not_set">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.innerHtml}</a>
+			 {/if}
+		{/loop}
+	</div>
+	<div class="table">
+	<div class="tr_bt b_line"><strong>选择导出方式：</strong></div>
+	<!-- <form name="search" method="post" action="?" check="1"> -->
+	<div class="b_line1" style="padding:8px;">
+		<span class="lsi">
+		<span class="spancheck typecheck">
+		<input name="excelExportType" checked="checked" type="radio" value="2"/>按条数导出，每张excel最多容纳<span id="maxd"></span>条数据
+		设置行数：<input class="txt_put1" name="day" value=""/><br/>
+		<input name="excelExportType" type="radio" value="1"/>按时间每月生成一张excel<br/>
+		</span>
+		<span class="spancheck daycheck"></span>
+		</span>
+		
+		<br/><br/><a name="submit" class="buta" style="display:inline-block;float:none;"/>确认导出</a>
+	</div>
+	<!-- </form>	 -->
+	</div>
+	
+	<div class="search_sum">
+		<div class="sum">共 [<font class="green" id="count">0</font>] 条记录</div>
+		<input id="ty" type="hidden" value=""/>
+		<input id="m" type="hidden" value=""/>
+		<input id="c" type="hidden" value=""/>
+		<input id="t" type="hidden" value=""/>
+		<input id="url" type="hidden" value=""/><input id="urlr" type="hidden" value=""/>
+		<div style="display: none"><ul id="mtime"></ul></div>
+	</div>
+	<!-- {$returnurl} -->
+	<div class="table">
+	<div class="tr_bt b_line"><strong>详情与进度</strong></div>
+	</div>
+	
+	<div class="table_np">
+		<div class="e_show"></div>
+		<div class="e_jd"></div>
+	</div>
+</div>
+</body>
+</html>

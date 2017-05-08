@@ -1,0 +1,153 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+                <div class="x_content">
+                
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                      {include file="./sysconfig/_nav" /}
+                      <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+		                   
+		               
+		               
+		               
+		                <form id="" class="form-horizontal form-label-left adminuserform" novalidate>
+		               
+		               <div class="table-responsive">
+		                      
+		                        <table class="table table-striped jambo_table bulk_action">
+		                        <thead>
+									<tr class="headings">
+										<th class="column-title">信息项</th>
+										 <th class="column-title">是否显示</th>
+						                  <th class="column-title">是否必填 </th>
+									</tr>
+		                        </thead>
+		                        <tbody>
+						                 <tr class="even pointer">
+						                 
+											 <td class=" ">申请人姓名</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[Vc_applicantName]" class="flat" value="Vc_applicantName" {if condition="(strpos_($params['Vc_showfields'],'Vc_applicantName')>0)"}checked="checked"{/if} > 
+											 </td>
+						                     <td class=" ">
+									                  <input type="checkbox" name="require[Vc_applicantName]" class="flat" value="Vc_applicantName" {if condition="(strpos_($params['Vc_requirefields'],'Vc_applicantName')>0)"}checked="checked"{/if} > 
+				                						 
+						                     </td>
+						                   </tr>
+						                   
+						                   <tr class="even pointer">
+											 <td class=" ">公司名称</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[Vc_name]" class="flat" value="Vc_name" {if condition="(strpos_($params['Vc_showfields'],'Vc_name')>0)"}checked="checked"{/if}> 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[Vc_name]" class="flat" value="Vc_name" {if condition="(strpos_($params['Vc_requirefields'],'Vc_name')>0)"}checked="checked"{/if} > 
+						                     </td>
+										  </tr>
+						                   <tr class="even pointer">
+											 <td class=" ">公司地址</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[Vc_address]" class="flat" value="Vc_address" {if condition="(strpos_($params['Vc_showfields'],'Vc_address')>0)"}checked="checked"{/if} > 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[Vc_address]" class="flat" value="Vc_address" {if condition="(strpos_($params['Vc_requirefields'],'Vc_address')>0)"}checked="checked"{/if} > 
+						                     </td>
+										  </tr>
+						                   <tr class="even pointer">
+											 <td class=" ">营业执照</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[Vc_licence_pic]" class="flat" value="Vc_licence_pic" {if condition="(strpos_($params['Vc_showfields'],'Vc_licence_pic')>0)"}checked="checked"{/if} > 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[Vc_licence_pic]" class="flat" value="Vc_licence_pic" {if condition="(strpos_($params['Vc_requirefields'],'Vc_licence_pic')>0)"}checked="checked"{/if} > 
+						                     </td>
+										  </tr>
+						                   <tr class="even pointer">
+											 <td class=" ">组织机构代码证</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[Vc_org_pic]" class="flat" value="Vc_org_pic" {if condition="(strpos_($params['Vc_showfields'],'Vc_org_pic')>0)"}checked="checked"{/if}> 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[Vc_org_pic]" class="flat" value="Vc_org_pic" {if condition="(strpos_($params['Vc_requirefields'],'Vc_org_pic')>0)"}checked="checked"{/if}  > 
+						                     </td>
+										  </tr>
+						                   <tr class="even pointer">
+											 <td class=" ">税务登记证</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[Vc_tax_pic]" class="flat" value="Vc_tax_pic" {if condition="(strpos_($params['Vc_showfields'],'Vc_tax_pic')>0)"}checked="checked"{/if}> 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[Vc_tax_pic]" class="flat" value="Vc_tax_pic" {if condition="(strpos_($params['Vc_requirefields'],'Vc_tax_pic')>0)"}checked="checked"{/if}  > 
+						                     </td>
+										  </tr>
+						                   <tr class="even pointer">
+											 <td class=" ">企业认证授权书</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[Vc_auth_pic]" class="flat" value="Vc_auth_pic" {if condition="(strpos_($params['Vc_showfields'],'Vc_auth_pic')>0)"}checked="checked"{/if}> 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[Vc_auth_pic]" class="flat" value="Vc_auth_pic" {if condition="(strpos_($params['Vc_requirefields'],'Vc_auth_pic')>0)"}checked="checked"{/if}  > 
+						                     </td>
+										  </tr>
+											 
+											 
+		                        </tbody>
+		                        </table>
+		                    </div>
+		                    
+		              
+		               <div class="ln_solid"></div>
+		               
+		                <div class="form-group">
+					       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+					       	 <input type="hidden" name="table" value="sm_company">
+					         <button type="submit" class="btn btn-success">确认</button>
+					         <button type="reset" class="btn  btn-danger">取消</button>
+					       </div>
+					     </div>
+		               
+		               
+		               
+		               </form>
+		                    
+                        </div>
+                        
+                      </div>
+                    </div>
+               		
+                    
+                    
+                </div>
+           
+
+{include file='public/rightEnd,public/footer' /}
+<script type="text/javascript">
+
+$(function(){
+		
+	var isSubmited = false;
+	$("form").submit(function(e){
+        e.preventDefault();
+        if(isSubmited) {
+            layer.msg("提交中...") ;
+            return false;
+    	}
+      
+       	isSubmited = true ;
+        $.post("{:url('/admin/sysconfig/subcompanyajax')}",$('form').serialize()).then(onSubmited) ;
+    });
+	function onSubmited(d) {
+        layer.msg(d.msg) ;
+        if (d.code==200) {
+        	//window.location.href = "/adminuser/showlist";
+            new xxx.Url("{:url('/admin/sysconfig/index',['type'=>'companyAuth'])}").delayGo(2) ;
+        }
+        isSubmited = false ;
+    }
+	
+	
+}); 
+
+
+</script>

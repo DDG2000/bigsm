@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Highcharts Example</title>
+
+		<script type="text/javascript" src="../jquery-1.7.2.min.js"></script>
+		<script type="text/javascript">
+$(function () {
+        $('#container').css({height:400,width:"100%"}).highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: '正在做中文Historic World Population by Region'
+            },
+            subtitle: {
+                text: 'Source: Wikipedia.org'
+            },
+            xAxis: {
+                categories: ['AfricaAfricaAfricaAfrica', 'America', 'Asia', 'Europe', 'Oceania', 'Oceania', 'Oceania', 'Oceania', 'Oceania', 'Oceania'],
+                title: {
+                    text: null//['1','2']
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Population (millions)',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' millions'
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                    ,showInLegend: false//是否显示 series name
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -100,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF',
+                shadow: true
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Year 1800',
+                data: [107, 31, 635, 203, 2, 21, 21, 21, 21, 21]
+            }]
+        });
+    });
+    
+
+		</script>
+	</head>
+	<body>
+<script src="highcharts.js"></script>
+<!-- 导出按钮
+<script src="exporting.js"></script>
+-->
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>

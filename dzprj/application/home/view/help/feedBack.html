@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        {include file='public/head'}
+        <title>云采网 - 帮助中心</title>
+    </head>
+<body>
+<!-- header -->
+{include file="public/top-help"}
+<!-- header -->
+<!-- content -->
+<div class="feedback w1200 cc cb mt37">
+	<div class="fl side-nav sideHelp w180">
+        <ul>
+		{volist name="class" id="vo"}
+		    <li><a href="{$vo.Vc_link}">{$vo.Vc_name}</a></li>
+		{/volist}
+
+			{if condition="isset($_SESSION['user'])"}
+			<li class="active"><a href="/help/feedback">意见反馈</a></li>
+			{/if}
+        </ul>
+	</div>
+	<div class="fr">
+		<div class="feedback-header">
+	        <p>您好！为了给您提供更好的服务，我们希望收集您使用云采网时的看法或建议。对您的配合和支持表示衷心感谢!</p>
+	    </div>
+	    <form class="feedback-form" action="{:url('comment/save')}" data-success="提交成功">
+	        <textarea name="Vc_content" rows="8" cols="40" placeholder="您对云采网有什么想法，请大声说出来吧！（例如：哪里有问题，哪些功能做得不够好等）" maxlength="240"></textarea>
+			<p class="tar" style="line-height:1.5;">240个字以内</p>
+	        <div class="feedback-form-item cb">
+	            <span class="feedback-form-item-title fl">上传相关截图</span>
+	            <a href="javascript:;" class="feedback-form-item-input fl tac" id="upload">选择文件</a>
+	        </div>
+	        <div class="feedback-form-item-tips">（10M以内）</div>
+	        <div class="feedback-form-item cb hide" id="showImg">
+	            <span class="feedback-form-item-title fl">&nbsp;</span>
+	            <div class="feedback-form-img fl">
+	                <img src="#">
+	            </div>
+	            <input type="hidden" name="Vc_imgpath"/>
+	        </div>
+	        <div class="feedback-form-item cb">
+	            <span class="feedback-form-item-title fl"><em class="warring">*</em>联系方式</span>
+	            <input type="text" name="Vc_phone" class="feedback-form-item-input fl" {if condition="isset($_SESSION['user'])"}value="{$_SESSION['user']['Vc_mobile']}" {/if}placeholder="请输入您的手机号码，以便我们及时回复您" data-rule="required:手机号;mobile;" maxlength="11"><span></span>
+	        </div>
+	        <div class="feedback-form-btn">
+	            <button type="submit">提交</button>
+	        </div>
+	    </form>
+	</div>
+</div>
+{include file="public/foot"}
+<script src="{:getResource('home/js/webuploader.min.js')}"></script>
+<script src="//cdn.bootcss.com/nice-validator/1.0.7/jquery.validator.min.js"></script>
+<script src="//cdn.bootcss.com/nice-validator/1.0.7/local/zh-CN.min.js"></script>
+<script type="text/javascript">
+	;(function(){
+		var uploader = WebUploader.create({
+	
+			// swf文件路径
+			swf:"/static/home/js/Uploader.swf",
+	
+			// 文件接收服务端。
+			server: "{:url('file_upload/doUpload')}",
+	
+			// 自动上传
+			auto: true,
+			runtimeOrder:'flash,html5',
+	
+			// 选择文件的按钮。可选。
+			// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+			pick: {
+				id:'#upload'
+			},
+	
+			// 只允许选择图片文件。
+			accept: {
+				title: 'Images',
+				extensions: 'gif,jpg,jpeg,bmp,png',
+				mimeTypes: 'image/*'
+			},
+			thumb: {
+				// 图片质量，只有type为`image/jpeg`的时候才有效。
+				quality: 70,
+	
+				// 是否允许裁剪。
+				crop: true
+			},
+	
+			compress: {
+				// 禁掉整个页面的拖拽功能，如果不禁用，图片拖进来的时候会默认被浏览器打开。
+				disableGlobalDnd:true,
+				allowMagnify: false
+				
+				// 单位字节，如果图片大小小于此值，不会采用压缩。
+				// compressSize: 0
+			}
+		});
+		
+		uploader.on("uploadStart", function(file, percentage){
+            layer.load(2,{
+                shade:[0.2,"#fff"]
+            });
+        });
+		
+		uploader.on("uploadError", function(){
+			layer.closeAll();
+            layer.msg("服务器错误，请稍后再试",{time:1500});
+        });
+        
+        uploader.on("error", function(){
+			layer.closeAll();
+            layer.msg("上传失败，请重新上传",{time:1500});
+        });
+		
+		uploader.on("uploadSuccess", function(file, res){
+			var data = res.data,
+				path = data[0].saveName;
+			
+			$("#showImg").show().find("input").val(path).prev().find("img").attr('src', "{$Think.config.img_url}"+path);
+			layer.closeAll();
+			layer.msg("上传成功",{time:1500});
+			uploader.reset();
+		});
+		
+		$(".feedback-form").ajaxForm({
+			success:function(){
+				layer.closeAll();
+				$(".feedback-form").get(0).reset();
+				$("#showImg").hide().find("input").val("");
+			},
+			beforeSubmitValidation: function(){
+				return false;
+			}
+		})
+
+	})();
+</script>
+</body>
+</html>

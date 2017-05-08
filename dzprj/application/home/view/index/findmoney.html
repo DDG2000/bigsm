@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{include file='public/head'}
+		<title>找资金首页</title>
+	</head>
+	<body>
+		{include file='public/top_small'}
+		<!-- content -->
+		<div class="content main">
+			<div class="banner" id="banner">
+				{include file="public/banner"}
+				<!-- <div class="banner-text">
+					<div class="text1">多个供应链金融产品为你服务</div>
+				</div> -->
+			</div>
+			{include file="public/notice"}
+			<div class="my-adss">
+				<ul class="w1200 cc cb fl-li">
+					<li class="li1">提交申请</li>
+					<li class="li2">等待审核</li>
+					<li class="li3">平台联系</li>
+					<li class="li4">获得资金</li>
+				</ul>
+			</div>
+			<div class="mod mod1 w1200 cc">
+				<h3 class="mod-title">金融服务产品</h3>
+				<div class="mod-wrap oh">
+					<ul class="w120 fl-li cb">
+						<li class="has">
+							<img src="/static/home/img/mod2.jpg" width="258" height="360px">
+							<div class="mask"></div>
+							<div class="wrap">
+								<div class="w-top tac">
+									<i class="ib i2"></i>
+									<div class="line"></div>
+									<h4>存货质押</h4>
+								</div>
+								<div class="w-bottom tac">
+									【O利息租赁设备】<br />
+									无抵押<span class="space">|</span>无担保
+									<a href="/find_money/toForm" class="btn noTarget isCertify">我要申请</a>
+								</div>
+							</div>
+						</li>
+						<li class="has">
+							<img src="/static/home/img/mod1.jpg" width="258" height="360px">
+							<div class="mask"></div>
+							<div class="wrap">
+								<div class="w-top tac">
+									<i class="ib i1"></i>
+									<div class="line"></div>
+									<h4>融资租赁</h4>
+								</div>
+								<div class="w-bottom tac">
+									【O利息租赁设备】<br />
+									无抵押<span class="space">|</span>无担保
+									<h4>近期上线</h4>
+								</div>
+							</div>
+						</li>
+						<li class="has">
+							<img src="/static/home/img/mod3.jpg" width="258" height="360px">
+							<div class="mask"></div>
+							<div class="wrap">
+								<div class="w-top tac">
+									<i class="ib i3"></i>
+									<div class="line"></div>
+									<h4>票据管理</h4>
+								</div>
+								<div class="w-bottom tac">
+									【O利息租赁设备】<br />
+									无抵押<span class="space">|</span>无担保
+									<h4>近期上线</h4>
+								</div>
+							</div>
+						</li>
+						<li class="none">
+							<img src="/static/home/img/mod3.jpg" width="258" height="360px">
+							<div class="mask"></div>
+							<div class="wrap">
+								<div class="none-h3">近期上线</div>
+								<div class="w-top tac">
+									<i class="ib i1"></i>
+									<div class="line"></div>
+									<h4>近期上线</h4>
+								</div>
+								<div class="w-bottom tac">
+									【O利息租赁设备<br />
+									无抵押<span class="space">|</span>无担保
+									<a href="#" class="btn">我要申请</a>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="mod tac mod2 w1200 cc">
+				<h3 class="mod-title">合作伙伴</h3>
+				<ul class="brand-list">
+					{volist name="links" id="vo"}
+						{if condition="$key < 12"}
+							<li><a{$vo.Vc_link==''?'':' href="'.$vo.Vc_link.'"'} target="_blank"><img src="{$Think.config.img_url}{$vo.Vc_logo}" width="200" height="200"></a></li>
+						{/if}
+					{/volist}
+				</ul>
+			</div>
+		</div>
+		{include file="public/copy"}
+		<!-- content -->
+		{include file="public/sideBar"}
+		{include file="public/mask"}
+		{include file="public/foot-normal"}
+	</body>
+</html>

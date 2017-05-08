@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss"}
+
+</head>
+<body>
+<div id="main">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.innerHtml}</a>
+			 {/if}
+		{/loop}
+	</div>
+	{if="isset($extend.marks)"}
+	<div class="mbt">
+		{$extend.marks}
+	</div>
+	{/if}
+
+	<div class="table">
+	<table>
+	
+	<tr class="tr_bt">
+		<td colspan="3"><strong>{$title}</strong></td>
+	</tr>
+	{loop="params"}
+		{if="$value.tip=='_Title_'"}
+		<tr class="tr_bt">
+			<td colspan="3"><strong>{$value.name}</strong></td>
+		</tr>
+		{elseif="$value.tip=='_Tip_'"}
+		<tr class="">
+			<td colspan="3" align="center"><strong>{$value.name}</strong></td>
+		</tr>
+		{else}
+		<tr>
+			<td class="td1">{$value.name}</td>
+			<td colspan="2">{$value.val}</td>
+			<!--<td>{ $value.tip}</td-->
+		</tr>
+		{/if}
+	{/loop}
+	</table>
+	</div>
+	<div id="btndiv" class="{$extend.isb?'btn clearfix':'fix'}">
+		<a name="close" class="but3" onclick="parent.hidePopWin()">关闭</a>
+	</div>
+
+</div>
+</body>
+</html>

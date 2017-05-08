@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    {include file='public/head'}
+		<title>云采网 - 找货订单确认</title>
+	</head>
+	<body>
+		{include file="public/top-copy"}
+		<!-- content -->
+		<div class="content project-content">
+			<div class="w1200 cc inner">
+				<ul class="process-line process-line-three w1100 cc tac ib-li">
+					<li class="active">
+						<div class="bg">
+							<span>1</span>
+						</div>
+						<p>填写订单</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>2</span>
+						</div>
+						<p>平台报价</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>3</span>
+						</div>
+						<p>采购 </p>
+					</li>
+				</ul>
+				<!--form-->
+				<form class="order-form cc form ajaxForm" action="/find_goods/comfirmAdd" method="post">
+					<div class="w1090 cc find-detail">
+						<div class="category">
+							<div class="category-title">订单信息确认</div>
+						</div>
+						<div class="detail-header">
+							<p class="title">行业：{$industryModel->getArr[$order.I_industryID]}</p>
+							<div class="wrap">
+								<p>联系人：{$order.Vc_consignee}  {$order.Vc_phone}<span>{$addr.proname1}{$addr.proname1==$addr.cityname1?'':$addr.cityname1}{$addr.areaname1}{$order.Vc_address}</span><span>支付方式：{$findGoodsModel->payArray[$order.I_paytype]}</span><span>报名截止时间：{$order.D_end}</span></p>
+							</div>
+						</div>
+						<table class="detail-table">
+							<thead>
+								<th width="234">货物属性</th>
+								<th width="160">数量</th>
+								<th width="419">备注</th>
+							</thead>
+							<tbody>
+							{volist name="$goods" id="vo"}
+								<tr>
+									<td class="name">
+										<b>{$vo.Vc_goods_breed}</b>材质：{$vo.Vc_goods_material},规格：{$vo.Vc_goods_spec}
+									</td>
+									<td>{$vo.N_plan_weight}{$vo.Vc_unit}</td>
+									{if condition="$key==0"}
+									<td {if condition="$key==0"}rowspan="{$count}"{/if}>{$order.T_note==""?'无':$order.T_note}</td>
+									{/if}
+								</tr>
+							{/volist}
+							</tbody>
+						</table>
+					</div>
+				</form>
+				<!--/form-->
+			</div>
+			<div class="form-submit tac">
+				<a href="/find_goods/toForm?type=2" class="form-submit-link">修改订单</a><a href="javascript:;" class="form-submit-menu" id="submit">确认</a>
+			</div>
+		</div>
+		<!-- content -->
+        <div class="masker hide masker-info" id="tipsMask">
+	        <div class="mask"></div>
+	        <div class="mask-wrap">
+	            <div class="mask-title cb">
+	                提示
+	                <a href="/find_goods/listpage?type=0" class="fr close" title="关闭"><img src="/static/home/img/close.png"></a>
+	            </div>
+	            <div class="mask-content">
+	                <p class="p1"><i></i>创建成功，请耐心等待审核</p>
+	            </div>
+				<div class="mask-footer">
+					<a href="/find_goods/listpage?type=0" class="noClick">确认</a>
+				</div>
+	        </div>
+		</div>
+		{include file="public/foot"}
+		<script type="text/javascript">
+			$(".ajaxForm").ajaxForm({
+				button:"#submit",
+                noTips:true,
+				success: function(){
+                    $("#tipsMask").fadeIn('400');
+				    //  location.href="/find_goods/listpage?type=0"
+				}
+			});
+		</script>
+	</body>
+</html>

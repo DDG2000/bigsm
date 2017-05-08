@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>云采网 - 个人资料</title>
+		{include file='public/head' /}
+	</head>
+	<body>
+		<!-- top -->
+		{include file='public/top' /}
+		<!-- top -->
+		<!-- content -->
+		<div class="mwrap cc cb mt25">
+			<div class="mside fl">
+				<div class="ms-title">账户设置</div>
+				<ul class="ms-list">
+					<li><a href="/account/certify">认证信息</a></li>
+					<li class="active"><a href="/account/index">个人资料</a></li>
+				</ul>
+			</div>
+			<div class="fl mcontent">
+				<div class="mc-title">个人资料</div>
+				<div class="mc-lwrap">
+					<form action="{:url('account/save')}" class="mc-form" method="post" data-error="保存失败" data-success="保存成功" id="accountForm">
+					<input type="hidden" name="uid" value="{$data|output='id'}"/>
+						<div class="ms-fitem cb">
+							<span class="ms-ftitle"><em class="warring">*</em>用户名：</span>
+							<input type="text" name="Vc_name" value="{$data|output='uname'}" class="ms-finput" maxlength="16"/>
+							<span></span>
+						</div>
+						<div class="ms-fitem cb">
+							<span class="ms-ftitle"><em class="warring">*</em>性别：</span>
+							<label for="man" class="ms-flabel checker{if condition="$data.I_sex==1"} active{/if}" data-type="radio">男</label>
+							<input type="radio" name="I_sex" value="1" {if condition="$data.I_sex==1"} checked {/if} />
+							<label for="men" class="ms-flabel checker{if condition="$data.I_sex==0"} active{/if}" data-type="radio">女</label>
+							<input type="radio" name="I_sex" value="0" {if condition="$data.I_sex==0"} checked {/if} />
+						</div>
+						<div class="ms-fitem cb">
+							<span class="ms-ftitle"><em class="warring">*</em>手机号码：</span>
+							<input type="hidden" name="Vc_mobile" value="{$data|output='Vc_mobile'}">
+							{$data|output='Vc_mobile'|sphone}
+							<span></span>
+							<!-- <a href="javascript:;" class="ms-menu-active">修改手机</a> -->
+						</div>
+						<div class="ms-fitem cb">
+							<span class="ms-ftitle"><em class="warring">*</em>邮箱：</span>
+							<input type="text" class="ms-finput" name="Vc_Email" value="{$data|output='Vc_Email'}" placeholder="请输入邮箱" maxlength="20"/>
+							<span></span>
+							<!-- <a href="javascript:;" class="ms-menu-active">修改邮箱</a> -->
+						</div>
+						<div class="ms-fitem cb">
+							<span class="ms-ftitle"><em class="warring">*</em>详细地址：</span>
+							<select name="I_provinceID" id="province" class="ms-fselect ms-faddress" data-id="{$data|output='I_provinceID'}">
+							<option>省份</option>
+							<option value="{$data|output='I_provinceID'}" selected>{$data|output='proname'}</option>
+							</select>
+							<select name="I_cityID" id="city" class="ms-fselect ms-faddress" data-id="{$data|output='I_cityID'}">
+							<option>市</option>
+							<option value="{$data|output='I_cityID'}" selected>{$data|output='cityname'}</option>
+							</select>
+							<select name="I_districtID" id="district" class="ms-fselect ms-faddress" data-id="{$data|output='I_districtID'}">
+							<option>县/区</option>
+								<option value="{$data|output='I_districtID'}" selected>{$data|output='areaname'}</option>
+							</select>
+							<input type="text" class="ms-finput ms-address-input" name="Vc_address" value="{$data|output='Vc_address'}" placeholder="详细地址" maxlength="20"/>
+							<span></span>
+						</div>
+						<div class="ms-fitem cb">
+							<span class="ms-ftitle"></span>
+							<button type="submit" class="ms-fbutton">保存</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- content -->
+		<!-- footer -->
+		{include file='public/foot' /}
+		<!-- footer -->
+		<script type="text/javascript">
+			$("#accountForm").ajaxForm({
+				success:function(){
+					location.reload();
+				}
+			});
+	    </script>
+	</body>
+</html>

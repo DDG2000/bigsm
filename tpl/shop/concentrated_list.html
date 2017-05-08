@@ -1,0 +1,112 @@
+	{include="inc/usercenter/css"}
+    <title>卖家中心 - 集采报名</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+		{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+				<div class="crumblenav">
+					<a href="#">报价管理</a><span class="current">集采报名</span>
+				</div>
+            	<div class="content-main-con no">
+            		<form class="data-table-query fs0" action="/index.php?act=shop&m=concentrated&w=list&submit" method="POST">
+						<input type="hidden" name="I_mallClassID">
+        				<label class="ib"><input type="text" name="starttime" value="{function="iset($starttime)"}" data-type="datepicker"></label>
+						<span>至</span><label class="ib"><input type="text" name="endtime" value="{function="iset($endtime)"}" data-type="datepicker"></label>
+    					<select class="ib" name="I_publish_status">
+							<option{if="$vo.I_status==10"} selected{/if}>审核中</option>
+							<option{if="$vo.I_status==20"} selected{/if}>招标中</option>
+							<option{if="$vo.I_status==30"} selected{/if}>已截至</option>
+							<option{if="$vo.I_status==40"} selected{/if}>已成交</option>
+							<option{if="$vo.I_status==50"} selected{/if}>审核不通过</option>
+						</select>
+						<select class="ib" name="I_offer_status">
+							{if="in_array($vo.id, $IcpIDArr)"}
+								<option selected>已报名</option>
+								<option>未报名</option>
+								{else}
+								<option>已报名</option>
+								<option selected>未报名</option>
+							{/if}
+						</select>
+    					<button class="ib btn-query" type="submit">查询</button>
+        			</form>
+            		<div class="ib-a data-list-table data-list-table-other" id="js-concentrated">
+            			<table border="0">
+            				<thead>
+            					<th width="108">集采名称</th>
+            					<th width="125">集采品名</th>
+            					<th width="80">集采重量</th>
+            					<th width="118">项目地址</th>
+            					<th width="160">集采期限</th>
+            					<th width="76">集采状态</th>
+            					<th width="86">参与状态</th>
+            					<th>操作</th>
+            				</thead>
+            				<tbody
+								{loop="data.data"}
+									{$vo=$value}
+									<input type="hidden" name="id" value={$vo.id}/>
+									<tr>
+										<td>{$vo.Vc_name}</td>
+										<td>
+											{loop="$vo.itemArray"}
+												{$sv=$value}
+												{$sv.Vc_name}、
+											{/loop}
+										</td>
+										<td>{$vo.N_weight}</td>
+										<td>
+											{if="$vo.proname==$vo.cityname"}
+												{$vo.cityname}{$vo.disname}{$vo.Vc_address}
+											{else}
+												{$vo.proname}{$vo.cityname}{$vo.disname}{$vo.Vc_address}
+											{/if}
+										</td>
+										<td>{$vo.D_start}—{$vo.D_end}</td>
+										<td>
+											{if="$vo.I_status==10"}
+												审核中
+											{elseif="$vo.I_status==20"}
+													招标中
+											{elseif="$vo.I_status==30"}
+												已截至
+											{elseif="$vo.I_status==40"}
+												已成交
+											{elseif="$vo.I_status==50"}
+												审核不通过
+											{/if}
+										</td>
+										<td>
+											{if="in_array($vo.id, $IcpIDArr)"}
+												已报名
+											{else}
+												未报名
+											{/if}
+										</td>
+										<td>
+											<a href="/index.php?act=shop&m=concentrated&w=detail&id={$vo.id}" data-event="show">查看</a>
+											{if="in_array($vo.id, $IcpIDArr)"}
+												<a href="javascript:;" data-event="change" data-id="{$vo.id}">修改信息</a>
+											{else}
+												<a href="javascript:;" class="sign" data-event="sign" data-id="{$vo.id}">报名</a>
+											{/if}
+											<a href="javascript:;" data-event="delete" data-id="{$vo.id}">删除</a>
+										</td>
+									</tr>
+								{/loop}
+            				</tbody>
+            			</table>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+	{include="inc/usercenter/footer"}
+    {include="inc/js"}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>采购计划</title>
+</head>
+<body>
+
+<h2>右侧采购计划</h2>
+<table>
+{loop="offerlist"}
+	<tr>
+
+	<td>
+	<a href="http://www.bigsm.com/index.php?act=requirement&m=commoditydetail&I_requirementID={$value.id}">
+	{$value.Vc_name}
+	
+	</a></td>
+	</tr>
+{/loop}
+</table>
+
+<h2>中间部分</h2>
+{$vo=$data.offerinfo}
+<table>
+	<tr>
+	<td>{$vo.Vc_name}</td>
+	</tr>
+
+</table>
+
+<table>
+	<tr>
+	<td>采购编号：</td>
+	<td>采购人：</td>
+	<td>提货地</td>
+	<td>支付方式</td>
+	<td>采购日期：</td>
+	<td>报价截止时间：</td>
+	<td>备注：</td>
+	<td>状态：</td>
+	
+	</tr>
+	
+	<tr>
+	<td>{$vo.Vc_orderSn}</td>
+	<td>{$vo.Vc_contact}</td>
+	<td>{$vo.Vc_province}{$vo.Vc_city}</td>
+	<td>{if="$vo.I_payType==1"}现款{else}银行承兑{/if}</td>
+	<td>{function="formatTime($vo['Createtime'],'Y-m-d')"}</td>
+	<td>{function="formatTime($vo['D_end'],'Y-m-d H:i')"}</td>
+	<td>{$vo.Vc_memo}</td>
+	<td>{if="$vo.I_publish_status==5"}已成交{else}未成交{/if}</td>
+	
+	</tr>
+	
+	
+</table>
+
+<table>
+	<tr>
+	<td>品名</td>
+	<td>材质</td>
+	<td>规格</td>
+	<td>数量</td>
+	<td>单位</td>
+	<td>钢厂</td>
+	</tr>
+
+{loop="data.goodslist.data"}
+{$v=$value}
+	<tr>
+	<td>{$v.Vc_item}</td>
+	<td>{$v.Vc_stuff}</td>
+	<td>{$v.Vc_specification}</td>
+	<td>{$v.N_amount}</td>
+	<td>
+	{if="$v.I_unitType==1"}
+	件
+	{elseif="$v.I_unitType==2"}
+	根
+	{elseif="$v.I_unitType==3"}
+	吨
+	{/if}
+	
+	
+	</td>
+	<td>{$v.Vc_factorys}</td>
+	</tr>
+
+
+{/loop}
+{if="$data.goodslist.count==0"}
+<tr data="it"><td colspan="3" align="center">无此相关数据！</td></tr>
+{/if}
+
+
+</table>
+
+<div id="pages" class="page">{$pagestr}</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

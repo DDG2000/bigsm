@@ -1,0 +1,21 @@
+<div id="error">
+    非法请求<span id="num">5</span>秒后回到上一页
+</div>
+<script type="text/javascript">
+    (function(document){
+        var num = document.getElementById("num"),
+        
+        index = 5;
+        
+        var timer = setInterval(function(){
+            num.innerHTML = --index;
+            if(index == 0){
+                clearInterval(timer);
+                window.history.back();
+            }
+        },1000);
+        
+    })(document);
+    
+    
+</script>

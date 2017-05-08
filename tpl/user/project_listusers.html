@@ -1,0 +1,55 @@
+	{include="inc/usercenter/css"}
+    <title>权限分配</title>
+</head>
+<body>
+   {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">交易管理</a><span class="current">我的订单</span>
+        		</div>
+            	<div class="pr content-main-con">
+            		<div class="data-table-query fs0">
+        				<label class="ib"><input type="text" value="2015-9-9"></label><span>至</span><label class="ib"><input type="text" value="2015-9-9"></label>
+    					<a href="##" class="ib btn-query">查询</a>
+    					<a href="##" class="ib btn-add">添加子帐号</a>
+        			</div>
+            		<div class="data-list-table ib-a quanxian">
+            			<table border="0">
+            				<thead>
+            					<th width="77">序号</th>
+            					<th width="81">用户名</th>
+            					<th width="108">真实姓名</th>
+            					<th width="121">联系电话</th>
+            					<th width="161">邮箱</th>
+            					<th width="100">创建时间</th>
+            					<th>操作</th>
+            				</thead>
+            				<tbody>
+							{if condition="!empty($data)"}
+							{loop="$data.data"}
+            					<tr>
+            						<td>{$counter+1}</td>
+            						<td>{$value.Vc_name}</td>
+            						<td>{$value.Vc_truename}</td>
+            						<td>{$value.Vc_mobile}</td>
+            						<td>{$value.Vc_Email}</td>
+            						<td>{$value.Createtime}</td>
+            						<td><a href="##" class="data-btn">分配权限</a>|<a href="##" class="data-btn">重置密码</a>|<a href="##" class="data-btn">启用</a>|<a href="##" class="data-btn-delete">删除</a></td>
+            					</tr>
+							{/loop}
+							{/if}
+            				</tbody>
+            			</table>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

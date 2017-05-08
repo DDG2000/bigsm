@@ -1,0 +1,44 @@
+	{include="inc/css"}
+    <title>商铺简介</title>
+</head>
+<body>
+    {include="inc/shop/header"}
+    <!-- banner -->
+    {include="inc/shop/banner"}
+    <!-- banner -->
+    <!-- 中间内容部分 -->
+    <div id="container">
+		<div class="c w1100">
+			<!-- 商铺首页导航 -->
+			{include="inc/shop/nav"}
+			<!-- 商铺首页导航 -->
+			<div class="cb w">
+				<!-- 首页中间部分 -->
+				<div class="fl main-left">
+					<div class="page">
+						<div class="page-title">
+							<h2>公司简介</h2>
+						</div>
+						<div class="page-content page-content-introduction">
+							{if="empty($v.T_desc)"}
+								该店家很懒，暂时没填哦。。。
+							{else}
+									{$v.T_desc}
+							{/if}
+							<!--<p style="text-indent: 2em;">四川长城软件科技股份有限公司成立于1996年，注册资本2035万元。公司致力于互联网及移动互联网应用技术的开发和运营服务，是一家经国家认证的高新技术企业，并于2014年1月在全国中小企业股份转让系统正式挂牌 （股票代码:430426）。</p>
+							<p style="text-indent: 2em;">公司目前员工约130人，其中技术及开发人员约80人，拥有丰富的互联网及移动互联网产品业务开发和运营经验，提供行业    O2O平台、垂直电商平台和互联网金融解决方案，以及以手机游戏为代表的消费娱乐类应用软件和服务平台， 成功为行业客户及公众用户提供了多个服务平台的建设及运营支撑。截至目前，公司已累计开发各类应用及平台产品超过百项，其中部分系统支撑用户数量近亿，获得企业及公众用户的广泛好评。</p>
+							<p style="text-indent: 2em;">除成都本部外公司还在北京、广州等地拥有多个子公司和分支结构。在最近3年中公司自主研发的专利和科技成果达10 多项，申请著作权200多项。</p>
+							<p style="text-indent: 2em;">基于国家确定的互联网+发展战略，公司将加大力度开展基于互联网与传统产业结合的新业务整合创新，希望能与社会各界广泛合作，共创美好未来！</p>-->
+						</div>
+					</div>
+				</div>
+				<!-- 首页中间部分 -->
+				<!-- 首页右侧 -->
+				{include="inc/shop/company"}
+				<!-- 首页右侧 -->
+			</div>
+		</div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

@@ -1,0 +1,79 @@
+	{include="inc/usercenter/css"}
+    <title>需求管理 - 我的招标需求</title>
+</head>
+<body>
+   {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">需求管理</a><span class="current">我的招标需求列表</span>
+        		</div>
+            	<div class="pr content-main-con">
+            		<div class="data-table-query fs0">
+        				<label class="ib"><input type="text" value="2015-09-09" data-type="datepicker"></label><span>至</span><label class="ib"><input type="text" value="2016-09-19" data-type="datepicker"></label>
+    					<a href="javascript:void(0);" class="ib btn-query">查询</a>
+    					<a href="/index.php?act=user&m=require&w=addtender" target="_blank" class="ib btn-add">发布招标需求</a>
+        			</div>
+            		<div class="data-list-table">
+            			<table>
+            				<thead>
+            					<th width="100">招标项目</th>
+            					<th width="120">发布时间</th>
+            					<th width="120">招标时间</th>
+								<th width="70">联系人</th>
+            					<th width="85">联系方式</th>
+            					<th width="100">标书下载数量</th>
+            					<th width="135">标书</th>
+            					<th>操作</th>
+            				</thead>
+            				<tbody id="tender-list">
+								{loop="data.data"}
+									<tr class="{if="!($counter%2==0)"}even{/if}">
+										<td>{$value.Vc_name}</td>
+										<td>{function="formatTime($value.Createtime,'Y-m-d H:i')"}</td>
+										<td>{function="formatTime($value.D_end,'Y-m-d H:i')"}</td>
+										<td>{$value.Vc_contact}</td>
+										<td>{$value.Vc_contact_phone}</td>
+										<td></td>
+										<td>
+											<a href="javascript:(0);" title="预览">预览</a><a href="{$value.Vc_excel}" class="download ie-download" title="下载" download="{$value.Vc_name}.xls" target="_blank">下载</a><a href="javascript:void(0);" data-event="reUpload" title="重新上传" data-id="{$value.id}">重新上传</a>
+										</td>
+										<td>
+											<a href="javascript:void(0);" data-event="change" data-id="{$value.id}">修改</a>|<a href="javascript:void(0);" data-id="{$value.id}" data-event="delete" data-class="{$value.I_requirementID}">删除</a>|
+											{if="$value.I_publish_status!=3"}
+												<a href="javascript:void(0);" data-id="{$value.id}" data-class="{$value.I_requirementID}" data-event="cancel">撤销发布</a>
+											{else}
+												<a href="javascript:;" style="cursor:default;color:#999;display:inline-block;width:48px;">已撤销</a>
+											{/if}
+										</td>
+									</tr>
+								{/loop}
+            				</tbody>
+            			</table>
+						<div id="pagestr">{$pagestr}</div>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+	<!-- 重新上传标书弹窗 -->
+	<div class="mask-content-change" style="display:none;">
+		<form action="javascript:;" class="tender-form" enctype="multipart/form-data" id="tender-form-change"></form>
+	</div>
+	<div class="mask-content-upload" style="display:none;">
+		<form id="upload-tender" enctype="multipart/form-data">
+			<input type="file" name="Vc_excel" class="hidden" id="tender-file"><label for="tender-file" class="file-input">浏览</label><span class="filename">请选择文件</span>
+			<button type="submit">上传</button>
+		</form>
+	</div>
+	<!-- 重新上传标书弹窗 -->
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}
+    
+

@@ -1,0 +1,39 @@
+@charset "utf-8";
+.content{width: 940px;margin: 10px auto;}
+.result_evaluation{/* margin: 18px 20px; */min-width: 600px;min-height: 600px;color: #333;} 
+.result_evaluation .search_list ul{font-size: 14px;}
+.result_evaluation .search_list li{font-weight: bold;display: inline;margin-right: 10px;}
+.result_evaluation .search_list .now{color: #009dd9;}
+
+.result_evaluation .result_1 table{width: 80%;margin-top: 20px;font-size: 14px;border: 1px solid #ccc;}
+.result_evaluation .result_1 td{padding: 5px;border: 1px solid #ccc;}
+.result_evaluation .result_1 thead td , 
+.result_evaluation .result_1 .thead td{height:40px;vertical-align: top; }
+.result_evaluation .result_1 tfoot td{height:30px;}
+.result_evaluation .result_1 .ckd{font-size: 14px;}
+
+.result_evaluation .result_2{max-width:80%;margin:20px 0px}
+.result_evaluation #container{min-width:500px;height:400px;}
+
+.result_evaluation .result_3 .res3_table{/* width: 80%; */min-width:500px;height:510px;margin-top: 20px;background: url("../image/result_333.jpg") center top no-repeat; }
+.result_evaluation .result_3 td{font-size: 18px;}
+.result_evaluation .result_3 td div{}
+
+.result_evaluation .result_3 .res3_td1{text-align: right;vertical-align: top;width:50%;height: 262px;background: url("../image/result_3_1.png") left bottom 30px no-repeat;}
+.result_evaluation .result_3 .res3_td1 .res3_d1{margin-top: 110px;margin-right: 50px;margin-left: 20px;}
+.result_evaluation .result_3 .res3_td2{text-align: left;vertical-align: top;}
+.result_evaluation .result_3 .res3_td2 .res3_d2{margin-top: 110px;margin-left: 50px;}
+.result_evaluation .result_3 .res3_td3{text-align: right;vertical-align: top;background: url("../image/result_3_3.png") left 30px no-repeat;}
+.result_evaluation .result_3 .res3_td3 .res3_d3{margin-top: 80px;margin-right: 50px;margin-left: 20px;}
+.result_evaluation .result_3 .res3_td4{text-align: left;vertical-align: top;}
+.result_evaluation .result_3 .res3_td4 .res3_d4{margin-top: 80px;margin-left: 50px;}
+
+.result_evaluation .result_3 .res3_td .res3_d ul{display: inline-block;vertical-align: top; /* text-align: center; */}
+.result_evaluation .result_3 .res3_td .res3_d1 ul,
+.result_evaluation .result_3 .res3_td .res3_d3 ul{margin-left: 10px;}
+.result_evaluation .result_3 .res3_td .res3_d2 ul,
+.result_evaluation .result_3 .res3_td .res3_d4 ul{margin-right: 10px;}
+
+table{color: #333;}
+
+td{word-break: break-all;word-wrap: break-word;}

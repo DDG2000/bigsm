@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss"}
+
+<script type="text/javascript">
+$(function(){
+	//操作
+	$(".manage").click(function(e){
+		//e.preventDefault();
+		var _this=$(this),tr=_this.parent().parent("tr"),_rcount=tr.find("input[name='rcount']"),_rprice=tr.find("input[name='rprice']"),_reason=$(":input[name='reason']"),_intro=$(":input[name='intro']");
+		if(!checkinput(_rcount)) return false;
+		if(!checkinput(_rprice)) return false;
+		var rcount=_rcount.val(),rprice=_rprice.val();
+		var param=[];param.push("rcount="+_rcount.val());param.push("rprice="+_rprice.val());param.push("reason="+_reason.val());param.push("intro="+_intro.val());
+		_this.attr("target", "hideframe");
+		_this.attr("href", _this.attr("href")+"&"+param.join("&"));
+		return true;
+	});
+	function checkinput(o){
+		if(parseInt(o.val())==0){showJsTipFun("请填写"+o.attr("title"));o.select();return false;}
+		if(parseInt(o.val())>parseInt(o.attr("maxn"))){showJsTipFun(o.attr("title")+"超出上限！");o.select();return false;}
+		return true;
+	}
+});
+</script>
+</head>
+<body>
+<div id="main">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.innerHtml}</a>
+			 {/if}
+		{/loop}
+	</div>
+	{if="isset($extend.marks)"}
+	<div class="mbt">
+		{$extend.marks}
+	</div>
+	{/if}
+
+	<div class="table">
+	<table>
+		<tr class="tr_bt">
+			<td colspan="3"><strong>{$title}</strong></td>
+		</tr>
+		<tr>
+			<td>订单编号：{$order['Vc_code']}　　下单时间：{$order['Createtime']}<br />会员：{$user['Vc_name']}　　级别:{$user['gradename']}　　注册时间：{$user['Createtime']}　　最后登录时间：{$user['Dt_lastlogintime']}　　登录次数：{$user['I_logins']}<br /><span class="red">订单支付金额:</span><span id="sumprice">{$order['N_price']}</span>元 = 商品金额<span id="pdprices">{$order['pdprices']}</span>元 + 运费<span id="dispatching">{$order['N_dispatching']}</span>元 - 优惠<span id="coupon">{$order['coupon']}</span>元 - 退货<span id="rprices">{$order['rprices']}元 - 管理员减免金额<span id="manprice">{$order['manprice']}元</td>
+		</tr>
+	</table>
+	</div>
+	
+	<div class="mbt"><a class="cur">商品信息</a></div>
+	<div class="table">
+	<table>
+	<tr class="tr_bt">
+		<td><input name="fan" type="checkbox" value="1" class="ck_fan" rel="IdList" title="反选"/></td>
+		{loop="oproductsth"}
+		<td width="{$value.wid}">{$value.val}</td>
+		{/loop}
+	</tr>
+	{loop="oproducts"}
+	<tr>
+		<td width="25"><input name="IdList" type="checkbox" value="{$key}"/></td>
+		{$value}
+	</tr>
+	{/loop}
+	</table>
+	</div>
+
+	<form name="form" method="post" action="{$action}" target="{if="!isset($extend.target)"}hideframe{/if}" check="1">
+	<div class="table">
+	<table>
+		{loop="params"}
+		<tr>
+			<td class="td1">{if="strpos($value.attrs.' '.$value.val,'isc')!==false&&strpos($value.attrs.' '.$value.val,'ennull')===false"}<font style="color:red;">*</font> {/if}{$value.name}</td>
+			{if="$value.ty=='text'"}
+			<td><input type="text" name="{$key}" value="{$value.val}" class="txt_put2" {$value.attrs}></td>
+			{elseif="$value.ty=='textarea'"}
+			<td><textarea name="{$key}" class="txt_put3" {$value.attrs}>{$value.val}</textarea></td>
+			{else}
+			<td>{$value.val}</td>
+			{/if}
+		</tr>
+		{/loop}
+	</table>
+	</div>
+	<div id="btndiv" class="fix">
+		{loop="btns"}
+			{$value}
+		{/loop}
+		<a name="reset" class="but3" onclick="window.history.back()">返回</a>
+		{loop="hides"}
+		<input type="hidden" name="{$key}" value="{$value}">
+		{/loop}
+	</div>
+	</form>
+
+</div>
+</body>
+</html>
+<iframe id="hideframe" name="hideframe" style="display:none;">

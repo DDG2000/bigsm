@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		{include file='public/head'}
+		<title>云采网 - 我的融资</title>
+	</head>
+	<body>
+		{include file="public/top"}
+		<!--<div class="crm nbg bd">-->
+			<!--<div class="w1200 cc">-->
+				<!--<em class="crm-inner">&lt;!&ndash;占位用的勿删&ndash;&gt;</em><a href="#">首页</a><em>></em><a href="#">我的工作台</a><em>></em><a href="#">我的项目</a><em>></em><span>采购下单</span>-->
+			<!--</div>-->
+		<!--</div>-->
+		<!-- content -->
+		<div class="content w1200 cc cb mt24">
+			{include file='public/sideNav' /}
+			<div class="fr w1000 find-list">
+				<ul class="tab fl-li cb">
+					<li {if condition="($type==0)"}class='active'{/if}><a href="/find_money/listpage?type=0">全部</a></li>
+					<li {if condition="($type==1)"}class='active'{/if}><a href="/find_money/listpage?type=1">审核中<em>（{$count.wait}）</em></a></li>
+					<li {if condition="($type==2)"}class='active'{/if}><a href="/find_money/listpage?type=2">已通过<em>（{$count.pass}）</em></a></li>
+					<li {if condition="($type==3)"}class='active'{/if}><a href="/find_money/listpage?type=3">未通过<em>（{$count.deny}）</em></a></li>
+					<li {if condition="($type==4)"}class="active"{/if}><a href="/find_money/listpage?type=4">已取消<em>（{$count.cancel}）</em></a></li>
+
+				</ul>
+				<!--<ul class="list-total fl-li cb">-->
+					<!--<li class="active"><a href="#">全部（4）</a></li>-->
+					<!--<li><a href="#">存贷融资（1）</a></li>-->
+					<!--<li><a href="#">应收账款（1）</a></li>-->
+				<!--</ul>-->
+				<div class="finance-list mt22">
+					<table>
+						<thead>
+							<th width="21"></th>
+							<th width="229" class="tal">订单号</th>
+							<th width="126">类型</th>
+							<th width="172">申请额度</th>
+							<th width="120">期限</th>
+							<th width="106">状态</th>
+							<th width="210">操作</th>
+						</thead>
+						
+						<tbody>
+						{if condition="($listdata)"}
+							{volist name="listdata" id="vo"}
+								<tr class="data data-t">
+									<td></td>
+									<td class="tal">{$vo.Vc_orderSn}</td>
+									<td>存货质押</td>
+									<td>{$vo.N_needed}&nbsp;万元</td>
+									<td>{$vo.N_days|intval}&nbsp;天</td>
+									<td>
+										<span class="status">{$findMoneyModel->statusArray[$vo.I_status]}</span>
+									</td>
+									<td rowspan="2" class="middle">
+										<a href="/find_money/orderInfo?id={$vo.id}" class="link">融资详情</a>
+										{if condition="($vo.I_status==1)"}
+										<a href="javascript:void(0);" data-ajax="/find_money/checkModifyStatus?id={$vo.id}" data-id="{$vo.id}" data-toform="find_money" class="link link-btn modify-order-btn">修改订单</a>
+										<a href="javascript:void(0);" data-ajax="/find_money/cancel?id={$vo.id}" class="link link-btn cancel-order-btn">取消订单</a>
+										{/if}
+									</td>
+								</tr>
+								<tr class="data data-m">
+									<td></td>
+									<td colspan="5" class="tal">申请时间：{$vo.Createtime|strtotime|date="Y-m-d",###}&nbsp;&nbsp;<em>{$vo.Createtime|strtotime|date="H:i",###}</em></td>
+								</tr>
+								<tr class="data data-b">
+									<td colspan="7" class="tal comment">备注：{$vo.T_note}</td>
+								</tr>
+								<tr class="space">
+									<td colspan="10"></td>
+								</tr>
+							{/volist}
+						{else}
+							<tr>
+								<td rowspan="3" colspan="7">
+									<p class="emptyTips">无数据</p>
+								</td>
+							</tr>
+						{/if}
+						</tbody>
+					</table>
+					{if condition="count($listdata)>0"}
+					<!-- 分页 -->
+					<div class="cb pager fl-li">
+						<div class="fr">
+							{$list->render()}
+						</div>
+					</div>
+					<!-- 分页 -->
+					{/if}
+				</div>
+			</div>
+		</div>
+		<!-- sideBar -->
+		{include file="public/sideBar"}
+		<!-- sideBar -->
+		<!-- content -->
+		{include file="public/foot"}
+		<script type="text/javascript">
+	        $(".finance-list a.cancel-order-btn").btnAjax({
+	            isConfirm:true,
+	            btn:["确定","返回"],
+				error:function(res){
+					if(res.msg=='请刷新页面!') {
+						layer.alert("数据已过期，请刷新页面!",{
+							btn:["点我刷新"],
+							btn1: function(){
+								location.reload();
+							}
+						})
+					} else {
+						layer.alert(res.msg);
+					}
+				}
+	        });
+	    </script>
+	</body>
+</html>

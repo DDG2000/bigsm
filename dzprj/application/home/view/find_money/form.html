@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		{include file='public/head'}
+		<title>找资金（表单页）</title>
+	</head>
+	<body>
+	{include file="public/top-copy"}
+		<!-- content -->
+		<div class="content project-content">
+			<div class="w1200 cc inner">
+				<ul class="process-line w1100 cc tac ib-li">
+					<li class="active">
+						<div class="bg">
+							<span>1</span>
+						</div>
+						<p>提交申请</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>2</span>
+						</div>
+						<p>等待审核</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>3</span>
+						</div>
+						<p>平台放款</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>4</span>
+						</div>
+						<p>获得资金</p>
+					</li>
+				</ul>
+				<!--form-->
+				<div class="order-form find-form cc form">
+					<form class="cc ajaxForm" action="{:url('find_money/submitAdd')}" method="post">
+						<div class="category">
+							{if condition='(isset($order.id))'}
+							<input type="hidden" name="id" value="{$order.id}">
+							<input type="hidden" name="Vc_orderSn" value="{$order.Vc_orderSn}">
+							{/if}
+							<div class="category-title">基础信息</div>
+							<div class="form-items">
+								<span class="form-items-title"><em class="warring">*</em>存货品名</span>
+								<input type="text" name="Vc_ordername"  maxlength="20" value="{if condition='(isset($order))'}{$order|output='Vc_ordername'}{/if}" class="normal-middle" placeholder="请输入存货品名" tabindex="1"/>
+								<em class="space-em space-em-22"></em>
+								<input type="text" name="Vc_level" maxlength="11" value="{if condition='(isset($order))'}{$order|output='Vc_level'}{/if}" class="normal-middle" placeholder="请输入存货规格等级" tabindex="2"/>
+								<span></span>
+							</div>
+							<div class="form-items">
+								<span class="form-items-title"><em class="warring">*</em>数量</span>
+								<input type="text" class="normal-middle number_form" placeholder="请输入数量" name="N_amount" value="{if condition='(isset($order))'}{$order.Vc_unit=='件'?intval($order.N_amount):$order.N_amount}{/if}" {if condition='(isset($order) && $order.Vc_unit=="吨")'} float{else} number{/if} tabindex="3"/>
+								<select name="Vc_unit" class="unit_select" tabindex="4">
+									<option value="吨" {if condition='(isset($order) && $order.Vc_unit=="吨")'}selected{/if}>吨</option>
+									<option value="件" {if condition='(isset($order) && $order.Vc_unit=="件")'}selected{/if}>件</option>
+								</select>
+							</div>
+							<div class="form-items">
+								<span class="form-items-title"><em class="warring">*</em>存货地点</span>
+								<div class="item-wrap">
+									<input name="proname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.proname1}{/if}">
+									<select name="I_cave_provinceID" data-name="proname" id="provinceID" class="normal-middle change_add_name" data-id="{if condition='(isset($order))'}{$order.I_cave_provinceID}{/if}" tabindex="5"><option value="">请选择</option></select>
+								</div>
+								<em class="space-em space-em-22"></em>
+								<div class="item-wrap">
+									<input name="cityname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.cityname1}{/if}">
+									<select name="I_cave_cityID" data-name="cityname" id="cityID" class="normal-middle change_add_name" data-id="{if condition='(isset($order))'}{$order.I_cave_cityID}{/if}" tabindex="6"><option value="">请选择</option></select>
+								</div>
+								<em class="space-em space-em-22"></em>
+								<div class="item-wrap">
+									<input name="areaname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.areaname1}{/if}">
+									<select name="I_cave_districtID" data-name="areaname" id="districtID" class="normal-middle change_add_name" data-id="{if condition='(isset($order))'}{$order.I_cave_districtID}{/if}" tabindex="7"><option value="">请选择</option></select>
+								</div>
+								<em class="space-em space-em-22"></em>
+								<div class="item-wrap">
+									<input type="text" name="Vc_cave_address" value="{if condition='(isset($order))'}{$order.Vc_cave_address}{/if}" class="address-detail" placeholder="详细地址" tabindex="8" maxlength="50"/>
+									<span></span>
+								</div>
+							</div>
+							<div class="form-items">
+								<span class="form-items-title"><em class="warring">*</em>货权单位</span>
+								<div class="item-wrap">
+									<input name="proname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.proname2}{/if}">
+									<select name="I_belong_provinceID" id="province" data-name="proname" class="normal-middle change_add_name" data-id="{if condition='(isset($order))'}{$order|output='I_belong_provinceID'}{/if}" tabindex="9"><option value="" >请选择</option></select>
+								</div>
+								<em class="space-em space-em-22"></em>
+								<div class="item-wrap">
+									<input name="cityname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.cityname2}{/if}">
+									<select name="I_belong_cityID" id="city" data-name="cityname" class="normal-middle change_add_name" data-id="{if condition='(isset($order))'}{$order|output='I_belong_cityID'}{/if}" tabindex="10"><option value="">请选择</option></select>
+								</div>
+								<em class="space-em space-em-22"></em>
+								<div class="item-wrap">
+									<input name="areaname[]" type="hidden" value="{if condition='(isset($addr))'}{$addr.areaname2}{/if}">
+									<select name="I_belong_districtID" data-name="areaname" id="district" class="normal-middle change_add_name" data-id="{if condition='(isset($order))'}{$order|output='I_belong_districtID'}{/if}" tabindex="11"><option value="">请选择</option></select>
+								</div>
+								<em class="space-em space-em-22"></em>
+								<div class="item-wrap">
+									<input type="text" name="Vc_belong_address" maxlength="50" value="{if condition='(isset($order))'}{$order.Vc_belong_address}{/if}" class="address-detail" placeholder="详细地址" tabindex="12"/>
+									<span></span>
+								</div>
+							</div>
+						</div>
+						<div class="category pt9">
+							<div class="category-title">融资信息</div>
+							<div class="form-items">
+								<span class="form-items-title title-small"><em class="warring">*</em>融资额度</span>
+								<input type="text" name="N_needed" id="" value="{if condition='(isset($order))'}{$order|output='N_needed'}{/if}" class="normal-middle" placeholder="预计垫资额度" float tabindex="13"/>
+								<span class="unit">万元</span>
+							</div>
+							<div class="form-items">
+								<span class="form-items-title title-small"><em class="warring">*</em>融资周期</span>
+								<input type="text" name="N_days" id="" value="{if condition='(isset($order))'}{$order|output='N_days'}{/if}" class="normal-middle" placeholder="输入垫资期限" number tabindex="14"/>
+								<span class="unit">天</span>
+							</div>
+						</div>
+						<div class="category pt9">
+							<div class="category-title">联系方式</div>
+							{if condition="(isset($tels))"}
+							{volist name='$tels' id='vo'}
+							<div class="form-items">
+								<span class="form-items-title title-small"><em class="warring">*</em>联系人</span>
+								<input type="text" name="Vc_contacts[]" maxlength="30" value="{$vo.Vc_contact}" class="normal-middle" placeholder="请输入姓名" tabindex="15"/>
+								<em class="space-em space-em-22"></em>
+								<input type="text" name="Vc_contact_tels[]" id="" value="{$vo.Vc_contact_tel}" class="normal-middle mobile" placeholder="请输入手机号码" tel tabindex="16" maxlength="11"/>
+								<a href="javascript:;" class="menu add"></a>
+								<a href="javascript:;" class="menu delete"></a>
+							</div>
+							{/volist}
+							{else}
+							<div class="form-items">
+								<span class="form-items-title title-small"><em class="warring">*</em>联系人</span>
+								<input type="text" name="Vc_contacts[]" maxlength="30" value="" class="normal-middle" placeholder="请输入姓名" tabindex="15" />
+								<em class="space-em space-em-22"></em>
+								<input type="text" name="Vc_contact_tels[]" id="" value="" class="normal-middle" placeholder="请输入手机号码" tel tabindex="16" maxlength="11"/>
+								<a href="javascript:;" class="menu add"></a>
+								<a href="javascript:;" class="menu delete"></a>
+							</div>
+							{/if}
+							<div class="form-items">
+								<!-- <div class="category-title"></div> -->
+								<span class="form-items-title title-small title">备注</span>
+								<textarea maxlength="200" name="T_note" rows="" cols=""  class="comment" placeholder="如果有什么需求请告诉我们，字数小于200字" tabindex="17">{if condition='(isset($order))'}{$order.T_note}{else}{/if}</textarea>
+								<span></span>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!--/form-->
+			</div>
+			<div class="form-submit tac">
+				<a href="javascript:;" class="form-submit-menu" id="submit">提交订单</a>
+			</div>
+		</div>
+		<!-- content -->
+	{include file="public/foot-bg"}
+	<script>
+		$().autoSelectData({
+			'#provinceID':{
+				url:'/comm/getprovince',
+				level:0
+			},
+			'#cityID':{
+				url:'/comm/getCity?pid=',
+				level:1
+			},
+			'#districtID':{
+				url:'/comm/getDistrict?pid=',
+				level:2
+			}
+		})
+
+
+
+		$(".ajaxForm").ajaxForm({
+			button:"#submit",
+			noTips:true,
+			success: function (res) {
+				layer.closeAll();
+				console.log(res);
+				location.href=res.url;
+			},
+			beforeSubmitValidation: function(){
+				if(window.isCertify) {
+					return true;
+				} else {
+					
+					showCertify();
+					return false;
+				}
+				
+			}
+		});
+
+		$(document).on("click","a.add", function(){
+			if ($('.form-items').filter(function(){
+				return $(this).find(".add").length
+			}).length < 5 ) {
+				var $parent = $(this).closest('.form-items'),
+		            html = [
+						'<div class="form-items">',
+							'<span class="form-items-title title-small"><em class="warring">*</em>联系人</span>',
+							'<input type="text" name="Vc_contacts[]" id="" maxlength="30" value="" class="normal-middle" placeholder="请输入姓名">',
+							'<em class="space-em space-em-22"></em>',
+								'<input type="text" name="Vc_contact_tels[]" id="" value="" class="normal-middle mobile" maxLength="11" placeholder="请输入手机号码" tel>',
+							'<a href="javascript:;" class="menu add"></a>',
+							'<a href="javascript:;" class="menu delete"></a>',
+						'</div>'
+					].join("");
+	
+		        $parent.after(html);
+			} else {
+				layer.msg("最多五位联系人",{time:1500});
+			}
+	        
+	    });
+	    //
+		//
+		$(document).on("click","a.delete", function(){
+			if ($(".form-items").filter(function(){
+				return $(this).find("a.delete").length
+			}).length > 1 ) {
+				$(this).closest('.form-items').fadeOut("fast", function(){
+					$(this).remove();
+					total();
+				});
+			} else {
+				layer.msg("最少一位联系人",{time:1500});
+			}
+		});
+		//
+	</script>
+	</body>
+</html>

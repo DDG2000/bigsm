@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.2.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+         http://www.springframework.org/schema/aop 
+         http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		 http://www.springframework.org/schema/mvc 
+		 http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+	<context:component-scan base-package="com.gwsoft.dz" />
+	<context:property-placeholder location="classpath:db.properties" />
+	<bean id="erpDbManager" class="com.gwsoft.dz.dao.DatabaseManager">
+		<property name="driver" value="${jdbc.erp.sqlserver.driverClassName}" />
+		<property name="url" value="${jdbc.erp.sqlserver.url}" />
+		<property name="user" value="${jdbc.erp.sqlserver.username}" />
+		<property name="password" value="${jdbc.erp.sqlserver.password}" />
+	</bean>
+	<bean id="dzDbManager" class="com.gwsoft.dz.dao.DatabaseManager">
+		<property name="driver" value="${jdbc.dz.mysql.driverClassName}" />
+		<property name="url" value="${jdbc.dz.mysql.url}" />
+		<property name="user" value="${jdbc.dz.mysql.username}" />
+		<property name="password" value="${jdbc.dz.mysql.password}" />
+	</bean>
+	
+	<bean id="synchronizeService" class="com.gwsoft.dz.service.SynchronizeService"></bean>
+	<bean id="syncSchedule" class="com.gwsoft.dz.service.SynchronizeSchedule" scope="singleton"
+		depends-on="synchronizeService" >
+	</bean>
+	
+	<bean id="goodsSyncTask" class="com.gwsoft.dz.service.SynchronizeTask" scope="prototype">
+		<property name="dzDao"  ref="dzGoodsDao"/>
+		<property name="erpDao" ref="erpGoodsDao" />
+	</bean>
+	<bean id="employeeSyncTask" class="com.gwsoft.dz.service.SynchronizeTask" scope="prototype">
+		<property name="dzDao"  ref="dzEmployeeDao"/>
+		<property name="erpDao" ref="erpEmployeeDao" />
+	</bean>
+	<bean id="placeSyncTask" class="com.gwsoft.dz.service.SynchronizeTask" scope="prototype">
+		<property name="dzDao"  ref="dzPlaceDao"/>
+		<property name="erpDao" ref="erpPlaceDao" />
+	</bean>
+	<bean id="companySyncTask" class="com.gwsoft.dz.service.SynchronizeTask" scope="prototype">
+		<property name="dzDao"  ref="dzCompanyDao"/>
+		<property name="erpDao" ref="erpCompanyDao" />
+	</bean>
+	<bean id="purchaseProofSyncTask" class="com.gwsoft.dz.service.SynchronizeTask" scope="prototype">
+		<property name="dzDao"  ref="dzPurchaseProofDao"/>
+		<property name="erpDao" ref="erpPurchaseProofDao" />
+	</bean>
+	<bean id="billSyncTask" class="com.gwsoft.dz.service.SynchronizeTask" scope="prototype">
+		<property name="dzDao"  ref="dzBillDao"/>
+		<property name="erpDao" ref="erpBillDao" />
+	</bean>
+	<bean id="projectSyncTask" class="com.gwsoft.dz.service.SynchronizeTask" scope="prototype">
+		<property name="dzDao"  ref="dzProjectDao"/>
+		<property name="erpDao" ref="erpProjectDao" />
+	</bean>
+	
+	<mvc:default-servlet-handler />
+</beans>

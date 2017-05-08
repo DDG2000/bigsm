@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{include file='public/head'}
+		<title>云采网 - 我要找车</title>
+	</head>
+	<body>
+		{include file='public/top_small'}
+		<!-- content -->
+		<div class="content main">
+			<div class="banner" id="banner">
+				{include file="public/banner"}
+				<!-- <div class="banner-text">
+					<div class="text2">{$param.Teams|num_format}家优质物流公司
+						<div class="text3">发布你的运输需求<span>一键找车</span></div>
+					</div>
+				</div> -->
+				<div class="w1200 float-wrapper">
+					<div class="float-tips pa">
+						<div class="mask"></div>
+						<div class="wrap">
+							<span></span>
+							<h3>询价找车</h3>
+							<p>写下你的运输需求<br />我们给你找车！！</p>
+							{if condition="(isset($_SESSION['user']))"}
+							<a href="/find_cars/toForm">我要找货车</a>
+							{else}
+							<a href="/index/findCarsIndex">我要找货车</a>
+							{/if}
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="public/notice"}
+			<div class="mod mod5">
+				<div class="w1200 cc oh">
+					<ul class="fl-li w120 cb">
+						<li>
+							<div class="t">
+								<div class="t-t">
+									<i class="i1"></i><span class="s1">采货快</span>
+								</div>
+								<p>授信支付、先提货后付款</p>
+							</div>
+						</li>
+						<li>
+							<div class="t">
+								<div class="t-t">
+									<i class="i2"></i><span class="s2">随心还</span>
+								</div>
+								<p>随借随还、最长还款期60天</p>
+							</div>
+						</li>
+						<li>
+							<div class="t">
+								<div class="t-t">
+									<i class="i3"></i><span class="s3">享免息</span>
+								</div>
+								<p>开通即享3天免息</p>
+							</div>
+						</li>
+						<li>
+							<div class="t">
+								<div class="t-t">
+									<i class="i4"></i><span class="s4">有惊喜</span>
+								</div>
+								<p>有授信、享优惠</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="mod6">
+				<ul class="w1200 cc cb fl-li">
+					<li>
+						<img src="/static/home/img/mod5-1.jpg" width="400" height="345">
+						<div class="mask"></div>
+						{if condition="($param.Teams)"}
+						<div class="wrap">
+							<span>{$param.Teams|num_format}</span>
+							<p>我们拥有优质车队（个）</p>
+						</div>
+						{/if}
+					</li>
+					<li class="l2">
+						<img src="/static/home/img/mod5-2.jpg" width="400" height="345">
+						<div class="mask"></div>
+						{if condition="($param.Needs)"}
+						<div class="wrap">
+							<span>{$param.Needs|num_format}</span>
+							<p>平台累计解决运输需求（次）</p>
+						</div>
+						{/if}
+					</li>
+					<li>
+						<img src="/static/home/img/mod5-3.jpg" width="400" height="345">
+						<div class="mask"></div>
+						{if condition="($param.Dilivers)"}
+						<div class="wrap">
+							<span>{$param.Dilivers|num_format}</span>
+							<p>累计运输货物（吨）</p>
+						</div>
+						{/if}
+					</li>
+				</ul>
+			</div>
+			<div class="mod mod7">
+				<div class="w1200 cc cb">
+					<div class="fl tips">如何找车</div>
+					<div class="fl progress"></div>
+				</div>
+			</div>
+			<div class="mod mod2 tac w1200 cc">
+				<h3 class="mod-title">合作物流</h3>
+				<ul class="brand-list">
+					{volist name="links" id="vo"}
+						{if condition="$key < 12"}
+							<li><a{$vo.Vc_link==''?'':' href="'.$vo.Vc_link.'"'} target="_blank"><img src="{$Think.config.img_url}{$vo.Vc_logo}" width="200" height="200"></a></li>
+						{/if}
+					{/volist}
+				</ul>
+			</div>
+		</div>
+		<!-- content -->
+		{include file="public/copy"}
+		<!-- content -->
+		{include file="public/sideBar"}
+		{include file="public/foot-normal"}
+	</body>
+</html>

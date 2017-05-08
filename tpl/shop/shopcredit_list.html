@@ -1,0 +1,88 @@
+	{include="inc/css"}
+    <title>商城信用</title>
+</head>
+<body>
+    {include="inc/header"}
+    {include="inc/mainnav"}
+    <!-- 中间部分 -->
+    <div id="container" class="oh w1100 c">
+		<!-- 面包屑 -->
+    	<div class="cb crumbnav">
+    		<a href="index.html">首页</a><a href="index.html">钢材市场</a><span class="current">商铺信用</span>
+    		<div class="fr wgt-results">共搜索到<em id="credit-search-count">{$data.count}</em>个 资源</div>
+    	</div>
+    	<!-- 面包屑 -->
+    	<!-- 选择条件进行查询和筛选 -->
+		<div class="filter-condition-wrapper">
+			<div class="cb first filter-condition" id="credit-sort-category">
+				<span class="fl filter-condition-name">分类：</span>
+				<div class="fl ib-a fs0 filter-condition-con">
+					<a href="javascript:void(0);" class="filter-condition-all active" data-id="default">全部</a>
+					{loop="itemClassList"}
+					{$vo=$value}
+						<a href="javascript:void(0);" data-id="{$vo.id}" {if="isset($searchData['itemClassID'])"}
+							{if="$vo.id==$searchData['itemClassID']"}class="active"{/if}{/if}>{$vo.Vc_name}</a>
+					{/loop}
+				</div>
+				<a href="javascript:void(0);" class="fr filter-condition-more">+更多</a>
+			</div>
+			<div class="cb filter-condition" id="credit-sort-area">
+				<span class="fl filter-condition-name">地区：</span>
+				<div class="fl ib-a fs0 filter-condition-con">
+					<a href="javascript:void(0);" class="filter-condition-all active" data-id="default">全部</a>
+					{loop="areaList"}
+						{$vo=$value}
+						<a href="javascript:void(0);" data-id="{$vo.ID}" {if="isset($searchData['provinceID'])"}
+						{if="$vo.ID==$searchData['provinceID']"}class="active"{/if}{/if}>{$vo.Vc_province}</a>
+					{/loop}
+				</div>
+				<a href="javascript:void(0);" class="fr filter-condition-more">+更多</a>
+			</div>
+		</div>
+		
+		<!-- 选择条件进行查询和筛选 -->
+		<div class="cb credit-sort">
+			<div class="fl wgt-sort" id="credit-sort-desc">
+				排序：<a href="javascript:void(0);" class="{if="!isset($searchData['order_type'])"}active{/if}" data-sort="1">综合排序</a><a href="javascript:void(0);" data-sort="amount">成长数量</a><a href="javascript:void(0);" data-sort="money">成长金额</a>
+			</div>
+			<form class="fr wgt-search" id="credit-sort-search">
+				<input type="text" value="" name="skey" placeholder="请输入商铺的名称"/><button type="submit">搜索</button>
+			</form>
+			</div>
+			<ul class="w110 cb fl-li credit-company-list" id="credit-sort-list">
+				{loop="data.data"}
+					{$vo=$value}
+					<li>
+						<div class="cb credit-company-info">
+							<a href="/index.php?act=shop&m=shopcredit&w=index&id={$vo.id}" target="_blank" class="fl img"><img src="{$vo.Vc_logo_pic}#" width="110" height="110"/></a>
+							<div class="fl credit-company-info-con">
+								<a href="/index.php?act=shop&m=shopcredit&w=index&id={$vo.id}" target="_blank" class="name">{$vo.Vc_name}</a>
+								<p class="numinfo">成交数量： {$vo.N_amount}吨<br />成交金额： {$vo.N_money}元</p>
+							</div>
+						</div>
+						<div class="scope">
+							<span class="ib">经营范围：</span>
+							<div class="cb ib fl-a scope-wrapper">
+								{loop="$vo.itemClassArr"}
+									<a href="javascript:void(0);">{$value.Vc_name}</a>
+								{/loop}
+							</div>
+						</div>
+						<a href="http://wpa.qq.com/msgrd?Uin={$vo.Vc_service_qq}" class="qq" target="_blank"><img src="{#TPL_IMG#}qq.png#" width="25" height="25" alt="{$vo.Vc_name}"></a>
+					</li>
+				{/loop}
+			</ul>
+    	<div class="cb w credit-pagenum">
+    		<!-- 分页 -->
+			<div id="pagestr">{$pagestr}</div>
+			<!-- 分页 -->
+		</div>
+		<form class="visible-form" id="credit-sort-form">
+			<input type="text" name="itemClassID" value="">
+			<input type="text" name="cityID" value="">
+			<input type="text" name="order_type" value="">
+		</form>
+    </div>
+    <!-- 中间部分 -->	
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

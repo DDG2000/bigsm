@@ -1,0 +1,61 @@
+#content,
+#header,
+#footer {
+  background: #F6F5F5;
+}
+#header.index {
+  background: #F8FBFB;
+}
+.top a {
+  color: #666;
+}
+.top a:hover,
+.header-con-nav a:hover {
+  color: #c00;
+}
+.header-con {
+  background: #1279C5;
+}
+.header-con.index {
+  background: #fff;
+}
+.footer-abt {
+  background: #464646;
+}
+.footer-abt-links .fl a {
+  color: #b2b2b2;
+}
+.footer-abt-links .fl {
+  color: #b2b2b2;
+}
+.footer-abt-links {
+  border-bottom: 1px solid #7D7D7D;
+}
+.footer-nav dl a {
+  color: #666;
+}
+.footer-abt-links .fl a:hover,
+.footer-abt-links .fr a:hover,
+.footer-abt-cprt a:hover,
+.footer-nav dl a:hover,
+.m-form-full a.btn:hover {
+  color: #c00;
+}
+.footer-abt-links .fr a,
+.footer-abt-cprt a,
+.footer-abt-cprt {
+  color: #fff;
+}
+.content-side li {
+  color: #222;
+}
+.content-side-submenu a .content-side-submenu a {
+  color: #666;
+}
+.content-side-submenu a:hover {
+  color: #c00;
+}
+.content-side-submenu a:hover:before {
+  color: #c00;
+}
+/*# sourceMappingURL=skin.css.map */

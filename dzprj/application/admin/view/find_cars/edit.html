@@ -1,0 +1,411 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="x_content">
+        <br>
+        <form  class="form-horizontal form-label-left" novalidate>
+            <input type="hidden" name="id" value="{$data|output='id'}">
+
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">订单号</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                    {$data|output='Vc_orderSn'}
+                </h5>
+            </div>
+			<!--<div class="item form-group">-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">行业 <span class="required">*</span></label>-->
+				<!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--<div class="radio pull-left">-->
+						<!--<label>-->
+							<!--<input value="1" name="I_industryID" type="radio" class="flat "  {if condition="(isetn($data.I_status)==1)"}checked{/if}> 钢铁-->
+						<!--</label>-->
+					<!--</div>-->
+					<!--<div class="radio pull-left">-->
+						<!--<label>-->
+							<!--<input value="2" name="I_industryID" type="radio" class="flat " {if condition="(isetn($data.I_status)==2)"}checked{/if}> 化工-->
+						<!--</label>-->
+					<!--</div>-->
+					<!--<div class="radio pull-left">-->
+						<!--<label>-->
+							<!--<input value="0" name="I_industryID" type="radio" class="flat " {if condition="(isetn($data.I_status)==0)"}checked{/if}> 其他-->
+						<!--</label>-->
+					<!--</div>-->
+
+				<!--</div>-->
+			<!--</div>-->
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">用户名</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data|output='userphone'}&nbsp;&nbsp;&nbsp;{$data|output='username'}
+				</h5>
+			</div>
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">发货人</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                    {$data|output='Vc_senter'}  &nbsp;&nbsp;&nbsp;{$data.Vc_sent_tel}&nbsp;&nbsp;&nbsp;{$data|output='proname1'}&nbsp;{$data|output='cityname1'}&nbsp;{$data|output='areaname1'}&nbsp;{$data|output='Vc_sent_address'}
+                </h5>
+            </div>
+            <!--<div class="item form-group">-->
+                <!--<label class="control-label col-md-3 col-sm-3 col-xs-12">发货人电话</label>-->
+                <!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+                  <!--{$data.Vc_sent_tel}-->
+                <!--</h5>-->
+            <!--</div>-->
+			<!--<div class="item form-group">-->
+                <!--<label class="control-label col-md-3 col-sm-3 col-xs-12">发货地址</label>-->
+                <!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+                    <!--{$data|output='proname1'}&nbsp;{$data|output='cityname1'}&nbsp;{$data|output='areaname1'}&nbsp;{$data|output='Vc_sent_address'}-->
+                <!--</h5>-->
+            <!--</div>-->
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">收货人</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data|output='Vc_receiver'}&nbsp;&nbsp;&nbsp;{$data.Vc_receiver_tel}&nbsp;&nbsp;&nbsp;{$data|output='proname2'}&nbsp;{$data|output='cityname2'}&nbsp;{$data|output='areaname2'}&nbsp;{$data|output='Vc_sent_address'}
+				</h5>
+			</div>
+			<!--<div class="item form-group">-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">收货人电话</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data.Vc_receiver_tel}-->
+				<!--</h5>-->
+			<!--</div>-->
+			<!--<div class="item form-group">-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">收货地址</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data|output='proname2'}&nbsp;{$data|output='cityname2'}&nbsp;{$data|output='areaname2'}&nbsp;{$data|output='Vc_sent_address'}-->
+				<!--</h5>-->
+			<!--</div>-->
+           <!--<div class="item form-group">-->
+                <!--<label class="control-label col-md-3 col-sm-3 col-xs-12" > 运输距离</label>-->
+                <!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+                    <!--{$data.N_judge_distance}Km-->
+                <!--</h5>-->
+            <!--</div>-->
+            
+           <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" > 期望价格</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                    {$data.I_offertype==1?'单价&nbsp;'.$data.N_expectprice.'元/吨':'一口价&nbsp;'.$data.N_expectprice.'元'}
+                </h5>
+            </div>
+            
+           <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" > 是否含税</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data.I_plus_tax==1?'含税':'不含税'}
+                </h5>
+            </div>
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12" > 自卸车</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data.I_plus_dumper==1?'要':'不要'}
+				</h5>
+			</div>
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12" > 垫出库费</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data.I_plus_deliveryfee==1?'要':'不要'}
+				</h5>
+			</div>
+			<div class="item form-group" }>
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">到货日期</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data.D_arrived_start|strtotime|date="Y-m-d",###}
+				</h5>
+			</div>
+			<!--<div class="item form-group" }>-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">提货日期</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data|output='D_arrived_end'}-->
+				<!--</h5>-->
+			<!--</div>-->
+			<!--<div class="item form-group" }>-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">预估总运费</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data|output='N_judge_totalprice'}元-->
+				<!--</h5>-->
+			<!--</div>-->
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12" > 备注信息</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data.T_note}
+				</h5>
+			</div>
+            <div class="item form-group" }>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">申请时间</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                    {$data|output='Createtime'}
+                </h5>
+            </div>
+			<!--<div class="item form-group" }>-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">更新时间</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data.D_updatetime==null?'&#45;&#45;':$data.D_updatetime}-->
+				<!--</h5>-->
+			<!--</div>-->
+			<!--<div class="item form-group" }>-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">取消时间</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data.D_canceltime==null?'&#45;&#45;':$data.D_canceltime}-->
+				<!--</h5>-->
+			<!--</div>-->
+			<div class="item form-group" id="check">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">审核 </label>
+				<h5 class="col-md-3 col-sm-6 col-xs-12 industry_change">
+					{$findCars->statusArray[$data.I_status]}
+					<a href="javascript:void(0);" class="btn btn-info btn-xs btn-success" status_val="{$data.I_status}" id_val="{$data.id}" st_val='1'><i class="fa fa-pencil"></i> 通过</a>
+					<a href="javascript:void(0);" class="btn btn-info btn-xs btn-warning" status_val="{$data.I_status}" id_val="{$data.id}" st_val="2"><i class="fa fa-pencil"></i> 不通过</a>
+				</h5>
+			</div>
+			{if condition="!empty($data.Vc_orderSn)"}
+			<div class="item form-group" }>
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">运输商品</label>
+				<div class="clearfix"></div>
+				<div class="ln_solid"></div>
+				<div id="listForm">
+					<table class="table table-striped jambo_table bulk_action">
+						<thead>
+						<tr class="headings">
+							<th class="column-title" style="">ID </th>
+							<th class="column-title" style="">货物代码 </th>
+							<th class="column-title" style="">货物分类</th>
+							<th class="column-title" style="">品名</th>
+							<th class="column-title" style="">规格</th>
+							<th class="column-title" style="">材质</th>
+							<th class="column-title" style="">产地</th>
+							<th class="column-title" style="">数量</th>
+							<!--<th class="column-title" style="">仓库名</th>-->
+							</th>
+						</tr>
+						</thead>
+
+						<tbody>
+						{volist name="$goodsList" id="vo" key="k"}
+						<tr class="even pointer" k-index="{$k}">
+							<td class=" ">{$vo.id}</td>
+							<td class=" ">{$vo.Vc_goods_code}</td>
+							<td class=" ">{$vo.Vc_goods_class}</td>
+							<td class=" ">{$vo.Vc_goods_breed}</td>
+							<td class=" ">{$vo.Vc_goods_spec}</td>
+							<td class=" ">{$vo.Vc_goods_material}</td>
+							<td class=" ">{$vo.Vc_goods_factory}</td>
+							<td class=" ">{if condition="$vo.Vc_unit=='件'"}{$vo.N_plan_weight|intval}{else}{$vo.N_plan_weight}{/if}&nbsp;{$vo.Vc_unit}</td>
+							<!--<td class=" ">{$vo.Vc_warehouse}</td>-->
+						</tr>
+						{/volist}
+						</tbody>
+					</table>
+				</div>
+			</div>
+            {/if}
+            <div class="clearfix"></div>
+            <div class="ln_solid"></div>
+        </form>
+    </div>
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    	 
+    	  var $form = $('form'),  url = "{:url('/admin/file_upload/doUpload')}" ,
+           uploadButton = $('<button onclick="return false;"/>')
+                   .addClass('btn btn-primary')
+                   .prop('disabled', true)
+                   .text('处理中...')
+                   .on('click', function () {
+                       var $this = $(this),
+                               data = $this.data();
+                       $this
+                               .off('click')
+                               .text('Abort')
+                               .on('click', function () {
+                                   $this.remove();
+                                   data.abort();
+                               });
+                       data.submit().always(function () {
+                           $this.remove();
+                       });
+                   });
+		   deleteButton = $('<button onclick="return false;"/>')
+		           .addClass('btn btn-danger')
+		           .text('删除')
+		           .on('click', function () {
+		               var $this = $(this) ;
+		              // console.log(this);
+		               $this.parents('.form-group').find('[x-file-input]').val(-1) ;
+		               $this.parents('.fileContainer').empty() ;
+		           });
+		//审核
+		$(".btn-success,.btn-warning").bind('click',function(){
+			if($(this).attr("sending")==1){
+				return;
+			}
+			var st_val = $(this).attr('st_val');
+			var status_val = $(this).attr('status_val');
+			var id_val = '';
+			if($(this).hasClass("btn-audit-checkbox")){
+				var vals = getCheckBoxVals("#listForm table tbody");
+				id_val = vals.join();
+			}else{
+				id_val = parseInt($(this).attr('id_val'));
+			}
+			submitForm(id_val,st_val,status_val);
+		});
+
+		function submitForm(id_val,st_val,status_val){
+			if(null == id_val || '' == id_val || id_val <= 0){
+				layer.msg("请先选择");
+			}
+			if(status_val==4){
+				layer.msg("已取消不能审核");
+				return false;
+			}
+			if(st_val==(status_val-1)){
+				layer.msg("审核状态未改变");
+				return false;
+			}
+
+			layer.confirm('确认审核？', {
+				icon: 3,
+				btn: ['确认','取消'], //按钮
+				title:'提示',
+			}, function(index){
+				$(this).attr("sending",1);
+				layer.close(index);
+				$.getJSON("{:url('/find_cars/check')}",{id:id_val,check:st_val},
+						function(data){
+							if(null != data.msg || '' != data.msg){
+								layer.msg(data.msg);
+							}
+
+							if(data.code==200){
+								window.location.reload();
+							}else if(null != data.url || '' != data.url){
+								window.location.href = data.url;
+							}else{
+								$(this).removeAttr("sending");
+							}
+						});
+			});
+		}
+
+
+		//文件上传
+		   $('[x-file-up]').fileupload({
+		       // $('input[type=file]').fileupload({
+		       url: url,
+		       dataType: 'json',
+		       autoUpload: false,
+		       acceptFileTypes: /(\.|\/)(doc?x|txt|xls?x)$/i,
+		       maxFileSize: 999000,
+		       
+		       disableImageResize: /Android(?!.*Chrome)|Opera/
+		               .test(window.navigator.userAgent),
+		       /* previewMaxWidth: 200,
+		       previewMaxHeight: 200,
+		       previewCrop: true */
+		   }).on('fileuploadadd', function (e, data) {
+		       var $dom = $('input[name="' + data.paramName + '"]')
+		               .parents('.fileinput-button').next('.fileContainer') ;
+		       data.context = $('<div/>').appendTo($dom.empty());
+		       $.each(data.files, function (index, file) {
+		           var node = $('<p/>')
+		                   .append($('<span/>').text(file.name));
+		           if (!index) {
+		               node
+		                       .append('<br>')
+		                       .append(uploadButton.clone(true).data(data));
+		           }
+		           node.appendTo(data.context);
+		       });
+		   }).on('fileuploadprocessalways', function (e, data) {
+		       var index = data.index,
+		               file = data.files[index],
+		               node = $(data.context.children()[index]);
+		       if (file.preview) {
+		           node
+		                   .prepend('<br>')
+		                   .prepend(file.preview);
+		       }
+		       if (file.error) {
+		           node
+		                   .append('<br>')
+		                   .append($('<span class="text-danger"/>').text(file.error));
+		       }
+		       if (index + 1 === data.files.length) {
+		           data.context.find('button')
+		                   .text('上传')
+		                   .prop('disabled', !!data.files.error);
+		       }
+		   }).on('fileuploadprogressall', function (e, data) {
+		       var progress = parseInt(data.loaded / data.total * 100, 10);
+		       $('#progress .progress-bar').css(
+		               'width',
+		               progress + '%'
+		       );
+		   }).on('fileuploaddone', function (e, data) {
+		       if (data.result && data.result.code == 200) {
+		           console.log(data.result.data[0]);
+		    	   var img = data.result.data[0] ,
+		                   inputName = $(this).attr('name').replace('_file','') ,
+		                   $input = $('input[name="'+inputName+'"]') ,
+		                   $dom = $(this).parents('.fileinput-button').next('.fileContainer') ,
+		                   $delBtn = deleteButton.clone(true) ;
+		           $input.val(img.saveName) ;
+		           $dom.append($delBtn) ;
+		       }
+		       }) ;
+
+    	//编辑时文件查看
+    	
+    	var tpl = new xxx.STemplate("<h2><a href='@{src}' target='_blank'> <i class='fa  fa-file-zip-o (alias)  fa-fw fa-2x'></i> <span>文件下载</span></a></h2>") ;
+                
+    	$('[x-file-input]').each(setSavedImage) ;
+
+	    function setSavedImage () {
+	        var $this = $(this) , val = $this.val() , imgHost = "{$Think.config.img_url}" ,
+	                $container = $this.parents('.fileinput-button').next('.fileContainer') ,$img ;
+	        if (val && val.length > 10) {
+	            $img = $(tpl.update({'src':imgHost+val}).html()) ;
+	            $img.appendTo($container) ;
+	            // $container.after() ;
+	            deleteButton.clone(true).appendTo($container) ;
+	        }
+	    }
+    	
+	    
+	    
+    	//业务提交
+    	//$form.on('blur', 'input[required]', validator.checkField);
+        $(".btn-sub").on("click", function(){
+        	
+        /* 	if(!validator.checkAll($form) ) {
+        		return false;
+        	} */
+    			layer.confirm('确认审核吗？', {
+    				icon: 3, 
+    				btn: ['确认','取消'], //按钮
+    				title:'提示',
+    			}, function(index){
+      				layer.close(index);
+      				$.post("{:url('/admin/find_cars/edit')}",$form.serializeArray(),
+      				function(data){
+      					if(null != data.msg || '' != data.msg){
+      						layer.msg(data.msg);
+      					}
+      					
+      				 	if(data.code==200){
+								setTimeout(function(){window.location.href="{:url('/admin/find_cars/index')}";},1000);
+      					}
+      				
+      				});
+    			});
+    		
+    	});
+        
+    }) ;
+</script>

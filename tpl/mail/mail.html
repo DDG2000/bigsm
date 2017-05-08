@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>mail</title>
+<style>
+#mail_p2p{width:760px;margin:0 auto;padding:0 17px 58px 17px;background:#89b5e9;}
+#mail_p2p .logo{height:77px;}
+#mail_p2p .logo img{border:none;}
+#mail_p2p .white{background:#fff;padding:8px;font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif;font-size:14px;line-height:30px;}
+#mail_p2p .white .text{color:#505050;}
+#mail_p2p .white .text span{color:#ff9019;}
+#mail_p2p .white .text .button{display:block;width:122px;height:38px;line-height:38px;text-align:center;font-size:18px;color:#fff;background:#ff5a00;text-decoration:none;margin:20px 0;}
+#mail_p2p .white .ps{background:#fff1de;border:solid 1px #ffcf8e;color:#737373;padding:8px 8px 30px 8px;}
+#mail_p2p .white .ps a{color:#ff931e;text-decoration:underline;}
+</style>
+</head>
+
+<body>
+<div id="mail_p2p">
+	<div class="logo"><a href="{webroot}" target="_blank"><img src="{webroot}/tpl/image/mail/logo.gif" /></a></div>
+	<div class="white">
+		<div class="text">
+		亲爱的<span>{uname}</span>用户：<br />
+		欢迎使用{p2pname}系统！<br />
+		{Vc_content}
+		<!--a href="#" class="button" target="_blank">####</a-->
+		</div>
+		<div class="ps">
+		如果想了解更多信息，请登录：<br />
+		{p2pname}官方首页：<a href="{webroot}" target="_blank">{host}</a>
+		</div>
+	</div>
+</div>
+</body>
+</html>

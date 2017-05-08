@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>云采网 - 消息设置</title>
+{include file='public/head' /}
+</head>
+<body>
+    <!-- top -->
+    {include file='public/top' /}
+    <!-- top -->
+    <!-- content -->
+    <!-- content -->
+    <div class="crm nbg bd">
+        <div class="w1200 cc">
+            <em class="crm-inner"><!--占位用的勿删--></em><a href="/">首页</a><em>></em><a href="/workroom/index">我的工作台</a><em>></em><a href="/message/myMessages">消息</a><em>></em><span>消息提醒设置</span>
+        </div>
+    </div>
+    <form class="messages" action="{:url('saveConfig')}" method="post" data-success="设置成功" data-error="设置失败">
+        <div class="settings cc w1200">
+            <div class="set-title">交易提醒</div>
+            <div class="set-header cb">
+                操作<span class="title2">提醒方式</span>
+            </div>
+            <input type="hidden" name="save__audit_success[]" value="1">
+            <input type="checkbox" style="display:none;" id="s1" name="save__audit_success[]" {$model->getChecked('audit_success',2)} value="2">
+            <input type="checkbox" style="display:none;" id="s2" name="save__audit_success[]" {$model->getChecked('audit_success',3)} value="3">
+            <ul class="set-list">
+                <li>
+                    <input type="hidden" name="save__audit_fail[]" value="1">
+                    <a>项目申请状态更新提醒</a>
+                    <label for="f1" class="imessage"><input type="checkbox" id="f1" name="save__audit_fail[]" {$model->getChecked('audit_fail',2)} value="2">站内信</label>
+                    <label for="f2" class="cmessage"><input type="checkbox" id="f2" name="save__audit_fail[]" {$model->getChecked('audit_fail',3)} value="3">短信</label>
+                </li>
+                <li>
+                    <input type="hidden" name="save__remind_arrived[]" value="1">
+                    <a>订单到货提醒</a>
+                    <label for="a1" class="imessage"><input type="checkbox" id="a1" name="save__remind_arrived[]" {$model->getChecked('remind_arrived',2)} value="2">站内信</label>
+                    <label for="a2" class="cmessage"><input type="checkbox" id="a2" name="save__remind_arrived[]" {$model->getChecked('remind_arrived',3)} value="3">短信</label>
+                </li>
+                <li>
+                    <input type="hidden" name="save__remind_dispatch[]" value="1">
+                    <a>订单发货提醒</a>
+                    <label for="d1" class="imessage"><input type="checkbox" id="d1" name="save__remind_dispatch[]" {$model->getChecked('remind_dispatch',2)} value="2">站内信</label>
+                    <label for="d2" class="cmessage"><input type="checkbox" id="d2" name="save__remind_dispatch[]" {$model->getChecked('remind_dispatch',3)} value="3">短信</label>
+                </li>
+                <li>
+                    <input type="hidden" name="save__remind_repay[]" value="1">
+                    <a>还款提醒</a>
+                    <label for="r1" class="imessage"><input type="checkbox" id="r1" name="save__remind_repay[]" {$model->getChecked('remind_repay',2)} value="2">站内信</label>
+                    <label for="r2" class="cmessage"><input type="checkbox" id="r2" name="save__remind_repay[]" {$model->getChecked('remind_repay',3)} value="3">短信</label>
+                </li>
+                <li>
+                    <input type="hidden" name="save__remind_check[]" value="1">
+                    <a>对账提醒</a>
+                    <label for="c1" class="imessage"><input type="checkbox" id="c1" name="save__remind_check[]" {$model->getChecked('remind_check',2)} value="2">站内信</label>
+                    <label for="c2" class="cmessage"><input type="checkbox" id="c2" name="save__remind_check[]" {$model->getChecked('remind_check',3)} value="3">短信</label>
+                </li>
+                
+            </ul>
+            <div class="set-title bd">系统提示</div>
+            <div class="set-header cb">
+                操作<span class="title2">提醒方式</span>
+            </div>
+            <ul class="set-list">
+                
+                <li>
+                    <input type="hidden" name="save__user_code_reset[]" value="1">
+                    <a>密码修改变动</a>
+                    <label for="t1" class="imessage"><input type="checkbox" id="t1" name="save__user_code_reset[]" {$model->getChecked('user_code_reset',2)} value="2">站内信</label>
+                    <label for="t2" class="cmessage"><input type="checkbox" id="t2" name="save__user_code_reset[]" {$model->getChecked('user_code_reset',3)} value="3">短信</label>
+                </li>
+            </ul>
+            <button type="submit" class="btn-submit">保存设置</button>
+        </div>
+    </form>
+    <!-- content -->
+<!-- content -->
+<!-- footer -->
+{include file='public/foot' /}
+<script type="text/javascript">
+    var $s1 = $('#s1') , $s2 = $('#s2') , $f1 = $('#f1') , $f2 = $('#f2') ;
+    $f1.change(function(){
+    	$s1.prop('checked',$(this).prop('checked')) ;
+    }) ;
+    $f2.change(function(){
+    	$s2.prop('checked',$(this).prop('checked')) ;
+    }) ;
+    
+    $(".messages").ajaxForm({
+        success: function(){
+            location.reload();
+        }
+    });
+</script>
+<!-- footer -->
+</body>
+</html>

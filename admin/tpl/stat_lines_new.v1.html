@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss_stat"}
+{if="isset($extend.js)"}
+	{$extend.js}
+{/if}
+<style type="text/css">
+.container-item{padding: 10px}
+.container-item{color: rgb(192,192,192);cursor: pointer;}
+</style>
+</head>
+
+<body>
+<div id="main">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.html}</a>
+			 {/if}
+		{/loop}
+	</div>
+
+	<div class="table">
+		<div style="position:relative">
+			<div class="container-item" style="position:absolute; width:100px;right: 15px; top: 5px;float: right;z-index:100">
+				<div><b>成交金额</b></div>
+				<div><b>综合年化收益</b></div>
+				<div><b>投资人数统计</b></div>
+				<div><b>投资成功笔数</b></div>
+			</div>
+			
+			<div class="container" id="container1" style="width:95%;min-width:400px;height:450px;border:1px solid #c0c0c0;margin:5px auto 10px"></div>
+			<div class="container" id="container2" style="width:95%;min-width:400px;height:450px;border:1px solid #c0c0c0;margin:5px auto 10px;display: none;"></div>
+			<div class="container" id="container3" style="width:95%;min-width:400px;height:450px;border:1px solid #c0c0c0;margin:5px auto 10px;display: none;"></div>
+			<div class="container" id="container4" style="width:95%;min-width:400px;height:450px;border:1px solid #c0c0c0;margin:5px auto 10px;display: none;"></div>
+		</div>
+	</div>
+
+	<div class="table">
+	<table>
+	<tr class="tr_bt">
+		<td><strong>提示信息</strong></td>
+	</tr>
+	{loop="helps"}
+	<tr><td>{$key+1}.{$value}</td></tr>
+	{/loop}
+	</table>
+	</div>
+</div>
+<script type="text/javascript">
+var chart_value1,chart_value2,chart_value3,chart_value4;
+var p2psubtitle = '';
+chart_value1 = {
+	chart: {
+		renderTo: 'container1',
+		margin: [80, 40, 30, 70]
+	},
+	title: {
+		text: '成交金额',
+		style: {margin: '10px 0 0 0'}
+	},
+	subtitle: {
+		text: p2psubtitle
+	},
+	xAxis: [{
+		categories: []
+	}],
+	yAxis: [{
+		title: {
+			text: ''
+		},
+		labels: {
+			formatter: function() {
+				return this.value+' 万';
+			}
+		}
+	}],
+	tooltip: {
+		formatter: function() {
+			return ''+this.y +' 万';
+		},
+		style: {color: '#003399'}
+	},
+	legend:{enabled:false},
+	series: [{
+		data: [0]
+	}]
+};
+
+chart_value2 = {
+		chart: {
+			renderTo: 'container2',
+			margin: [80, 40, 30, 70]
+		},
+		title: {
+			text: '综合年化收益',
+			style: {margin: '10px 0 0 0'}
+		},
+		subtitle: {
+			text: p2psubtitle
+		},
+		xAxis: [{
+			categories: []
+		}],
+		yAxis: [{
+			title: {
+				text: ''
+			},
+			/* min: 0,  */
+			labels: {
+				formatter: function() {
+					return this.value+' %';
+				}
+			}
+		}],
+		tooltip: {
+			formatter: function() {
+				return ''+this.y +' %';
+			},
+			style: {color: '#003399'}
+		},
+		legend:{enabled:false},
+		series: [{
+			data: [0]
+		}]
+	};
+	
+chart_value3 = {
+		chart: {
+			renderTo: 'container3',
+			margin: [80, 40, 30, 70]
+		},
+		title: {
+			text: '投资人数统计',
+			style: {margin: '10px 0 0 0'}
+		},
+		subtitle: {
+			text: p2psubtitle
+		},
+		xAxis: [{
+			categories: []
+		}],
+		yAxis: [{
+			title: {
+				text: ''
+			},
+			/* min: 0,  */
+			labels: {
+				formatter: function() {
+					return this.value+' 人';
+				}
+			}
+		}],
+		tooltip: {
+			formatter: function() {
+				/* if(unit=='千人'){
+				   this.y=this.y/1000;
+				} */
+				return ''+this.y +' 人';
+			},
+			style: {color: '#003399'}
+		},
+		legend:{enabled:false},
+		series: [{
+			data: [0]
+		}]
+	};
+
+chart_value4 = {
+		chart: {
+			renderTo: 'container4',
+			margin: [80, 40, 30, 70]
+		},
+		title: {
+			text: '投资成功笔数',
+			style: {margin: '10px 0 0 0'}
+		},
+		subtitle: {
+			text: p2psubtitle
+		},
+		xAxis: [{
+			categories: []
+		}],
+		yAxis: [{
+			title: {
+				text: ''
+			},
+			/* min: 0,  */
+			labels: {
+				formatter: function() {
+					return this.value+' 笔';
+				}
+			}
+		}],
+		tooltip: {
+			formatter: function() {
+				return ''+this.y +' 笔';
+			},
+			style: {color: '#003399'}
+		},
+		legend:{enabled:false},
+		series: [{
+			data: [0]
+		}]
+	};
+$(function() {
+	var datas='{$stat}';
+	var da = eval('('+datas+')');
+	
+	var chart = new Highcharts.Chart(chart_value1);
+	chart.xAxis[0].setCategories(da.datalist,true);
+	chart.series[0].setData(da.moneylist,true);
+	
+	chart = new Highcharts.Chart(chart_value2);
+	chart.xAxis[0].setCategories(da.datalist,true);
+	chart.series[0].setData(da.ratelist,true);
+	
+	chart = new Highcharts.Chart(chart_value3);
+	chart.xAxis[0].setCategories(da.datalist,true);
+	chart.series[0].setData(da.lenderlist,true);
+	
+	chart = new Highcharts.Chart(chart_value4);
+	chart.xAxis[0].setCategories(da.datalist,true);
+	chart.series[0].setData(da.lendnumlist,true);
+	
+	$(".container-item div").eq(0).css("color","#003399");
+	$(".container-item div").live('click',function(){
+		$(".container-item div").css("color","rgb(192,192,192)");
+		$(this).css("color","#003399");
+		$(".container").css("display","none");
+		$(".container").eq($(this).index(".container-item div")).show();
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		{include file='public/head'}
+		<title>云采网 - 我的找车</title>
+	</head>
+	<body>
+	{include file="public/top"}
+		<!-- content -->
+		<div class="content w1200 cc cb mt24">
+			{include file="public/sideNav"}
+			<div class="fr w1000 find-list">
+				<ul class="tab fl-li cb">
+					<li {if condition="($type==0)"}class='active'{/if}><a href="/find_cars/listpage?type=0">全部</a></li>
+					<li {if condition="($type==1)"}class='active'{/if}><a href="/find_cars/listpage?type=1">审核中<em>（{$count.wait}）</em></a></li>
+					<li {if condition="($type==2)"}class='active'{/if}><a href="/find_cars/listpage?type=2">已通过<em>（{$count.pass}）</em></a></li>
+					<li {if condition="($type==3)"}class='active'{/if}><a href="/find_cars/listpage?type=3">未通过<em>（{$count.deny}）</em></a></li>
+					<li {if condition="($type==4)"}class="active"{/if}><a href="/find_cars/listpage?type=4">已取消<em>（{$count.cancel}）</em></a></li>
+				</ul>
+				<ul class="tab-menu fl-li cb mt15">
+					<li {if condition="($I_industryID==0)"}class='active'{/if}><a href="/find_cars/listpage?type={$type}&I_industryID=0">全部</a></li>
+					{volist name="$industryModel->getArr" id="vo"}
+					<li {if condition="($I_industryID==$key)"}class='active'{/if}><a href="/find_cars/listpage?type={$type}&I_industryID={$key}">{$vo}运输</a></li>
+					{/volist}
+				</ul>
+				<div class="list-header list-header-order">
+					<ul class="cb fl-li">
+						<li style="width:211px">货物详情</li>
+						<li style="width:186px">数量</li>
+						<li style="width:197px">发货信息</li>
+						<li style="width:198px">收货信息</li>
+						<li style="width:86px">状态</li>
+						<li style="width:122px">操作</li>
+					</ul>
+				</div>
+				<!-- 进行中的订单 -->
+				{volist name='$listdata' id='vo'}
+				<table class="ctl-table-cars">
+					<thead>
+					<th width="196" class="auto tal">
+						<p>订单号：{$vo.Vc_orderSn}</p>
+					</th>
+					<th width="192" class="tac">
+						<p>下单时间：{$vo.Createtime|strtotime|date="Y-m-d H:i",###}</p>
+						<span></span>
+					</th>
+					<th width="200" class="tac">
+						<p>到货日期：{$vo.D_arrived_start|strtotime|date="Y-m-d H:i",###}</p>
+					</th>
+					<th width="100" class="tac">
+						<b>{$vo.I_plus_tax==1?'含税':'不含税'}</b>
+					</th>
+					<th width="100" class="tac">
+						<b>{$vo.I_plus_dumper==1?'自卸车':'不自卸车'}</b>
+					</th>
+					<th width="124">
+						<b>{$vo.I_plus_deliveryfee==1?'垫出库费':'不垫出库费'}</b>
+					</th>
+					<th width="88" class="tac"></th>
+					</thead>
+					<tbody>
+					{volist name='$vo.goods' id='vo2' key="k"}
+					<tr>
+						<td class="auto">
+							<p class="name">{$vo2.Vc_goods_class}&nbsp;&nbsp;&nbsp;{$vo2.Vc_goods_breed}</p>
+							<p class="spec">材质：{$vo2.Vc_goods_material}<span>规格：{$vo2.Vc_goods_spec}</span></p>
+						</td>
+						<td class="tac">
+							{if condition="($vo2.Vc_unit=='件')"}{$vo2.N_plan_weight|intval}{else}{$vo2.N_plan_weight}{/if}&nbsp;{$vo2.Vc_unit}
+						</td>
+						{if condition="$k==1"}
+						<td {if condition="$k==1"}rowspan="{$vo.count}"{/if} class="auto">
+							<p>发货人：{$vo.Vc_senter}&nbsp;{$vo.Vc_sent_tel}</p>
+							<p>发货地址：{$vo.order.proname1}{$vo.order.proname1==$vo.order.cityname1?'':$vo.order.cityname1}{$vo.order.areaname1}{$vo.Vc_sent_address}</p>
+						</td>
+						<td {if condition="$k==1"}rowspan="{$vo.count}"{/if} colspan="2" class="auto">
+							<p>收货人：{$vo.Vc_receiver}&nbsp;{$vo.Vc_receiver_tel}</p>
+							<p>收货地址：{$vo.order.proname2}{$vo.order.proname2==$vo.order.cityname2?'':$vo.order.cityname2}{$vo.order.areaname2}{$vo.Vc_receive_address}</p>
+						</td>
+						<td {if condition="$k==1"}rowspan="{$vo.count}"{/if} class="tac status">
+							{$findCarsModel->statusArray[$vo.I_status]}
+						</td>
+						<td {if condition="$k==1"}rowspan="{$vo.count}"{/if} class="tac">
+							<a href="{:url('/find_cars/orderInfo',['id'=>$vo.id])}" class="link"> 订单详情</a>
+							{if condition="$vo.I_status==1&&$k==1"}
+						<a href="javascript:void(0);" data-ajax="/find_cars/checkModifyStatus?id={$vo.id}" data-id="{$vo.id}" data-toform="find_cars" class="link link-btn modify-order-btn">修改订单</a>
+							<a href="javascript:;" data-ajax="{:url('/find_cars/cancel',['id'=>$vo.id])}" class="link cancel"> 取消订单</a>
+							{/if}
+						</td>
+						{/if}
+					</tr>
+					{/volist}
+					<tr>
+						<td colspan="5" class="auto comment">
+							备注:{$vo.T_note}
+						</td>
+						<td class="comment auto" colspan="2">
+							{if condition="$vo.I_offertype==1"}
+								<b>单价：<em class="total">{$vo.N_expectprice}元/吨</em></b>
+							{else}
+								<b>一口价：<em class="total">{$vo.N_expectprice}元</em></b>
+							{/if}
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				{/volist}
+				<!-- 进行中的订单 -->
+				{if condition="count($listdata)>0"}
+				<!-- 分页 -->
+				<div class="cb pager fl-li">
+					<div class="fr">
+						{$list->render()}
+					</div>
+				</div>
+				<!-- 分页 -->
+				{/if}
+			</div>
+		</div>
+		<!-- content -->
+		<!-- sideBar -->
+		{include file="public/sideBar"}
+		<!-- sideBar -->
+	{include file="public/foot"}
+	<script type="text/javascript">
+		$(".ctl-table-cars a.cancel").btnAjax({
+			isConfirm:true,
+			btn:["确定","返回"],
+			success:"取消成功"
+		})
+	</script>
+	</body>
+</html>

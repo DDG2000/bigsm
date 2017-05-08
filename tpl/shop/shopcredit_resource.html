@@ -1,0 +1,79 @@
+	{include="inc/css"}
+    <title>商铺资源单</title>
+</head>
+<body>
+    {include="inc/shop/header"}
+    <!-- banner -->
+    {include="inc/shop/banner"}
+    <!-- banner -->
+    <!-- 中间内容部分 -->
+    <div id="container">
+		<div class="c w1100">
+			<!-- 商铺首页导航 -->
+			{include="inc/shop/nav"}
+			<!-- 商铺首页导航 -->
+			<div class="cb w">
+				<!-- 首页中间部分 -->
+				<div class="fl main-left">
+					<div class="resourcelist">
+						<table>
+							<thead>
+								<tr>
+									<th width="145">公司名称</th>
+									<th width="76">主营品种</th>
+									<th width="183">资源单说明</th>
+									<th width="164">联系人</th>
+									<th width="51">下载数</th>
+									<th width="124">上传时间</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+									{$vs=$shopres}
+									<tr>
+										<td>{$vs.Vc_name}</td>
+										<td class="word-wrap1">{loop="$vs.itemClassArr"}{$vo=$value}{$vo.Vc_name}{/loop}</td>
+										<td class="word-wrap2">{$vs.Vc_desc}</td>
+										<td>{$vs.Vc_contact}&nbsp;&nbsp;{$vs.Vc_contact_phone}</td>
+										<td>{$vs.I_downloadtimes}</td>
+										<td>{function="formatTime($vs['Createtime'],'Y-m-d H:i')"}</td>
+										<td>
+											<a href="javascript:void(0);" data-file="{$vs.Vc_res_file}" icon="search" title="预览">预览</a>
+											<a href="{$vs.Vc_res_file}" icon="download" download="xxx.xls" title="下载">下载</a>
+										</td>
+									</tr>
+									<!--<input type="hidden" name="id" value="{$vs.id}">
+									<td>{$vs.Vc_name}</td>
+									<td>-->
+									
+									<!--{loop="$vs.itemClassArr"}
+									{$vo=$value}
+									{$vo.Vc_name}   
+									{/loop}
+									
+									
+									
+									</td>
+									<td>{$vs.Vc_desc}</td>
+									<td>
+									{$vs.Vc_contact}
+									{$vs.Vc_contact_phone}
+									
+									</td>
+									<td>{$vs.I_downloadtimes}</td>
+									<td>{function="formatTime($vs['Createtime'],'Y-m-d H:i')"}</td>
+									<td>{$vs.Vc_res_file}</td>-->
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- 首页中间部分 -->
+				<!-- 首页右侧 -->
+				{include="inc/shop/company"}
+				<!-- 首页右侧 -->
+			</div>
+		</div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

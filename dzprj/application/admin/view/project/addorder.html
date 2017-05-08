@@ -1,0 +1,206 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="x_content">
+        <br>
+        <form  class="form-horizontal form-label-left" novalidate>
+         	
+             <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">申请信息</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                <ul class="list-unstyled">
+	              	<li><i class="fa fa-user fa-fw"></i> 项目申请人：{$data|output='Vc_applicantName'}</li>
+	              	<li><i class="fa fa-university fa-fw"></i> 公司名：{$data|output='Vc_erp_name'}</li>
+	              	<li><i class="fa fa-calendar fa-fw"></i> 申请时间：{$data|output='Createtime'}</li>
+              	</ul>
+                </h5>
+            </div>
+             <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">项目信息</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                 <ul class="list-unstyled">
+	              	<li><i class="fa fa-briefcase fa-fw"></i> 项目名：{$data.Vc_ct_name==null?$data.projname:$data.Vc_ct_name}</li>
+	              	<li><i class="fa fa-jpy fa-fw"></i> 当前可用额度：{$data.N_usable_loan}万      授信额度：{$data.N_loan_maxprice}万</li>
+	              	<li><i class="fa fa-map-marker fa-fw"></i> 项目地址：{$data.Vc_address}</li>
+              	 </ul>
+                </h5>
+            </div>
+            <div class="form-group item">
+		                <label class="control-label col-md-3 col-sm-3 col-xs-12">采购申请人 <span class="required">*</span></label>
+		                <div class="col-md-3 col-sm-4 col-xs-6">
+		                    <select class="form-control"  id="userSel" name='I_userID' required="required">
+		                     <option value="">请选择用户</option>
+		                     {volist name="$users" id="vo"}
+                                <option value="{$vo.I_userID}">{$vo.Vc_applicantName}</option>
+                            {/volist}
+		                    </select>
+		                 
+		                </div>
+		           
+		                
+	         </div>
+            <div class="form-group item">
+		                <label class="control-label col-md-3 col-sm-3 col-xs-12">行业 <span class="required">*</span></label>
+		                <div class="col-md-3 col-sm-4 col-xs-6">
+		                  <select name="I_industryID" class="form-control"  required="required">
+                            {volist name="$malls" id="vo"}
+                                <option value="{$vo.id}">{$vo.Vc_name}</option>
+                            {/volist}
+                        </select>
+		                </div>
+	         </div>
+         	 <div class="item form-group" >
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">收货人<span class="required">*</span></label>
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                  <input name="Vc_contact"  class="form-control" value="{$data|output='Vc_applicantName'}" required="required" type="text">
+    
+                </div>
+            </div>
+         	 <div class="item form-group" >
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">联系手机<span class="required">*</span></label>
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                  <input name="Vc_phone"  class="form-control" maxlength="11" value="{$data|output='umobile'}" required="required" type="text">
+    
+                </div>
+            </div>
+         	 <div class="item form-group" >
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">收货地址<span class="required">*</span></label>
+                <div class="col-md-2 col-sm-3 col-xs-5 pull-left">
+					<select name="I_provinceID" class="form-control" id="province" ><option>请选择省</option></select>    
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-5 pull-left">
+			 
+					<select name="I_cityID" id="city" class="form-control" ><option>请选择市</option></select>    
+				 
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-5 pull-left">
+					   
+					<select name="I_districtID" id="district" class="form-control" ><option>请选择区</option></select>    
+                </div>
+               
+            </div>
+            <div class="item form-group" >
+                <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                 <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input name="Vc_address"  class="form-control" value="{$data|output='Vc_address'}" required="required" type="text" placeholder="详细地址">
+    
+                </div>
+            </div>
+           
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" > 运输要求</label>
+                
+            </div>
+             <div class="form-group item">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" >到货时间 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12  ">
+                                    <span class="fa fa-calendar form-control-feedback left" ></span>
+                                    <input type="text" class="form-control has-feedback-left "  id="D_transport_end" placeholder=""  name="D_transport_end">
+                                </div>
+                            </div>
+              </div>
+             <div class="form-group item">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" > 备注
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <textarea name="T_note" maxlength="30"    class="form-control"></textarea>
+                            </div>
+              </div>
+             <div class="item form-group" }>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">erp订单编号<span class="required">*</span></label>
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                  <input name="Vc_orderSn" id="Vc_orderSn" class="form-control" required="required" type="text">
+    
+                </div>
+            </div>
+            
+            
+            <div class="clearfix"></div>
+            <div class="ln_solid"></div>
+            <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                 <input name="I_projectID"   value="{$data.aid}" type="hidden">
+                 <input name="Vc_projNo"   value="{$data.Vc_code}" type="hidden">
+                 <input name="projname"   value="{$data.Vc_ct_name}" type="hidden">
+                    <button type="button" class="btn btn-success btn-sub">确认</button>
+                    <button onclick="history.go(-1);return false;" class="btn   btn-danger">取消</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    	
+    	
+    	$().autoSelectData({
+    		'#province':{
+    			url:"{:url('comm/getprovince')}",
+    			level:0
+    		},
+    		'#city':{
+    			url:"{:url('/comm/getCity?pid=')}",
+    			level:1
+    		},
+    		'#district':{
+    			url:"{:url('/comm/getDistrict?pid=')}",
+    			level:2
+    		}
+    	})
+    	 
+    	  var $form = $('form');
+           
+    	//时间控件molv
+    	    var start = {
+    	        elem: '#D_transport_end',
+    	        format: 'YYYY-MM-DD hh:mm:ss',
+    	        min: '2016-01-01 00:00:01', //设定最小日期为当前日期
+    	        max: '2100-12-31 23:59:59', //最大日期
+    	        istime: true,
+    	        istoday: true,
+    	        choose: function(datas){
+    	            end.min = datas; //开始日选好后，重置结束日的最小日期
+    	            end.start = datas //将结束日的初始值设定为开始日
+    	        }
+    	    };
+    	    laydate(start);
+	    
+	    
+    	//业务提交
+    	$form.on('blur', 'input[required]', validator.checkField);
+        $(".btn-sub").on("click", function(){
+        	
+         	if(!validator.checkAll($form) ) {
+        		return false;
+        	} 
+    			layer.confirm('确认提交吗？', {
+    				icon: 3, 
+    				btn: ['确认','取消'], //按钮
+    				title:'提示',
+    			}, function(index){
+      				layer.close(index);
+      				$.post("{:url('/admin/project/addorder')}",$form.serializeArray(),
+      				function(data){
+      					if(null != data.msg || '' != data.msg){
+      						layer.msg(data.msg);
+      					}
+      					
+      				 	if(data.code==200){
+      						setTimeout(function(){window.location.href="{:url('/admin/project/index')}";},1000);
+      					}
+      				
+      				});
+    			});
+    		
+    	});
+        
+    }) ;
+</script>

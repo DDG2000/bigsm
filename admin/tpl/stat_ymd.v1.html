@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss_stat_scrollbar"}
+{if="isset($extend.js)"}
+	{$extend.js}
+{/if}
+</head>
+
+<body>
+<div id="main">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.html}</a>
+			 {/if}
+		{/loop}
+	</div>
+
+	{if="isset($extend.sTypes)"}
+	<div class="table">
+	<form name="form1" method="post" action="?" check="1">
+	<div class="b_line1" style="padding:8px;">
+		{if="isset($extend.sTypes)"}
+			{loop="extend.sTypes"}
+		<span class="lsi">{$value}</span>
+			{/loop}
+		{/if}
+		<a name="submit" class="buta" style="display:inline-block;float:none;margin-left:15px;" />搜索</a>
+		{loop="$extend.hides"}
+		<input type="hidden" name="{$key}" value="{$value}"/>
+		{/loop}
+	</div>
+	</form>	
+	</div>
+	{/if}
+	
+	<div class="table" style="margin:auto;text-align:center;width:{$stat.w};">
+		<div style="border:1px solid #c0c0c0;position:relative">
+			<div style="position:absolute; width:100px;right: 10px; top: 10px;float: right;z-index:100">
+				{$extend.ymd}
+			</div>
+			<div id="container" style="min-width:400px;height:400px;"></div>
+		</div>
+	</div>
+	
+	{if="isset($list)"}
+	<div class="table">
+	<table>
+	<tr class="tr_bt">
+		<td width="25">序号</td>
+		{loop="$list.ths"}
+		<td width="{$value.wid}">{$value.val}</td>
+		{/loop}
+	</tr>
+	{loop="$list.tds"}
+	<tr>
+		<td>{$counter+1}</td>
+		{$value}
+	</tr>
+	{else}
+	<tr>
+		<td width="25" colspan="10" align="center">没有数据！</td>
+	</tr>
+	{/loop}
+	</table>
+	</div>
+	{/if}
+
+	<div class="table">
+	<table>
+	<tr class="tr_bt">
+		<td><strong style="">提示信息</strong></td>
+	</tr>
+	{loop="helps"}
+	<tr><td>{$key+1}.{$value}</td></tr>
+	{/loop}
+	</table>
+	</div>
+</div>
+<script type="text/javascript">
+//分割显示
+var all_series = [{$stat.datas}];
+var len = [{$stat.items}];
+{if="$stat.datas!=''"}
+$(function () {
+	var chart = new Highcharts.Chart({
+		chart: {
+			renderTo: 'container',
+			heigth:{$stat.h},
+			type: 'line'
+		},
+		credits:{
+			text:''
+		},
+		title: {
+			text: '{$stat.title}'
+		},
+		subtitle: {
+			text: '{$stat.subtitle}'
+		},
+		/* rangeSelector:{
+			enabled:true
+		}, */
+		xAxis: {
+			categories: [{$stat.items}],
+			showFirstLabel:true
+			{if="$stat.xlens > $stat.xnum"}
+			,min: {$stat.xlens - $stat.xnum} //3.设置显示个数
+			,max:{$stat.xlens-1}
+			{/if}
+		},
+		{if="$stat.xlens > $stat.xnum"}
+		scrollbar: {
+	        enabled: true,
+	        left:0,
+	        scrollLeft:0,
+	        liveRedraw:true
+	    },
+	    {/if}
+		yAxis: {
+			title: {
+				text: '{$stat.ytitle}'
+			}
+		},
+		tooltip: {
+			enabled: true,
+			formatter: function() {
+				/* return '<b>'+ this.series.name +'</b><br/>'+
+					this.x +': '+ this.y +'{$stat.yt2}'; */
+				return ''+this.y +' '+ '{$stat.yt2}';;
+			}
+		},
+		plotOptions:{line:{dataLabels:{enabled: true}, enableMouseTracking: true}},
+		legend:{enabled:{function="iset($stat.legend, 'true')"},
+			xDateFormat:0
+		},
+		series: all_series
+	});
+	//只显示最后一个
+	$("#container .highcharts-legend-item:lt("+(all_series.length-1)+")").click();
+	$(".highcharts-scrollbar").click(function(){
+		//alert($(".highcharts-scrollbar").width());
+	});
+	
+});
+{/if}
+</script>
+</body>
+</html>

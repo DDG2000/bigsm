@@ -1,0 +1,10 @@
+<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+       <li role="presentation" class="{$type=='userReg'?"active":""}"><a href="{:url('index',array('type'=>'userReg'))}" id="home-tab" role="tab"  >会员注册设置</a>
+       </li>
+       <li role="presentation" class="{$type=='companyAuth'?"active":""}"><a href="{:url('index',array('type'=>'companyAuth'))}" role="tab" id="profile-tab"  >会员认证设置</a>
+       </li>
+       <li role="presentation" class="{$type=='projApply'?"active":""}"><a href="{:url('index',array('type'=>'projApply'))}" role="tab" id="profile-tab2" >项目申请设置</a>
+       </li>
+       <li role="presentation" class="{$type=='orderCreate'?"active":""}"><a href="{:url('index',array('type'=>'orderCreate'))}" role="tab" id="profile-tab2" >订单创建设置</a>
+       </li> 
+   </ul>

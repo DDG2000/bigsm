@@ -1,0 +1,118 @@
+ {include="inc/shop/css"}
+<title>卖家中心- 首页</title>
+</head>
+
+<body>
+	{include="inc/shopcenter/header"}
+	<!-- 中间内容部分 -->
+	<div id="content">
+		<div class="w1100 c cb">
+			<!--   侧边菜单 -->
+			{include="inc/shopcenter/side"}
+			<!-- 侧边菜单 -->
+			<!-- 内容区 -->
+			<div class="fr content-main">
+				<div class="w content-main-head">
+					<div class="fl company-info">
+						<div class="img fl">
+							<img src="{$data.base.Vc_logo_pic}##" width="100" height="100" />
+						</div>
+						<div class="fl c-666 comany-info-con">
+							<p>公司名称:&nbsp;&nbsp;{$data.base.Vc_name}</p>
+							<p>成交数量:&nbsp;&nbsp;{$data.base.N_amount}吨</p>
+							<p>成交金额:&nbsp;&nbsp;{$data.base.N_money}元</p>
+							<p>开店时间:&nbsp;&nbsp; {function="formatTime($data.base.Dt_open,'Y-m-d')"}
+							</p>
+						</div>
+					</div>
+					<div class="fl db-a ib-i order-info">
+						<a href="#" class="order-info-layer">
+							<i class="pending"></i>待处理订单<em>{$data.ordercount}</em>
+						</a>
+						<a href="#" class="pub-a order-info-layer">
+							<i class="pub"></i>我的发布<em>{$data.publishedcount}</em>
+						</a>
+					</div>
+				</div>
+				<div class="content-main-con">
+					<div class="cb content-main-con-head">
+						<span class="head-title">我的订单</span>
+						<a href="#" class="fr head-btn">查看全部订单</a>
+					</div>
+					<div class="content-main-con-list">
+						<div class="cb fs14 c-444 homeorder-header">
+							<span class="s1">订单详情</span>
+							<span class="s2">收货人</span>
+							<span class="s3">总计</span>
+							<span class="s4">订单状态</span>
+							<span class="s5">操作</span>
+						</div>
+						<div class="table-myorder home">
+							{loop="$data.orderlist"}
+								<table>
+									<thead>
+										<tr>
+											<th colspan="8">
+												订单号： <a href="#" class="order-num">{$value.Vc_orderNO}</a><span class="order-date">下单时间：{function="formatTime($value.Createtime,'Y-m-d H:i')"}</span>
+											</th>
+										</tr>
+									</thead>
+									<tr>										
+										{$v=$value.commoditylist[0]}
+										<td width="368" class="homecon">{$v.itemname}&nbsp;/&nbsp;{$v.specificationname}&nbsp;/&nbsp;{$v.stuffname}&nbsp;/&nbsp;{$v.factoryname}&nbsp;/&nbsp;{$v.warehouse}&nbsp;/&nbsp;{$v.N_amount}件&nbsp;/&nbsp;{$v.N_weight}吨</td>
+										<td rowspan="{function="count($value.commoditylist)"}" width="117" class="js-showInfo">
+											{$value.Vc_consignee}
+											<div class="thisInfo">
+												<p>姓名：{$value.Vc_consignee}</p>
+												<p>地址：{$value.Vc_consignee_address}</p>
+												<p>电话：{$value.Vc_consignee_phone}</p>
+											</div>
+										</td>
+										<td rowspan="{function="count($value.commoditylist)"}" width="134" class="money">￥{$value.N_amount_price}</td>
+										<td rowspan="{function="count($value.commoditylist)"}" width="110" class="status{$value.I_status}">
+											{if="$value.I_status==10"}
+												等待审核
+											{elseif="$value.I_status==20"}
+												已完成
+											{elseif="$value.I_status==30"}
+												待发货
+											{elseif="$value.I_status==40"}
+												待提货
+											{elseif="$value.I_status==50"}
+												商家取消
+											{elseif="$value.I_status==60"}
+												用户取消
+											{/if}
+										</td>
+										<td rowspan="{function="count($value.commoditylist)"}" width="98" class="last1">
+											{if="$value.I_status==10"}
+												<a href="##">修改价格</a>
+											{/if}
+											<a href="/index.php?act=user&m=order&w=detail&id={$value.id}">订单详情</a>
+										</td>
+										{if="$value.I_status==10"}
+											<td rowspan="{function="count($value.commoditylist)"}" class="last">
+												<a href="##">审核</a>
+											</td>
+										{/if}
+									</tr>
+									{loop="$value.commoditylist"}
+										{if="$counter>0"}
+											{$v=$value;}
+											<tr>
+												<td width="368" class="homecon">&nbsp;{$v.itemname}&nbsp;/&nbsp;{$v.specificationname}&nbsp;/&nbsp;{$v.stuffname}&nbsp;/&nbsp;{$v.factoryname}&nbsp;/&nbsp;{$v.warehouse}&nbsp;/&nbsp;{$v.N_amount}件&nbsp;/&nbsp;{$v.N_weight}吨</td>
+											</tr>
+										{/if}
+									{/loop}
+								</table>
+							{/loop}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 内容区 -->
+		</div>
+	</div>
+	<!-- 中间内容部分 -->
+	{include="inc/shop/footer"}
+	{include="inc/js"}

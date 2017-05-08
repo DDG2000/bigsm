@@ -1,0 +1,36 @@
+	{include="inc/usercenter/css"}
+    <title>轮播图片编辑</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="pr content-main-con no">
+            		<form action="/index.php?act=shop&m=slides&w=edit&submit"  method="post" class="m-form-slide" id="js-slide-edit" enctype="multipart/form-data">
+						{$vo=$data}
+						<input type="hidden" name="id" value="{$vo.id}"/>
+						<ul>
+							<li><label class="form-slide-title">名称：</label><input type="text" name="Vc_name"  value="{$vo.Vc_name}"/></li>
+							<li><label class="form-slide-title">链接地址：</label><input type="text" name="Vc_linkurl"  value="{$vo.Vc_linkurl}" /><span class="tips">点击链接到的页面http：//***</span></li>
+							<li><label class="form-slide-title form-slide-current">当前图片：</label><img src="{$vo.Vc_url}#"></li>
+
+							<!-- 时间原因暂时直接提交处理 -->
+							<!--<li><label class="form-slide-title">重新上传：</label><a href="javascript:;" class="form-slide-upload" id="js-slide-upload">选择图片</a><span class="form-slide-filename"></span></li>-->
+							<!-- 后期修改为异步 -->
+
+							<li><label class="form-slide-title">重新上传：</label><label for="js-slide-upload" class="form-slide-upload">选择图片</label><input type="file" name="Vc_img" id="js-slide-upload"><span class="tips">修改广告所显示的内容</span></li>
+							<li><label class="form-slide-title">排序号：</label><input type="text" name="I_order" value="{$vo.I_order}" /><span class="tips">前台显示按降序排列</span></li>
+							<li><button type="submit">保存</button></li>
+						</ul>
+					</form>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

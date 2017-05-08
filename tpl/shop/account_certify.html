@@ -1,0 +1,468 @@
+	{include="inc/usercenter/css"}
+    <title>卖家中心 - 认证信息</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="pr content-main-con no">
+            		<div class="cb content-main-con-head line">
+            			<span class="head-title">认证信息</span>
+            		</div>
+					{if="$isExistShop==1"}
+						{$v=$data;}
+						{if="$issubed==1"}
+							<div class="pr cb companyinfo">
+								<div class="fl fs0 m-form">
+									{if="$v.I_cert_status==1"}
+										<form action="#" method="post" id="js-certify">
+											<input type="hidden" name="Vc_identity_pic1" value="{$v.Vc_identity_pic1}">
+											<input type="hidden" name="Vc_identity_pic2" value="{$v.Vc_identity_pic2}">
+											<input type="hidden" name="Vc_licence_pic" value="{$v.Vc_licence_pic}">
+											<input type="hidden" name="Vc_tax_pic" value="{$v.Vc_tax_pic}">
+											<input type="hidden" name="Vc_org_pic" value="{$v.Vc_org_pic}">
+											<div class="form-item">
+												<label class="title">公司名称：</label><span class="form-item-text">{$v.Vc_name}</span>
+											</div>
+											<div class="form-item">
+												<label class="title">公司地址：</label><span class="form-item-text">
+												{if="$v.proname==$v.cityname"}
+													{$v.proname}{$v.disname}{$v.Vc_address}
+												{else}
+													{$v.proname}{$v.cityname}{$v.disname}{$v.Vc_address}
+												{/if}</span>
+											</div>
+											<div class="form-item">
+												<label class="title">法人姓名：</label><input type="text" value="{$v.Vc_corporation}" name="Vc_corporation" disabled/>
+											</div>
+											<div class="form-item">
+												<label class="title">法人身份证号：</label><input type="text" value="{$v.Vc_identity}" name="Vc_identity" disabled/>
+											</div>
+											<div class="form-item">
+												<label class="title">身份证正面：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">不可修改</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_identity_pic1}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">身份证反面：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">不可修改</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_identity_pic2}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">营业执照：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">不可修改</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_licence_pic}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">税务登记证：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">不可修改</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_tax_pic}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">组织机构代码证：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">不可修改</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_org_pic}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item form-item-apply">
+												<div class="submit">提交</div>
+											</div>
+										</form>
+										<div class="shop-certify-process">
+											<p class="certify-status1">审核中</p>
+										</div>
+									{elseif="$v.I_cert_status==2"}
+										<form action="#" method="post" id="js-certify">
+											<input type="hidden" name="Vc_identity_pic1" value="{$v.Vc_identity_pic1}">
+											<input type="hidden" name="Vc_identity_pic2" value="{$v.Vc_identity_pic2}">
+											<input type="hidden" name="Vc_licence_pic" value="{$v.Vc_licence_pic}">
+											<input type="hidden" name="Vc_tax_pic" value="{$v.Vc_tax_pic}">
+											<input type="hidden" name="Vc_org_pic" value="{$v.Vc_org_pic}">
+											<div class="form-item">
+												<label class="title">公司名称：</label><span class="form-item-text">{$v.Vc_name}</span>
+											</div>
+											<div class="form-item">
+												<label class="title">公司地址：</label><span class="form-item-text">
+												{if="$v.proname==$v.cityname"}
+													{$v.proname}{$v.disname}{$v.Vc_address}
+												{else}
+													{$v.proname}{$v.cityname}{$v.disname}{$v.Vc_address}
+												{/if}</span>
+											</div>
+											<div class="form-item">
+												<label class="title">法人姓名：</label><input type="text" value="{$v.Vc_corporation}" name="Vc_corporation"/>
+											</div>
+											<div class="form-item">
+												<label class="title">法人身份证号：</label><input type="text" value="{$v.Vc_identity}" name="Vc_identity"/>
+											</div>
+											<div class="form-item">
+												<label class="title">身份证正面：</label>
+												<div class="pr form-item-wrapper">
+													<label id="file-input1" class="form-item-file-label">选择图片</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_identity_pic1}#" id="file-img1" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">身份证反面：</label>
+												<div class="pr form-item-wrapper">
+													<label id="file-input11" class="form-item-file-label">选择图片</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_identity_pic2}#" id="file-img11" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">营业执照：</label>
+												<div class="pr form-item-wrapper">
+													<label id="file-input2" class="form-item-file-label">选择图片</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_licence_pic}#" id="file-img2" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">税务登记证：</label>
+												<div class="pr form-item-wrapper">
+													<label id="file-input3" class="form-item-file-label">选择图片</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_tax_pic}#" id="file-img3" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">组织机构代码证：</label>
+												<div class="pr form-item-wrapper">
+													<label id="file-input4" class="form-item-file-label">选择图片</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_org_pic}#" id="file-img4" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item form-item-apply">
+												<button type="submit">提交</button>
+											</div>
+										</form>
+										<div class="shop-certify-process">
+											<p class="certify-status2">请修改后再次申请</p>
+										</div>
+									{elseif="$v.I_cert_status==3"}
+										<form action="#" method="post" id="js-certify">
+											<input type="hidden" name="Vc_identity_pic1" value="{$v.Vc_identity_pic1}">
+											<input type="hidden" name="Vc_identity_pic2" value="{$v.Vc_identity_pic2}">
+											<input type="hidden" name="Vc_licence_pic" value="{$v.Vc_licence_pic}">
+											<input type="hidden" name="Vc_tax_pic" value="{$v.Vc_tax_pic}">
+											<input type="hidden" name="Vc_org_pic" value="{$v.Vc_org_pic}">
+											<div class="form-item">
+												<label class="title">公司名称：</label><span class="form-item-text">{$v.Vc_name}</span>
+											</div>
+											<div class="form-item">
+												<label class="title">公司地址：</label><span class="form-item-text">
+												{if="$v.proname==$v.cityname"}
+													{$v.proname}{$v.disname}{$v.Vc_address}
+												{else}
+													{$v.proname}{$v.cityname}{$v.disname}{$v.Vc_address}
+												{/if}</span>
+											</div>
+											<div class="form-item">
+												<label class="title">法人姓名：</label><input type="text" value="{$v.Vc_corporation}" name="Vc_corporation" disabled/>
+											</div>
+											<div class="form-item">
+												<label class="title">法人身份证号：</label><input type="text" value="{$v.Vc_identity}" name="Vc_identity" disabled/>
+											</div>
+											<div class="form-item">
+												<label class="title">身份证正面：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">不可修改</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_identity_pic1}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">身份证反面：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">不可修改</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_identity_pic2}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">营业执照：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">不可修改</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_licence_pic}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">税务登记证：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">不可修改</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_tax_pic}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">组织机构代码证：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">不可修改</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_org_pic}#" width="257" height="160">
+												</div>
+											</div>
+										</form>
+										<div class="shop-certify-process">
+											<p class="certify-status3">已通过</p>
+										</div>
+									{elseif="$v.I_cert_status==4"}
+										<form action="#" method="post" id="js-certify">
+											<input type="hidden" name="Vc_identity_pic1" value="{$v.Vc_identity_pic1}">
+											<input type="hidden" name="Vc_identity_pic2" value="{$v.Vc_identity_pic2}">
+											<input type="hidden" name="Vc_licence_pic" value="{$v.Vc_licence_pic}">
+											<input type="hidden" name="Vc_tax_pic" value="{$v.Vc_tax_pic}">
+											<input type="hidden" name="Vc_org_pic" value="{$v.Vc_org_pic}">
+											<div class="form-item">
+												<label class="title">公司名称：</label><span class="form-item-text">{$v.Vc_name}</span>
+											</div>
+											<div class="form-item">
+												<label class="title">公司地址：</label><span class="form-item-text">
+												{if="$v.proname==$v.cityname"}
+													{$v.proname}{$v.disname}{$v.Vc_address}
+												{else}
+													{$v.proname}{$v.cityname}{$v.disname}{$v.Vc_address}
+												{/if}</span>
+											</div>
+											<div class="form-item">
+												<label class="title">法人姓名：</label><input type="text" value="{$v.Vc_corporation}" name="Vc_corporation" disabled/>
+											</div>
+											<div class="form-item">
+												<label class="title">法人身份证号：</label><input type="text" value="{$v.Vc_identity}" name="Vc_identity" disabled/>
+											</div>
+											<div class="form-item">
+												<label class="title">身份证正面：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">选择图片</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_identity_pic1}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">身份证反面：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">选择图片</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_identity_pic2}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">营业执照：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">选择图片</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_licence_pic}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">税务登记证：</label>
+												<div class="pr form-item-wrapper">
+													<label  class="form-item-file-label">选择图片</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_tax_pic}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item">
+												<label class="title">组织机构代码证：</label>
+												<div class="pr form-item-wrapper">
+													<label class="form-item-file-label">选择图片</label>
+												</div>
+											</div>
+											<div class="form-item">
+												<div class="form-item-imgpreview">
+													<img src="{$v.Vc_org_pic}#" width="257" height="160">
+												</div>
+											</div>
+											<div class="form-item form-item-apply">
+												<div class="submit">不可提交</div>
+											</div>
+										</form>
+										<div class="shop-certify-process">
+											<p class="certify-status4">不可申请</p>
+										</div>
+									{/if}
+								</div>
+							</div>
+						{else}
+							<div class="pr cb companyinfo">
+								<div class="fl fs0 m-form">
+									<form action="#" method="post" id="js-certify" class="isok">
+										<input type="hidden" name="Vc_identity_pic1" value="{$v.Vc_identity_pic1}">
+										<input type="hidden" name="Vc_identity_pic2" value="{$v.Vc_identity_pic2}">
+										<input type="hidden" name="Vc_licence_pic" value="{$v.Vc_licence_pic}">
+										<input type="hidden" name="Vc_tax_pic" value="{$v.Vc_tax_pic}">
+										<input type="hidden" name="Vc_org_pic" value="{$v.Vc_org_pic}">
+										<div class="form-item">
+											<label class="title">公司名称：</label><span class="form-item-text"></span>
+										</div>
+										<div class="form-item">
+											<label class="title">公司地址：</label><span class="form-item-text">
+											{if="$v.proname==$v.cityname"}
+												{$v.proname}{$v.disname}{$v.Vc_address}
+											{else}
+												{$v.proname}{$v.cityname}{$v.disname}{$v.Vc_address}
+											{/if}</span>
+										</div>
+										<div class="form-item">
+											<label class="title">法人姓名：</label><input type="text" value="" name="Vc_corporation"/>
+										</div>
+										<div class="form-item">
+											<label class="title">法人身份证号：</label><input type="text" value="" name="Vc_identity"/>
+										</div>
+										<div class="form-item">
+											<label class="title">身份证正面：</label>
+											<div class="pr form-item-wrapper">
+												<label id="file-input1" class="form-item-file-label">选择图片</label>
+											</div>
+										</div>
+										<div class="form-item">
+											<div class="form-item-imgpreview">
+												<img src="{#TPL_IMG#}defaults.jpg#" id="file-img1" width="257" height="160">
+											</div>
+										</div>
+										<div class="form-item">
+											<label class="title">身份证反面：</label>
+											<div class="pr form-item-wrapper">
+												<label id="file-input11" class="form-item-file-label">选择图片</label>
+											</div>
+										</div>
+										<div class="form-item">
+											<div class="form-item-imgpreview">
+												<img src="{#TPL_IMG#}defaults.jpg#" id="file-img11" width="257" height="160">
+											</div>
+										</div>
+										<div class="form-item">
+											<label class="title">营业执照：</label>
+											<div class="pr form-item-wrapper">
+												<label id="file-input2" class="form-item-file-label">选择图片</label>
+											</div>
+										</div>
+										<div class="form-item">
+											<div class="form-item-imgpreview">
+												<img src="{#TPL_IMG#}defaults.jpg#" id="file-img2" width="257" height="160">
+											</div>
+										</div>
+										<div class="form-item">
+											<label class="title">税务登记证：</label>
+											<div class="pr form-item-wrapper">
+												<label id="file-input3" class="form-item-file-label">选择图片</label>
+											</div>
+										</div>
+										<div class="form-item">
+											<div class="form-item-imgpreview">
+												<img src="{#TPL_IMG#}defaults.jpg#" id="file-img3" width="257" height="160">
+											</div>
+										</div>
+										<div class="form-item">
+											<label class="title">组织机构代码证：</label>
+											<div class="pr form-item-wrapper">
+												<label id="file-input4" class="form-item-file-label">选择图片</label>
+											</div>
+										</div>
+										<div class="form-item">
+											<div class="form-item-imgpreview">
+												<img src="{#TPL_IMG#}defaults.jpg#" id="file-img4" width="257" height="160">
+											</div>
+										</div>
+										<div class="form-item form-item-apply">
+											<button type="submit" class="submit">保存</button>
+											<button type="reset" class="reset">取消</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						{/if}
+						<hr class="form-hr pa" />
+					{else}
+						<script>
+							alert("请先完善基本信息再进行此操作");
+						</script>
+					{/if}
+            		
+                </div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

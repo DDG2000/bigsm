@@ -1,0 +1,126 @@
+.pop .pbg_600 {
+    background: #fff none repeat scroll 0 0;
+    border: 2px solid #ccc;
+    padding: 10px;
+    position: absolute;
+    width: 600px;
+}
+.pop .pbg_600 .bt {
+    border-bottom: 1px solid #268bd3;
+    height: 36px;
+    padding-bottom: 10px;
+}
+.pop .pbg_600 .bt .name {
+    float: left;
+    font-size: 22px;
+    line-height: 36px;
+    padding-left: 10px;
+}
+.pop .pbg_600 .bt .close {
+    float: right;
+    padding: 15px 10px 0 0;
+    width: 15px;
+}
+.pop .pbg_600 .bt .close a {
+    background: rgba(0, 0, 0, 0) url("../image/pop_close.gif") no-repeat scroll center center;
+    color: #fff;
+    display: block;
+    float: right;
+    height: 15px;
+    width: 15px;
+}
+.pop .pbg_600 .face {
+    color: #333;
+    font-size: 14px;
+    padding-top: 20px;
+    width: 600px;
+}
+.pop .pbg_600 .face .f1 {
+    float: left;
+    line-height: 44px;
+    text-align: center;
+    width: 150px;
+}
+.pop .pbg_600 .face .f1 img {
+    border: 1px solid #ddd;
+    height: 96px;
+    width: 96px;
+}
+.pop .pbg_600 .face .f1 a {
+    color: #0061a4;
+}
+.pop .pbg_600 .face .f1 img {
+    border: 1px solid #ddd;
+}
+.pop .pbg_600 .face .f1 a {
+    color: #0061a4;
+}
+.pop .pbg_600 .face .f2 {
+    float: left;
+    width: 350px;
+}
+.pop .pbg_600 .face .f2 .pt1 {
+    padding: 18px 0;
+}
+.pop .pbg_600 .face .f2 .pt2 {
+    font-size: 14px;
+    line-height: 24px;
+    padding-bottom: 14px;
+}
+.pop .pbg_600 .face .f2 .pt4 {
+    font-size: 16px;
+    line-height: 34px;
+    padding-left: 114px;
+}
+.pop .pbg_600 .face .f2 .pt5 {
+    height: 31px;
+    padding-left: 120px;
+}
+.pop .pbg_600 .face .f2 .pt5 a {
+    background: rgba(0, 0, 0, 0) url("../image/pop_but1.png") no-repeat scroll center center;
+    color: #fff;
+    display: block;
+    float: left;
+    font-size: 16px;
+    height: 31px;
+    line-height: 31px;
+    margin: 0 30px 0 auto;
+    text-align: center;
+    width: 130px;
+}
+.pop .pbg_600 .face .f2 .cut {
+    border: 1px solid #bbb;
+    height: 300px;
+    margin-left: 40px;
+    width: 300px;
+}
+.pop .pbg_600 .face .f2 .cut table {
+    width: 100%;
+}
+.pop .pbg_600 .face .f2 .cut table td {
+    background: #f6f6f6 none repeat scroll 0 0;
+    height: 300px;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+}
+.pop .pbg_600 .face .f2 .cut table td img {
+    max-height: 300px;
+    max-width: 300px;
+}
+.pop .pbg_600 .face .f3 {
+    float: left;
+    width: 100px;
+}
+.pop .pbg_600 .face .f3 a {
+    display: block;
+    height: 35px;
+    margin-top: 18px;
+    width: 35px;
+}
+.pop .pbg_600 .face .f3 .a1 {
+    background: rgba(0, 0, 0, 0) url("../image/face_+.gif") no-repeat scroll 0 0;
+}
+.pop .pbg_600 .face .f3 .a2 {
+    background: rgba(0, 0, 0, 0) url("../image/face_-.gif") no-repeat scroll 0 0;
+}   

@@ -1,0 +1,95 @@
+	{include="inc/usercenter/css"}
+    <title>订单管理 - 订单评价</title>
+</head>
+<body>
+   {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">交易管理</a><a href="#">我的订单</a><span class="current">订单评价</span>
+        		</div>
+				<div class="review">
+					<div class="review-order">
+						<div class="review-order-header cb">
+							<span class="title fl">商品信息</span><span class="title fl">评价状态</span>
+						</div>
+						<div class="review-order-content cb">
+							<div class="review-order-info">
+								{loop="data.goods"}
+								<div class="row">
+									<div class="colum colum1">{$value.itemname}</div>
+									<div class="colum colum2">{$value.stuffname}</div>
+									<div class="colum colum3">{$value.specificationname}</div>
+									<div class="colum colum4">{$value.factoryname}</div>
+									<div class="colum colum5">{$value.warehouse}</div>
+									<div class="colum colum6">{$value.N_amount}</div>
+									<div class="colum colum7">{$value.N_weight}</div>
+								</div>
+								{/loop}
+								<div class="date">
+									购买时间：{$data.Createtime}
+								</div>
+							</div>
+							<div class="review-order-status">
+								<a href="javascript:void(0);">未评价</a>
+							</div>
+						</div>
+					</div>
+					<iframe class="hide" name="hidden"></iframe>
+					<form action="/index.php?act=user&m=order&w=appraise" class="review-warapper" target="hidden" data-timely="0" id="review-form" method="GET" enctype="multipart/form-data">
+						<input type="text" class="hidden" name="id" value="{$data.id}">
+						<div class="review-item">
+							产品质量
+							<div class="compare-my-item ib">
+								<input type="text" class="hidden" name="quality">
+								<div class="bg pa"></div>
+								<div class="inner pa"></div>
+								<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+							</div>
+						</div>
+						<div class="review-item">
+							物流及时性
+							<div class="compare-my-item ib">
+								<input type="text" class="hidden" name="timely">
+								<div class="bg pa"></div>
+								<div class="inner pa"></div>
+								<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+							</div>
+						</div>
+						<div class="review-item">
+							服务态度
+							<div class="compare-my-item ib">
+								<input type="text" class="hidden" name="server">
+								<div class="bg pa"></div>
+								<div class="inner pa"></div>
+								<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+							</div>
+						</div>
+						<div class="review-item">
+							发票及时性
+							<div class="compare-my-item ib">
+								<input type="text" class="hidden" name="invoice">
+								<div class="bg pa"></div>
+								<div class="inner pa"></div>
+								<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+							</div>
+						</div>
+						<div class="review-comment">
+							<span class="comm-title ib">评论</span>
+							<textarea name="Vc_text" id="comment" class="ib"></textarea>
+						</div>
+						<label class="comm-upload"><input type="file" name="T_images"/>上传图片</label>
+						<button type="submit">确定</button>
+					</form>
+				</div>
+    		</div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

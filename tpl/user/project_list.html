@@ -1,0 +1,44 @@
+	{include="inc/usercenter/css"}
+    <title>会员中心 - 我的项目</title>
+</head>
+<body>
+  {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="management-wrapper">
+            		<div class="crumblenav">
+            			<a href="#">项目管理</a><span class="current">我的项目</span>
+            		</div>
+            		<div class="management-wrapper-inner">
+            			<div class="tab-menu">
+            				<ul>
+	        					<li class="active">在执行项目</li>
+	        					<li>已完成项目</li>
+	        				</ul>
+            			</div>
+        				<div class="oh pr w tab-item">
+        					<ul class="pr cb fl-li w110">
+								{loop="$data.data"}
+	        					<li>
+	        						<p>项目名称：<span>{$value.Vc_name}</span></p>
+	        						<p>项目业主：<span>{$value.Vc_admin}</span></p>
+	        						<p>项目地址：{$value.Vc_address}</p>
+	        						<p>联&nbsp;&nbsp;系&nbsp;人：{$value.Vc_contact}</p>
+	        						<p>垫资金额：￥{$value.N_loan_amount}万<a href="##" class="fr">{$value.Vc_name}</a></p>
+	        						<a href="##" class="edit-btn pa"><img src="../image/user/edit.png" width="20" height="20"></a>
+	        					</li>
+								{/loop}
+	        				</ul>
+        				</div>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

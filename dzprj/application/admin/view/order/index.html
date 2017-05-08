@@ -1,0 +1,115 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="table-responsive">
+        <form class="form-horizontal">
+         	
+            <div class="input-group col-md-3 col-sm-4 col-xs-12 form-group pull-right">
+                <input type="text" name="uname" id="nameSearch" class="form-control form-param-to" placeholder="项目名/订单号/公司名" value="{$param.uname}">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" id="nameSearchButton">搜索</button>
+                </span>
+            </div>
+           <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+                <select  x-listen  class="form-control form-param-to" name="projStatus">
+                    <option value="-2">订单状态</option>
+                    {volist name="$model->statusArray" id="vo"}
+                  {if condition="$key!=4"}
+                   	 <option value="{$key}" {$key==$param.projStatus?"selected":""}>{$vo}</option>
+                   {/if}
+                    {/volist}
+                </select>
+            </div>
+        </form>
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+                <tr class="headings">
+                   
+                    <th class="column-title">ID </th>
+                    <th class="column-title">订单号</th>
+                    <th class="column-title">下单人</th>
+                    <th class="column-title">公司名</th>
+                    <th class="column-title">所属项目</th>
+                    <th class="column-title">行业</th>
+                    <th class="column-title">收货地址</th>
+                    <th class="column-title">收货人</th>
+                    <th class="column-title">联系电话</th>
+                    <th class="column-title">订单状态</th>
+                    <th class="column-title">申请时间</th>
+                    <th class="column-title no-link last"><span class="nobr">操作</span>
+                    </th>
+                   
+                </tr>
+            </thead>
+
+            <tbody>
+                 {volist name="$page->items()" id="vo"}
+                <tr class="even pointer">
+               
+                    <td class=" ">{$vo.id}</td>
+                    <td class=" ">{$vo.Vc_orderSn==null?$vo.Vc_Sn:$vo.Vc_orderSn}</td>
+                    <td class=" ">{$vo.Vc_applicantName}</td>
+                    <td class=" ">{$vo.Vc_erp_name}</td>
+                    <td class=" ">{$vo.ct_projname==null?$vo.projname:$vo.ct_projname}</td>
+                    <td class=" ">{$vo.industry}</td>
+                    <td class=" ">{$vo.proname}{$vo.cityname}{$vo.areaname}{$vo.Vc_address}</td>
+                    <td class=" ">{$vo.Vc_contact}</td>
+                    <td class=" ">{$vo.Vc_phone}</td>
+                    <td class=" ">{$model->statusArray[$vo.StatusIndex]}</td>
+                    <td class=" ">{$vo.Createtime}</td>
+                    <td class=" last">
+            
+            
+            			{if condition="(checkPopedom('/admin/order/edit')) "}
+                <a href="{:url('/admin/order/edit',['id'=>$vo.id])}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 审核编辑</a>
+                		 
+               		{/if}
+            
+                
+             
+                    </td>
+                </tr>
+                
+                {/volist}
+            </tbody>
+        </table>
+    </div>
+    {$page->render()}
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+function onListSelectionChange () {
+    var $this = $(this) , val = $this.val() , name = $this.attr('name'),
+        clear=$this.data('clear') || '' , url = new xxx.Url() ,
+        clearArray = clear.split(',') , emptyVal = $this.data('empty') || -2 ;
+    if ('*' == clear) {
+        url.removeAllParams() ;
+    } else if (clearArray.length > 0) {
+        for (var i = clearArray.length - 1; i >= 0; i--) {
+            url.removeParam(clearArray[i]) ;
+        };
+    }
+    (val && val != emptyVal) ? url.setParam(name,val) : url.removeParam(name) ;
+    url.removeParam('page').go() ;
+}
+
+    $(document).ready(function(){
+        $('select[x-listen]').change(onListSelectionChange) ;
+        
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                url = new xxx.Url().removeParam('page') ;
+            
+            url.setParam('uname',encodeURIComponent(name)).go() ;
+        }) ;
+        
+        
+        
+        
+        
+    }) ;
+</script>

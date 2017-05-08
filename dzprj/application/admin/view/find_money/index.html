@@ -1,0 +1,201 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="table-responsive">
+        <form class="form-horizontal">
+         	<div class="col-md-2 col-sm-12 col-xs-12 form-group">
+            	{if condition="(checkPopedom('/admin/find_money/add')) "}
+                <a href="{:url('/admin/find_money/add')}" class="btn btn-sm btn-success" type="button"><i class="fa fa-plus-square"></i> 新增</a>
+                {/if}
+            </div>
+            <div class="input-group col-md-3 col-sm-4 col-xs-12 form-group pull-right">
+                <input type="text" name="keywords" id="nameSearch" class="form-control form-param-to" placeholder="订单号/用户名/存货品名" value="{$param.keywords}">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" id="nameSearchButton">搜索</button>
+                </span>
+            </div>
+           <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+                <select  x-listen  class="form-control form-param-to" name="applystatus">
+                    <option value="">项目状态</option>
+                    {volist name="$findmoney->statusArray" id="vo"}
+                  
+                   	 <option value="{$key}" {$key==$param.applystatus?"selected":""}>{$vo}</option>
+                   
+                    {/volist}
+                </select>
+            </div>
+        </form>
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+                <tr class="headings">
+                    <!-- <th>
+                        <input type="checkbox" id="check-all" class="flat"> 
+                    </th>-->
+                    <th class="column-title" style="width: 5%">ID </th>
+                    <!--<th class="column-title">行业</th>-->
+                    <th class="column-title" style="width: 9%">订单号</th>
+                    <th class="column-title" style="width: 7%">用户名</th>
+                    <th class="column-title" style="width: 9%">查看联系人</th>
+                    <th class="column-title" style="width: 7%">存货品名</th>
+                    <th class="column-title" style="width: 7%">等级规格</th>
+                    <th class="column-title" style="width: 7%">数量</th>
+                    <!--<th class="column-title" style="width: 11%">存货地址</th>-->
+                    <!--<th class="column-title" style="width: 11%">货权单位地址</th>-->
+                    <th class="column-title" style="width: 7%">融资额度</th>
+                    <th class="column-title" style="width: 7%">融资周期</th>
+                    <th class="column-title" style="width: 7%">审核状态</th>
+                    <th class="column-title" style="width: 9%">创建时间</th>
+                    <th class="column-title no-link last"><span class="nobr">操作</span>
+                    </th>
+                    <!-- <th class="bulk-actions" colspan="7">
+                        <a class="antoo" style="color:#fff; font-weight:500;">批量操作 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                    </th> -->
+                </tr>
+            </thead>
+
+            <tbody>
+                 {volist name="$page->items()" id="vo"}
+                <tr class="even pointer">
+                    <td class=" ">{$vo.id}</td>
+                    <td class=" ">{$vo.Vc_orderSn}</td>
+                    <td class=" ">{$vo.username}</td>
+                    <td class="contact"><input type="hidden" value="{$vo.id}">联系人</td>
+                    <td class=" ">{$vo.Vc_ordername}</td>
+                    <td class=" ">{$vo.Vc_level}</td>
+                    <td class=" ">{$vo.N_amount}吨</td>
+                    <!--<td class=" ">{$vo.proname1}{$vo.cityname1}{$vo.areaname1}{$vo.Vc_cave_address}</td>-->
+                    <!--<td class=" ">{$vo.proname2}{$vo.cityname2}{$vo.areaname2}{$vo.Vc_belong_address}</td>-->
+                    <td class=" ">{$vo.N_needed}万元</td>
+                    <td class=" ">{$vo.N_days}天</td>
+                    <td class=" ">{$findmoney->statusArray[$vo.I_status]}</td>
+                    <td class=" ">{$vo.Createtime}</td>
+                    <td class=" last">
+            			{if condition="(checkPopedom('/admin/find_money/edit'))"}
+            			{if condition="($vo.I_status!=4)"}
+                        <a href="javascript:void(0);" class="btn btn-info btn-xs btn-success" status_val="{$vo.I_status}" id_val="{$vo.id}" st_val='1'><i class="fa fa-pencil"></i> 通过</a>
+                        <a href="javascript:void(0);" class="btn btn-info btn-xs btn-warning" status_val="{$vo.I_status}" id_val="{$vo.id}" st_val="2"><i class="fa fa-pencil"></i> 不通过</a>
+                        {/if}
+                        <a href="{:url('/admin/find_money/edit',['id'=>$vo.id])}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 审核编辑</a>
+                        {/if}
+                    </td>
+                </tr>
+                
+                {/volist}
+            </tbody>
+        </table>
+        <table class="table table-striped jambo_table bulk_action cover_table" style="display:none">
+            <thead>
+            <tr class="headings">
+                <th class="column-title" style="">联系人姓名</th>
+                <th class="column-title" style="">联系人电话</th>
+            </tr>
+            </thead>
+
+            <tbody class="tel_content">
+
+            </tbody>
+        </table>
+    </div>
+    {$page->render()}
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select[x-listen]').change(onListPageSelectionChange) ;
+        
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                url = new xxx.Url().removeParam('page') ;
+            
+            url.setParam('keywords',encodeURIComponent(name)).go() ;
+        }) ;
+        var obj2=$('.cover_table');
+        $('.contact').mouseover(function (e) {
+            var x=e.pageX;
+            var y=e.pageY;
+            var obj=$(this);
+            var va=obj.find('input').val();
+            obj2.show();
+            obj2.css('left',x-250);
+            obj2.css('top',y-120);
+            $.ajax({
+                type:'post',
+                url:"{:url('/admin/find_money/getTels')}",
+                data:{'id':va},
+                dataType:'json',
+                success:function(data){
+                    console.log(data.code);
+                    if(data.code==200){
+                        var html='';
+                        var value=data.data;
+                        for(var i in value){
+                            html+='<tr class="even pointer"><td>'+value[i].Vc_contact+'</td><td>'+value[i].Vc_contact_tel+'</td></tr>'
+                        }
+                        obj2.find('.tel_content').html(html);
+                    }else{
+                        layer.msg(data.msg) ;
+                        return false;
+                    }
+                }
+           });
+        })
+        $('.contact').mouseout(function (e) {
+            obj2.hide();
+        })
+
+        //审核
+        $(".btn-success,.btn-warning").bind('click',function(){
+            if($(this).attr("sending")==1){
+                return;
+            }
+            var st_val = $(this).attr('st_val');
+            var status_val = $(this).attr('status_val');
+            var id_val = '';
+            if($(this).hasClass("btn-audit-checkbox")){
+                var vals = getCheckBoxVals("#listForm table tbody");
+                id_val = vals.join();
+            }else{
+                id_val = parseInt($(this).attr('id_val'));
+            }
+            submitForm(id_val,st_val,status_val);
+        });
+
+        function submitForm(id_val,st_val,status_val){
+            if(null == id_val || '' == id_val || id_val <= 0){
+                layer.msg("请先选择");
+            }
+            if(st_val==(status_val-1)){
+                layer.msg("审核状态未改变");
+                return false;
+            }
+
+            layer.confirm('确认审核吗？', {
+                icon: 3,
+                btn: ['确认','取消'], //按钮
+                title:'提示',
+            }, function(index){
+                $(this).attr("sending",1);
+                layer.close(index);
+                $.getJSON("{:url('/find_money/check')}",{id:id_val,check:st_val},
+                        function(data){
+                            if(null != data.msg || '' != data.msg){
+                                layer.msg(data.msg);
+                            }
+
+                            if(data.code==200){
+                                window.location.reload();
+                            }else if(null != data.url || '' != data.url){
+                                window.location.href = data.url;
+                            }else{
+                                $(this).removeAttr("sending");
+                            }
+                        });
+            });
+        }
+        
+    }) ;
+</script>

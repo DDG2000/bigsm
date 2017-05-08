@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+{if="$issubed==1"}
+
+<div>
+
+<form method="post" action="/index.php?act=shop&m=requirecommodity&w=offerset" >
+  
+      接收产品报价类别  :
+      {loop="data.mallclass"}
+      {$vo=$value}
+      <input type="radio" name="mallClassID" value="{$vo.id}"  {if="$vo.id==$I_mallclassID"}checked{/if}>{$vo.Vc_name}
+      
+      {/loop}<br>
+    所属分类：
+     {loop="data.subitemclass"}
+      {$vo=$value}
+      <input type="checkbox" name="itemclassID" value="{$vo.id}" {if="isset($itemClassArr[$vo.id])"}checked{/if} >{$vo.Vc_name}
+      
+      {/loop}<br>
+      
+           <input type="submit"  value="提交" />
+</form>
+</div>
+{else}
+<div>
+<form method="post" action="/index.php?act=shop&m=requirecommodity&w=offerset" >
+  
+     接收产品报价类别  :
+      {loop="data.mallclass"}
+      {$vo=$value}
+      <input type="radio" name="mallClassID" value="{$vo.id}"  {if="$counter==0"}checked{/if}>{$vo.Vc_name}
+      
+      {/loop}<br>
+    行业所属分类：
+     {loop="data.subitemclass"}
+      {$vo=$value}
+      <input type="checkbox" name="itemclassID" value="{$vo.id}" >{$vo.Vc_name}
+      
+      {/loop}<br>
+      
+           <input type="submit"  value="提交" />
+</form>
+</div>
+{/if}
+</body>
+</html>

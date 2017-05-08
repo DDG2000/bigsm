@@ -1,0 +1,191 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="table-responsive">
+        <form class="form-horizontal">
+         	
+            <div class="input-group col-md-3 col-sm-4 col-xs-12 form-group pull-right">
+                <input type="text" name="uname" id="nameSearch" class="form-control form-param-to" placeholder="订单号/货物属性" value="{if condition="isset($param.keyword)"}{$param.keyword}{/if}">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" id="nameSearchButton">搜索</button>
+                </span>
+            </div>
+           <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+                <select  x-listen  class="form-control form-param-to" name="orderStatus">
+                        <option value="-2">订单状态</option>
+                         {volist name="$model->statusArray" id="vo"}
+                   	 <option value="{$key}" {if condition="isset($param.orderStatus)"}{$key==$param.orderStatus?"selected":""}{/if}>{$vo}</option>
+                   
+                    {/volist}
+                </select>
+            </div>
+           
+           
+        </form>
+        <table class="table table-striped jambo_table bulk_action" id="menus-table">
+            <thead>
+                <tr class="headings">
+	 		
+                    <th class="column-title">ID</th>
+                    <th class="column-title" colspan="3">货物详情</th>
+                    <th class="column-title">单价(元)</th>
+                    <th class="column-title">计划数量</th>
+                    <th class="column-title">预计总价(元)</th>
+                    <th class="column-title">到货数量</th>
+                    <th class="column-title">实际总价(元)</th>
+                    <th class="column-title">来源</th>
+                    <th class="column-title">订单状态</th>
+                    <th class="column-title">确认状态</th>
+                    <th class="column-title">确认时间</th>
+                    <th class="column-title">操作</th>
+                   
+                   
+                </tr>
+            </thead>
+
+            <tbody>
+              {volist name='$listdata' id='vo' key="k"}
+                <tr class="even pointer " id="node-{$vo.id}">
+               
+                   <td style='padding-left:20px;'><input name='listorders[]' type='text' readonly="readonly" size='3' value='{$vo.id}' class='input input-order'></td>
+                    <td></td>
+                    <td>{$vo.Createtime|getDateStrYmd}</td>
+			 		<td colspan="4">订单号：{$vo.Vc_orderSn==null?$vo.Vc_Sn:$vo.Vc_orderSn}</td>
+			 		<td colspan="3">
+			 		所属项目：{$vo.Vc_ct_name==null?$vo.projname:$vo.Vc_ct_name}
+			 		</td>
+			 		<td></td>
+			 		<td></td>
+			 		<td colspan="2">
+			 			{if condition="(checkPopedom('/admin/order/edit')) "}
+                <a href="{:url('/admin/order/edit',['id'=>$vo.id])}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 审核编辑</a>
+                		 
+               		{/if}
+			 		</td>
+                   
+                </tr>
+                {volist name='$vo.orderlist' id='vo2' }
+                <tr class="even pointer  child-of-node-{$vo.id}" id="node-x-{$vo2.id}" >
+                   <td style='padding-left:20px;'><input name='listorders[]' type='text' readonly="readonly" size='3' value='{$vo2.id}' class='input input-order'></td>
+			 		
+                   <td  colspan="3"> {$vo2.Vc_goods_breed}<br> 材质-{$vo2.Vc_goods_material} 规格-{$vo2.Vc_goods_spec} 产地-{$vo2.Vc_goods_factory}</td>
+			 			
+			 		<td>{$vo2.N_ac_price==null?$vo2.N_judge_price:$vo2.N_ac_price}</td>
+			 		<td>
+			 		{$vo2.N_plan_weight}{$vo2.Vc_goods_uint}
+			 		 </td>
+			 		 <td>{$vo2.N_judge_totalprice}元</td>
+			 		<td>{$vo2.N_ac_weight==null?'暂无':$vo2.N_ac_weight.($vo2.Vc_goods_uint)} </td>
+			 		<td>
+			 		<p>{$vo2.N_ac_settlement==null?'暂无':'实际总价：'.$vo2.N_ac_settlement}</p>
+			 		   {if condition="$vo2.N_ac_settlement!=null"}
+                                            <p>到货时间：{$vo2.Dt_arrived|getDateStrYmd}</p>
+                                {/if}
+			 		</td>
+			 		
+			 		   <td class=" ">{$vo2.I_goods_src==1?'平台':'ERP'}</td>
+			 		<td >
+							{if condition="$vo2.I_goods_src==1"}
+                                        {switch name="$vo.I_status"}
+										    {case value="0"}待审核{/case}
+										    {case value="1"}审核通过待发货{/case}
+										    {case value="2"}审核通过{/case}
+										    {case value="-1"}审核不通过{/case}
+										    {case value="5"}已冻结{/case}
+										    {case value="6"}已关闭{/case}
+										{/switch}
+                                   		{else}
+                                   		{$vo2.Vc_orderstatus}  
+                              {/if}
+                                  			 		
+			 		</td>
+			 		<td >
+			 		{if condition="$vo2.I_goods_src==2"}
+								 	{if condition="isset($vo2.I_isconfirm)&&$vo2.I_isconfirm==1"}
+								 		<span style="color:green;">已确认</span>
+                                            {else}
+                                		  <span style="color:blue;">未确认</span>
+                               {/if}
+			 			{/if}
+			 		
+			 		</td>
+			 		<td>
+			 			{if condition="isset($vo2.I_isconfirm)&&$vo2.I_isconfirm==1"}
+								 	  {$vo2.Createtime}
+                               {/if}
+			 		
+			 		</td>
+			 		  <td class=" ">
+                            	{if condition="(checkPopedom('/admin/order/view')) "}
+                            	
+                            	{if condition="$vo2.I_goods_src==2"}
+		                            	  {if condition="$vo2.Vc_orderstatus=='已发货'||$vo2.Vc_orderstatus=='已到货'"}
+		                <a href="{:url('/admin/order/view',['id'=>$vo2.id,'orderSn'=>$vo2.Vc_orderSn])}" class="btn btn-primary btn-xs">查看物流信息</a>
+		                				{/if}
+                                {/if}
+               					{/if}
+                            
+                            </td>
+                   
+                </tr>
+                 	
+  					{/volist}
+               {/volist}
+            </tbody>
+        </table>
+    </div>
+       {$pages->render()}
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+<link href="//cdn.bootcss.com/jquery-treetable/3.2.0/css/jquery.treetable.min.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/jquery-treetable/3.2.0/jquery.treetable.min.js"></script>
+<script type="text/javascript">
+function onListSelectionChange () {
+    var $this = $(this) , val = $this.val() , name = $this.attr('name'),
+        clear=$this.data('clear') || '' , url = new xxx.Url() ,
+        clearArray = clear.split(',') , emptyVal = $this.data('empty') || -2 ;
+    if ('*' == clear) {
+        url.removeAllParams() ;
+    } else if (clearArray.length > 0) {
+        for (var i = clearArray.length - 1; i >= 0; i--) {
+            url.removeParam(clearArray[i]) ;
+        };
+    }
+    (val && val != emptyVal) ? url.setParam(name,val) : url.removeParam(name) ;
+    url.removeParam('page').go() ;
+}
+    $(document).ready(function(){
+    	
+    	/* Wind.css('treeTable');
+		Wind.use('treeTable', function() {
+		 $("#menus-table").treeTable({
+				indent : 20
+			}); 
+		}); */
+		Wind.css('treeTable');
+		Wind.use('treeTable', function() {
+			$("#menus-table").treeTable({
+				indent : 20
+			});
+		});
+	
+        $('select[x-listen]').change(onListSelectionChange) ;
+        
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                url = new xxx.Url().removeParam('page') ;
+            
+            url.setParam('keyword',encodeURIComponent(name)).go() ;
+        }) ;
+        
+        
+        
+        
+   // $(".expander").trigger("click", );
+        
+        
+    }) ;
+</script>

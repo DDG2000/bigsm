@@ -1,0 +1,526 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="x_content">
+        <br>
+        <form  class="form-horizontal form-label-left" novalidate>
+            <input type="hidden" name="id" value="{$data|output='id'}">
+			<!--<div class="item form-group" id="industry_modify">-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">行业 </label>-->
+				<!--<div class="col-md-3 col-sm-6 col-xs-12 industry_change"  style="display: none">-->
+					<!--{volist name="$model->getAll()" id="vo" }-->
+					<!--<div class="radio pull-left">-->
+						<!--<label>-->
+							<!--<input value="{$vo.id}" name="I_industryID" type="radio" class="flat industry"  {if condition="(isetn($data.I_industryID)==$vo.id)"}checked{/if}> {$vo.Vc_name}-->
+						<!--</label>-->
+					<!--</div>-->
+					<!--{/volist}-->
+					<!--<div class="radio pull-left">-->
+						<!--<label>-->
+							<!--<input value="0" name="I_industryID" type="radio" class="flat industry" {if condition="(isetn($data.I_industryID)==0)"}checked{/if}> 其他-->
+						<!--</label>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--<h5 class="col-md-3 col-sm-6 col-xs-12 industry_change">-->
+					<!--{$data.industryname?$data.industryname:'其他'}-->
+				<!--</h5>-->
+					<!--<div class=" last">-->
+						<!--{if condition="(checkPopedom('/admin/find_goods/modifyAjax')) "}-->
+						<!--<a href="javascript:void(0);" class="btn btn-info btn-xs btn-edit-industry" id_val="" k-index=""><i class="fa fa-pencil edit_btn"></i> 编辑</a>-->
+						<!--<a href="javascript:void(0);" class="btn btn-info btn-xs btn-modify-industry" id_val="" k-index="" style="display: none"><i class="fa fa-gear edit_btn"></i> 保存</a>-->
+						<!--<a href="javascript:void(0);" class="btn btn-info btn-xs btn-cancel-industry" id_val="" k-index="" style="display: none"><i class="fa fa-gear edit_btn"></i> 取消</a>-->
+						<!--{/if}-->
+					<!--</div>-->
+			<!--</div>-->
+
+			<div class="item form-group" id="industry_modify">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">行业 </label>
+				<h5 class="col-md-3 col-sm-6 col-xs-12 industry_change">
+					钢铁
+				</h5>
+			</div>
+
+
+			<div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">订单号</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                    {$data|output='Vc_orderSn'}
+                </h5>
+            </div>
+			<!--<div class="item form-group">-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">订单名称</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data|output='Vc_ordername'}-->
+				<!--</h5>-->
+			<!--</div>-->
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">用户名</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data|output='userphone'}&nbsp;&nbsp;&nbsp;{$data|output='username'}
+				</h5>
+			</div>
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">公司名称</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data|output='companyname'}
+				</h5>
+			</div>
+			<!--<div class="item form-group">-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">采购人</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data|output='Vc_contact'}&nbsp;&nbsp;{$data|output='Vc_contact_tel'}-->
+				<!--</h5>-->
+			<!--</div>-->
+			<!--<div class="item form-group">-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">订单名称</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data|output='Vc_ordername'}-->
+				<!--</h5>-->
+			<!--</div>-->
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">支付方式</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data.I_paytype==1?'银行转汇':'现金'}
+				</h5>
+			</div>
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">收货人</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                    {$data|output='Vc_consignee'}{$data|output='Vc_phone'}
+                </h5>
+            </div>
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">收货地址</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data|output='proname'}&nbsp;{$data|output='cityname'}&nbsp;{$data|output='areaname'}&nbsp;{$data|output='Vc_address'}
+				</h5>
+			</div>
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">报名截止时间</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data.D_end|strtotime|date="Y-m-d",###}
+				</h5>
+			</div>
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">预估总价</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data.N_judge_totalprice}元
+				</h5>
+			</div>
+			<!--<div class="item form-group">-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">采购名称</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data|output='Vc_name'}-->
+				<!--</h5>-->
+			<!--</div>-->
+            <div class="item form-group" }>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">申请时间</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                    {$data|output='Createtime'}
+                </h5>
+            </div>
+			<div class="item form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+				<h5 class="col-md-6 col-sm-6 col-xs-12">
+					{$data|output='T_note'}
+				</h5>
+			</div>
+			<!--<div class="item form-group" }>-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">更新时间</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data.D_updatetime==null?'&#45;&#45;':$data.D_updatetime}-->
+				<!--</h5>-->
+			<!--{if condition="($data.I_status==4)"}-->
+			<!--<div class="item form-group" }>-->
+				<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">取消时间</label>-->
+				<!--<h5 class="col-md-6 col-sm-6 col-xs-12">-->
+					<!--{$data.D_canceltime}-->
+				<!--</h5>-->
+			<!--</div>-->
+			<!--{/if}-->
+
+			<div class="item form-group" id="check">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12">审核 </label>
+				<h5 class="col-md-3 col-sm-6 col-xs-12 industry_change">
+					{$findgoods->statusArray[$data.I_status]}
+					{if condition="($data.I_status!=4)"}
+					<a href="javascript:void(0);" class="btn btn-info btn-xs btn-success" status_val="{$data.I_status}"  id_val="{$data.id}" st_val='1'><i class="fa fa-pencil"></i> 通过</a>
+					<a href="javascript:void(0);" class="btn btn-info btn-xs btn-warning" status_val="{$data.I_status}" id_val="{$data.id}" st_val="2"><i class="fa fa-pencil"></i> 不通过</a>
+					{/if}
+				</h5>
+			</div>
+            <div class="item form-group" }>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">货物清单</label>
+				<div class="clearfix"></div>
+				<div class="ln_solid"></div>
+				<div id="listForm">
+		<table class="table table-striped jambo_table bulk_action">
+			<thead>
+			<tr class="headings">
+				<th class="column-title" style="width: 3%">ID </th>
+				<th class="column-title" style="width: 7%">货物代码</th>
+				<th class="column-title" style="width: 7%">货物分类</th>
+				<th class="column-title" style="width: 7%">品名</th>
+				<th class="column-title" style="width: 7%">规格</th>
+				<th class="column-title" style="width: 7%">材质</th>
+				<!--<th class="column-title" style="width: 5%">产地</th>-->
+				<th class="column-title" style="width: 7%">需求数量</th>
+				<!--<th class="column-title" style="width: 7%">仓库名</th>-->
+				<th class="column-title" style="width: 9%">报价数量</th>
+				<th class="column-title" style="width: 9%">报价单价</th>
+				<th class="column-title" style="">报价垫资总价</th>
+				<th class="column-title no-link last" style="width: 5%"><span class="nobr">状态</span>
+				<th style="width: 12%">编辑</span>
+				</th>
+			</tr>
+			</thead>
+
+			<tbody>
+			{volist name="$goodsList" id="vo" key="k"}
+			<tr class="even pointer" k-index="{$k}">
+				<td class=" ">{$vo.id}</td>
+				<td class=" ">{$vo.Vc_goods_code}</td>
+				<td class=" ">{$vo.Vc_goods_class}</td>
+				<td class=" ">{$vo.Vc_goods_breed}</td>
+				<td class=" ">{$vo.Vc_goods_spec}</td>
+				<td class=" ">{$vo.Vc_goods_material}</td>
+				<!--<td class=" ">{$vo.Vc_goods_factory}</td>-->
+				<td class=" ">{$vo.Vc_unit=='件'?intval($vo.N_plan_weight):$vo.N_plan_weight}&nbsp;{$vo.Vc_unit}</td>
+				<input type="hidden" value="{$vo.Vc_unit}">
+				<!--<td class=" ">{$vo.Vc_warehouse}</td>-->
+				<td class="offer-amount">{$vo.N_offer_amount}</td>
+				<td class="offer-price">{$vo.N_offer_price}</td>
+				<td class="offer-totalprice">{$vo.N_offer_totalprice}</td>
+				<td class="status">
+					{if condition="($vo.I_status)"}
+					{$findgoods->goodsChargeArray[$vo.I_status]}
+					{else}-{/if}
+				</td>
+				<td class=" last">
+					{if condition="(checkPopedom('/admin/find_goods/modifyAjax')) "}
+					{if condition="($data.I_status==1 || $data.I_status==2)"}
+					<a href="javascript:void(0);" class="btn btn-info btn-xs btn-edit-to"  id_val="{$vo.id}" k-index="{$k}"><i class="fa fa-pencil edit_btn"></i> 编辑报价</a>
+					<a href="javascript:void(0);" class="btn btn-info btn-xs btn-modify-to" orderId_val="{$data.id}" id_val="{$vo.id}" k-index="{$k}" style="display: none"><i class="fa fa-gear edit_btn"></i> 保存</a>
+					<a href="javascript:void(0);" class="btn btn-info btn-xs btn-cancel-to" style="display: none"><i class="fa fa-gear edit_btn"></i> 取消</a>
+
+					{/if}
+					{/if}
+				</td>
+			</tr>
+
+			{/volist}
+			</tbody>
+		</table>
+            </div>
+            </div>
+            <div class="clearfix"></div>
+			<div class="ln_solid"></div>
+
+        </form>
+    </div>
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+		//行业选择
+		var oid = $("#industry_modify input:checked").val();
+		$("#industry_modify .btn-edit-industry").bind('click',function(){
+			if($(this).attr("no-ck")==1){
+				return;
+			}
+			var obj = $("#industry_modify");
+			$(obj).find(".industry_change").toggle();
+			$(this).hide();
+			$(obj).find(".btn-modify-industry").attr("no-ck",1).show();
+			$(obj).find(".btn-cancel-industry").attr("no-ck",1).show();
+		})
+		$("#industry_modify .btn-cancel-industry").bind('click',function(){
+			var obj = $("#industry_modify");
+			$(obj).find(".industry_change").toggle();
+			$(this).hide();
+			$(obj).find(".btn-modify-industry").hide();
+			$(obj).find(".btn-edit-industry").show();
+		})
+		$("#industry_modify .btn-modify-industry").bind('click',function(){
+			var obj_a = $(this);
+			if($(obj_a).attr("no-ck")==1){
+				if($(obj_a).attr("sending")==1){
+					return;
+				}
+				var obj = $("#industry_modify");
+				var id = $("input[name='id']").val();
+				var industry = $(obj).find("input[type='radio']:checked").val();
+				if(null == industry || '' == industry ){
+					layer.msg("请先选择");return;
+				}
+				console.log(oid);
+				console.log(industry);
+				if(oid == industry ){
+					console.log(0);
+					layer.msg("请先选择");
+					return;
+				}
+				layer.confirm('确认修改吗？', {
+					icon: 3,
+					btn: ['确认','取消'], //按钮
+					title:'提示',
+				}, function(index){
+					$(obj_a).attr("sending",1);
+					layer.close(index);
+					$.getJSON("{:url('/find_goods/modifyIndustry')}",{id:id,industry:industry},
+							function(data){
+								if(null != data.msg || '' != data.msg){
+									layer.msg(data.msg);
+								}
+//								if(data.code==200){
+									location.reload();
+//								}/* else{
+//								 $(obj_a).removeAttr("sending");
+//								 } */
+								$(obj_a).hide();
+								$(obj).find(".btn-edit-to").show();
+							});
+				});
+			}
+		});
+
+		//审核
+		$(".btn-success,.btn-warning").bind('click',function(){
+			if($(this).attr("sending")==1){
+				return;
+			}
+			var st_val = $(this).attr('st_val');
+			var status_val = $(this).attr('status_val');
+			var id_val = '';
+			var orderId = '';
+			if($(this).hasClass("btn-audit-checkbox")){
+				var vals = getCheckBoxVals("#listForm table tbody");
+				id_val = vals.join();
+			}else{
+				id_val = parseInt($(this).attr('id_val'));
+			}
+			submitForm(id_val,st_val,status_val);
+		});
+
+		function submitForm(id_val,st_val,status_val){
+			if(null == id_val || '' == id_val || id_val <= 0){
+				layer.msg("请先选择");
+			}
+			if(status_val==4){
+				layer.msg("已取消不能审核");
+				return false;
+			}
+			if(st_val==(status_val-1)){
+				layer.msg("审核状态未改变");
+				return false;
+			}
+
+			layer.confirm('确认审核？', {
+				icon: 3,
+				btn: ['确认','取消'], //按钮
+				title:'提示',
+			}, function(index){
+				$(this).attr("sending",1);
+				layer.close(index);
+				$.getJSON("{:url('/find_goods/check')}",{id:id_val,check:st_val},
+						function(data){
+							if(null != data.msg || '' != data.msg){
+								layer.msg(data.msg);
+							}
+
+							if(data.code==200){
+								window.location.reload();
+							}else if(null != data.url || '' != data.url){
+								window.location.href = data.url;
+							}else{
+								$(this).removeAttr("sending");
+							}
+						});
+			});
+		}
+
+		var obj;
+		var oamount;
+		var oprice;
+		var ototal;
+		var unit;
+		var flag=0;
+		//编辑货物清单
+//		$(".btn-modify-to").hide();
+		$(".btn-edit-to").bind('click',function(){
+			if($(this).attr("no-ck")==1){
+				return;
+			}
+			if(flag==1){
+				layer.msg("请先保存或取消");
+				return false;
+			}
+			flag=1;
+			obj = $("#listForm tr[k-index='"+$(this).attr("k-index")+"']");
+			oamount = $(obj).find(".offer-amount").text();
+			oprice=$(obj).find(".offer-price").text();
+			ototal=$(obj).find(".offer-totalprice").text();
+			unit=$(obj).find("input:hidden").val();
+			if(unit=='件'){
+				$(obj).find(".offer-amount").html("<input type='text' placeholder='小于1000万' number name='amount' class='amount'  style='width: 100%' value='"+$(obj).find(".offer-amount").html()+"'/>");
+			}else{
+				$(obj).find(".offer-amount").html("<input type='text' placeholder='小于1000万' float name='amount' class='amount'  style='width: 100%' value='"+$(obj).find(".offer-amount").html()+"'/>");
+			}
+			$(obj).find(".offer-price").html("<input type='text' placeholder='小于1000万' name='price' class=''  style='width: 100%' value='"+$(obj).find(".offer-price").html()+"'/>");
+			$(obj).find(".offer-totalprice").html("<input type='text' class='total' readonly name='total' style='width: 100%' value='"+$(obj).find(".offer-totalprice").html()+"'/>");
+			$(obj).find(".staue_check").toggle();
+			$(this).hide();
+			$(obj).find(".btn-modify-to").attr("no-ck",1).show();
+			$(obj).find(".btn-cancel-to").attr("no-ck",1).show();
+		});
+		$('.offer-amount').on('keyup','input',function () {
+			var v,e=$(this);
+
+			e.val(e.val().replace(/[^\d.]/g, '').replace(/^\./g, '').replace(/\.{2,}/g, '.').replace('.', '$#$').replace(/\./g, '').replace('$#$', '.').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'));
+
+			if(/^0\d/.test(e.val())) {
+				e.val(0);
+			}
+
+			v = e.val();
+			if( v.indexOf(".") > 6){
+				e.val(v.substr(0,10));
+			} else {
+				e.val(v.substr(0,7));
+			}
+			var amount=$('input[name="amount"]').val();
+			var price=$('input[name="price"]').val();
+
+			if(amount!=null && amount!=0 && price!=null && price!=0){
+				$.ajax({
+					url:'/find_goods/Mul',
+					data:{'number':amount,'price':price},
+					type:"POST",
+					dataType:"json",
+					success: function(v){
+						console.log(v);
+						$('input[name="total"]').val(v);
+					}
+				})
+			}
+		})
+		$('.offer-price').on('keyup','input',function () {
+			var v,e=$(this);
+
+			e.val(e.val().replace(/[^\d.]/g, '').replace(/^\./g, '').replace(/\.{2,}/g, '.').replace('.', '$#$').replace(/\./g, '').replace('$#$', '.').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'));
+
+			if(/^0\d/.test(e.val())) {
+				e.val(0);
+			}
+
+			v = e.val();
+			if( v.indexOf(".") > 6){
+				e.val(v.substr(0,10));
+			} else {
+				e.val(v.substr(0,7));
+			}
+			var amount=$('input[name="amount"]').val();
+			var price=$('input[name="price"]').val();
+
+			if(amount!=null && amount!=0 && price!=null && price!=0){
+				$.ajax({
+					url:'/find_goods/Mul',
+					data:{'number':amount,'price':price},
+					type:"POST",
+					dataType:"json",
+					success: function(v){
+						console.log(v);
+						$('input[name="total"]').val(v);
+					}
+				})
+			}
+		})
+		function floatMul(arg1,arg2)   {
+			var m=0,s1=arg1.toString(),s2=arg2.toString();
+			try{m+=s1.split(".")[1].length}catch(e){}
+			try{m+=s2.split(".")[1].length}catch(e){}
+			return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m);
+		}
+		$(".btn-modify-to").bind('click',function(){
+			flag=0;
+			var obj_a = $(this);
+			if($(obj_a).attr("no-ck")==1){
+				if($(obj_a).attr("sending")==1){
+					return;
+				}
+				var obj = $("#listForm tr[k-index='"+$(this).attr("k-index")+"']");
+				var dname = $(obj).find("input[name='amount']").eq(0).val();
+				var dpray = $(obj).find("input[name='price']").eq(0).val();
+				var daddr = $(obj).find("input[name='total']").eq(0).val();
+				var id_val = $(obj_a).attr("id_val");
+				var orderId=parseInt($(obj_a).attr('orderId_val'))
+				var status = $(obj).find("input[type='radio']:checked").val();
+				if(null == id_val || '' == id_val || id_val <= 0){
+					layer.msg("请先选择");
+					return;
+				}
+				if(oamount==dname && oprice==dpray){
+					layer.msg("数量/价格未改变");
+					return;
+				}
+				if(null == dname || '' == dname
+						|| null == dpray || '' == dpray
+						|| null == daddr || '' == daddr ){
+					layer.msg("更新内容不可为空");
+					return;
+				}
+				layer.confirm('确认报价?', {
+					icon: 3,
+					btn: ['确认','取消'], //按钮
+					title:'提示',
+				}, function(index){
+					$(obj_a).attr("sending",1);
+					layer.close(index);
+					$.getJSON("{:url('/find_goods/modifyAjax')}",{id:id_val,orderId:orderId,amount:dname,price:dpray,total:daddr},
+							function(data){
+								if(null != data.msg || '' != data.msg){
+									layer.msg(data.msg);
+								}
+									location.reload();
+							});
+				});
+			}
+		});
+		$(".btn-cancel-to").bind('click',function(){
+			location.reload();
+		})
+    	var tpl = new xxx.STemplate("<h2><a href='@{src}' target='_blank'> <i class='fa  fa-file-zip-o (alias)  fa-fw fa-2x'></i> <span>文件下载</span></a></h2>") ;
+    	//业务提交
+    	//$form.on('blur', 'input[required]', validator.checkField);
+        $(".btn-sub").on("click", function(){
+        	
+        /* 	if(!validator.checkAll($form) ) {
+        		return false;
+        	} */
+    			layer.confirm('确认审核吗？', {
+    				icon: 3, 
+    				btn: ['确认','取消'], //按钮
+    				title:'提示',
+    			}, function(index){
+      				layer.close(index);
+      				$.post("{:url('/admin/find_goods/edit')}",$form.serializeArray(),
+      				function(data){
+      					if(null != data.msg || '' != data.msg){
+      						layer.msg(data.msg);
+      					}
+      					
+      				 	if(data.code==200){
+      						setTimeout(function(){window.location.href="{:url('/admin/find_goods/index')}";},1000);
+      					}
+      				
+      				});
+    			});
+    		
+    	});
+        
+    }) ;
+</script>

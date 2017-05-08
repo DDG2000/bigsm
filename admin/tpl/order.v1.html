@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss"}
+
+<script type="text/javascript">
+$(function(){
+	$("td.product_num input").hide();
+	//修改订单商品数量
+	$(".mdynum").click(function(e){
+		e.preventDefault();
+		var _this=$(this),tr=_this.parent().parent("tr"),tdnum=tr.find("td.product_num"),tdspan=tdnum.find("span"),tdinput=tdnum.find("input");
+		if(_this.attr("data") == 1){
+			tdspan.hide();
+			tdinput.show();
+			_this.attr("data",2).html("保存修改");
+		}else{
+			var _count = parseInt(tdinput.val());
+			if(_count<=0){
+				showJsTipFun('商品数量必须大于零');
+				return false;
+			}
+			param={Work:'PROD',id:_this.attr("opid"),count:_count,tmp:Math.random()};
+			$.ajax({url:"OrderAjax.php",type:'post',dataType:'json',data:param,success:function(o){
+				if(o.flag==1){
+					var chajia=o.chajia,pdprices=parseFloat($("#pdprices").html()),sumprice=parseFloat($("#sumprice").val()),price=parseFloat(tr.find(".price").html());
+					$("#sumprice").val((sumprice+chajia).toFixed(2));
+					$("#pdprices").html((pdprices+chajia).toFixed(2));
+					tr.find(".dprices").html((_count*price).toFixed(0));
+					tdspan.html(tdinput.val()).show();
+					tdinput.hide();
+					_this.attr("data",1).html("修改数量");
+				}else{
+					showJsTipFun(o.err);
+				}
+			}});
+		}
+		return false;
+	});
+});
+</script>
+</head>
+<body>
+<div id="main">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.innerHtml}</a>
+			 {/if}
+		{/loop}
+	</div>
+	{if="isset($extend.marks)"}
+	<div class="mbt">
+		{$extend.marks}
+	</div>
+	{/if}
+
+	<div class="table">
+	<table>
+		<tr class="tr_bt">
+			<td colspan="3"><strong>{$title}</strong></td>
+		</tr>
+		<tr>
+			<td>订单编号：{$order['Vc_code']}　　下单时间：{$order['Createtime']}<br />会员：{$user['Vc_name']}　　级别:{$user['gradename']}　　注册时间：{$user['Createtime']}　　最后登录时间：{$user['Dt_lastlogintime']}　　登录次数：{$user['I_logins']}</td>
+		</tr>
+	</table>
+	</div>
+
+	<div class="mbt"><a class="cur">完成情况</a></div>
+	<div class="table">
+	<table>
+		<tr class="tr_bt">
+			<td>确认</td>
+			<td>收款</td>
+			<td>发货</td>
+			<td>完成</td>
+		</tr>
+		<tr>
+			<td><img src="../image/{$order['Status']>1?'checked':'check'}.gif#" /></td>
+			<td><img src="../image/{$order['Status']>2?'checked':'check'}.gif#" /></td>
+			<td><img src="../image/{$order['Status']>3?'checked':'check'}.gif#" /></td>
+			<td><img src="../image/{$order['Status']==5?'checked':'check'}.gif#" /></td>
+		</tr>
+		<tr>
+			<td>{$order['operator_queren']}</td>
+			<td>{$order['operator_shoukuan']}</td>
+			<td>{$order['operator_fahuo']}</td>
+			<td>{$order['operator_wancheng']}</td>
+		</tr>
+	</table>
+	</div>
+	
+	<div class="mbt"><a class="cur">商品信息</a></div>
+	<div class="table">
+	<table>
+		<tr class="tr_bt">
+			<td>商品图片</td>
+			<td>商品名称</td>
+			<td>商品型号</td>
+			<td>会员价</td>
+			<td>数量</td>
+			<td>小计</td>
+			<td>操作</td>
+		</tr>
+		{loop="oproducts"}
+		<tr>
+			<td><a href="MallProductInfo.php?id={$value.id}" class="hs" title="商品详细页" h="600"><img src="{$value.img}#" width="50" height="50"></a></td>
+			<td><a href="MallProductInfo.php?id={$value.id}" class="hs" title="商品详细页" h="600">{$value.name}</a></td>
+			<td>{$value.code}</td>
+			<td><span class="price">{$value.price}</span> 元</td>
+			<td class="product_num"><input name="pcount" type="number" class="page_put1" value="{$value.num}"/><span>{$value.num}</span></td>
+			<td><span class="dprices">{$value.price*$value.num}</span> 元</td>
+			<td><a class="mdynum" data="1" opid="{$value.id}" href="javascript:void(0);">修改数量</a></td>
+		</tr>
+		{/loop}
+	</table>
+	</div>
+
+	<form name="form" method="post" action="{$action}" target="{if="!isset($extend.target)"}hideframe{/if}" check="1">
+	<div class="table">
+	<table>
+	<tr>
+		<td colspan="7" class="order"><span class="red">支付金额：<input id="sumprice" name="SumP" type="text" class="txt_put1" value="{$order['N_price']}"/>元</span> = 商品金额<span id="pdprices">{$order['pdprices']}</span>元 + 运费<span id="dispatching">{$order['N_dispatching']}</span>元 - 优惠券<span id="coupon">{$order['coupon']}</span>元</td>
+	</tr>
+	</table>
+	</div>
+
+	<div class="table">
+	<table>
+		<tr class="tr_bt">
+			<td colspan="2"><strong>送货地址</strong></td>
+		</tr>
+		{loop="params"}
+		<tr>
+			<td class="td1">{if="strpos($value.attrs.' '.$value.val,'isc')!==false&&strpos($value.attrs.' '.$value.val,'ennull')===false"}<font style="color:red;">*</font> {/if}{$value.name}</td>
+			{if="$value.ty=='text'"}
+			<td><input type="text" name="{$key}" value="{$value.val}" class="txt_put2" {$value.attrs}></td>
+			{elseif="$value.ty=='textarea'"}
+			<td><textarea name="{$key}" class="txt_put3" {$value.attrs}>{$value.val}</textarea></td>
+			{else}
+			<td>{$value.val}</td>
+			{/if}
+		</tr>
+		{/loop}
+	</table>
+	</div>
+	<div id="btndiv" class="fix">
+		<a name="submit" class="but3" onclick="">提交</a>
+		<a name="reset" class="but3" onclick="window.history.back()">返回</a>
+		{loop="hides"}
+		<input type="hidden" name="{$key}" value="{$value}">
+		{/loop}
+	</div>
+	</form>
+
+</div>
+</body>
+</html>
+<iframe id="hideframe" name="hideframe" style="display:none;">

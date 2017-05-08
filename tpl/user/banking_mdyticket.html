@@ -1,0 +1,74 @@
+	{include="inc/usercenter/css"}
+    <title>金融管理 - 修改商票质押</title>
+</head>
+<body>
+	{include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">金融管理</a><span class="current">修改商票质押</span>
+        		</div>
+				{function="dump($data);"}
+            	<div id="p2p-form">
+					<p class="title">修改商票质押</p>
+					<p class="p2p-comm">成都长城钢贸有限公司</p>
+					<form action="##" method="POST" data-name="mdyticket">
+						<input type="text" class="hidden" name="id"/>
+						<input type="text" class="hidden" name="I_banking_classID">
+						<input type="text" class="hidden" name="Vc_company">
+						<ul class="fl-li cb">
+							<li>
+								<label>出&nbsp;票&nbsp;&nbsp;人：</label><input type="text" name="Vc_drawer" value="">
+							</li>
+							<li>
+								<label>出&nbsp;票&nbsp;&nbsp;日：</label><input type="text" name="Dt_issuedate">
+							</li>
+							<li>
+								<label>金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额：</label><input type="text" name="N_price">
+							</li>
+							<li>
+								<label>到&nbsp;期&nbsp;&nbsp;日：</label><input type="text" name="Dt_enddate">
+							</li>
+							<li>
+								<label>持&nbsp;票&nbsp;&nbsp;人：</label><input type="text" name="Vc_holder">
+							</li>
+							<li>
+								<label>银行是否保兑：</label><select name="I_sure"><option value="1">是</option><option value="0">否</option></select>
+							</li>
+							<li>
+								<label>贸易产品：</label><input type="text" name="Vc_products">
+							</li>
+							<li>
+								<label>贸易规模：</label><input type="text" name="Vc_size">
+							</li>
+							<li>
+								<label>融资周期：</label><input type="text" name="Vc_bank_cycle">
+							</li>
+							<li>
+								<label>融资规模：</label><input type="text" name="Vc_bank_size">
+							</li>
+							<li>
+								<label>联&nbsp;系&nbsp;&nbsp;人：</label><input type="text" name="Vc_contactor">
+							</li>
+							<li>
+								<label>联系电话：</label><input type="text" name="Vc_contactor_phone">
+							</li>
+							<li>
+								<label>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</label><input type="text" name="Vc_note">
+							</li>
+						</ul>
+						<button type="submit">确定</button>
+					</form>
+				</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+	
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

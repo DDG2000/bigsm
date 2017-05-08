@@ -1,0 +1,105 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="table-responsive">
+        <form class="form-horizontal">
+            <div class="input-group col-md-3 col-sm-4 col-xs-12 form-group pull-right">
+                <input type="text" name="uname" id="nameSearch" class="form-control form-param-to" placeholder="用户/项目名/订单号" value="{$param.uname}">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" id="nameSearchButton">搜索</button>
+                </span>
+            </div>
+           <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+                <select  x-listen  class="form-control form-param-to" name="replyStatus">
+                    <option value="-1">申诉状态</option>
+                    {volist name="$model->statusArray" id="vo"}
+                   
+                   	 <option value="{$key}" {$key==$param.replyStatus?"selected":""}>{$vo}</option>
+            
+                    {/volist}
+                </select>
+            </div>
+           <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+                <select  x-listen  class="form-control form-param-to" name="replyType">
+                    <option value="-1">申诉类型</option>
+                   
+                   	 <option value="1" {$param.replyType==1?"selected":""}>订单申诉</option>
+                   	 <option value="2" {$param.replyType==2?"selected":""}>账单申诉</option>
+            
+                </select>
+            </div>
+        </form>
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+                <tr class="headings">
+                   
+                    <th class="column-title">ID </th>
+                    <th class="column-title">用户</th>
+                    <th class="column-title">所属项目</th>
+                    <th class="column-title">订单号</th>
+                    <th class="column-title">货物详情</th>
+                    <th class="column-title">申诉类型</th>
+                    <th class="column-title">申诉内容</th>
+                    <th class="column-title">申诉状态</th>
+                    <th class="column-title">申诉时间</th>
+                    <th class="column-title no-link last"><span class="nobr">操作</span>
+                    </th>
+                   
+                </tr>
+            </thead>
+
+            <tbody>
+                 {volist name="$page->items()" id="vo"}
+                <tr class="even pointer">
+              
+                    <td class=" ">{$vo.id}</td>
+                    <td class=" ">{$vo.Vc_applicantName}</td>
+                    <td class=" ">{$vo.Vc_proj}</td>
+                    <td class=" ">{$vo.Vc_orderSn}</td>
+                    <td class=" ">{$vo.Vc_goods_breed}-{$vo.Vc_goods_material}-{$vo.Vc_goods_spec}-{$vo.Vc_goods_factory}</td>
+                    <td class=" ">{$vo.I_type==1?'订单申诉':'账单申诉'}</td>
+                    <td class=" ">{$vo.T_appeal|str_cut=20}</td>
+                    <td class=" ">{$model->statusArray[$vo.I_status]}</td>
+                    <td class=" ">{$vo.Createtime}</td>
+                    <td class=" last">
+            
+            
+            			{if condition="(checkPopedom('/admin/orderappeal/edit')) "}
+                <a href="{:url('/admin/orderappeal/edit',['id'=>$vo.id])}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 查看审核</a>
+              
+               		{/if}
+            		
+            
+                
+             
+                    </td>
+                </tr>
+                
+                {/volist}
+            </tbody>
+        </table>
+    </div>
+    {$page->render()}
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select[x-listen]').change(onListPageSelectionChange) ;
+        
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                url = new xxx.Url().removeParam('page') ;
+            
+            url.setParam('uname',encodeURIComponent(name)).go() ;
+        }) ;
+        
+        
+        
+        
+        
+    }) ;
+</script>

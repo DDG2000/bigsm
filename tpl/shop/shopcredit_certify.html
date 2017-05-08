@@ -1,0 +1,50 @@
+	{include="inc/css"}
+    <title>商铺认证信息</title>
+</head>
+<body>
+    {include="inc/shop/header"}
+    <!-- banner -->
+    {include="inc/shop/banner"}
+    <!-- banner -->
+    <!-- 中间内容部分 -->
+    <div id="container">
+		<div class="c w1100">
+			<!-- 商铺首页导航 -->
+			{include="inc/shop/nav"}
+			<!-- 商铺首页导航 -->
+			<div class="cb w">
+				<!-- 首页中间部分 -->
+				<div class="fl main-left">
+					<div class="page">
+						<div class="page-title">
+							<h2>认证信息</h2>
+						</div>
+						{$v=$shopinfo}
+						<div class="page-content page-content-certification">
+							<div class="cb certification-info">
+								<div class="fl certification-info-item">公司名称：  {$v.Vc_name}</div>
+								<div class="fl certification-info-item">公司地址：{if="$v.proname==$v.cityname"}
+		{$v.proname}{$v.disname}{$v.Vc_address}
+		{else}
+		{$v.proname}{$v.cityname}{$v.disname}{$v.Vc_address}
+		
+		{/if}</div>
+								<div class="fl certification-info-item">法人代表： {$v.Vc_corporation}</div>
+								<div class="fl certification-info-item">联系人：{$v.Vc_contact}</div>
+							</div>
+							<div class="tac certification-seal" {if="$v.I_cert_status==3"}certification = "yes"{/if}>
+								三合一营业执照
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 首页中间部分 -->
+				<!-- 首页右侧 -->
+				{include="inc/shop/company"}
+				<!-- 首页右侧 -->
+			</div>
+		</div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

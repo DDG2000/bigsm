@@ -1,0 +1,116 @@
+.content {
+	display: block;
+	width: 940px;
+	margin: 15px auto;
+	font-size: 14px;
+	color: #333;
+}
+.content .left {
+	float: left;
+	width: 168px;
+	border: 1px solid #ccc;
+	padding: 15px;
+	/*border-radius: 5px;*/
+}
+.content .left .box {
+	margin-bottom: 20px;
+}
+.content .left .box .title {
+	font-size: 14px;
+	padding-left: 25px;
+	cursor: pointer;
+	color: #333;
+	font-weight: bold;
+	background: url(/tpl/image/btn_shrink.png) no-repeat 0 center;
+}
+.content .left .box .select, .content .left .box .title:hover {color: #009dd9;}
+.content .left .box .spread {
+	background: url(/tpl/image/btn_spread.png) no-repeat 0 center;
+}
+.content .left .box .msg {
+	font-size: 14px;
+}
+.content .left .list .note {
+	padding-left: 40px;
+	/*font-weight: bold;*/
+	height: 28px;
+	line-height: 28px;
+}
+.content .left .list ul li a {
+	display: block;
+	padding-left: 60px;
+	height: 24px;
+	line-height: 24px;
+	overflow: hidden;
+}
+.content .left .list ul li a.select, .content .left .list ul li a:hover {
+	color: #009dd9;
+}
+.content .left .list ul li a.select {
+	cursor: default;
+}
+.content .right {
+	float: right;
+	width: 710px;
+	padding: 0 15px;
+}
+.content .right .note {
+	margin-bottom: 20px;
+	line-height: 24px;
+}
+.content .right .questionnaire {
+	border: 1px solid #ccc;
+}
+.content .right .questionnaire .row {
+	height: 40px;line-height: 40px;
+	border-bottom: 1px solid #ccc;
+	padding: 0 15px;
+}
+.content .right .questionnaire .row .title {
+	width: 470px;
+	float: left;
+}
+.content .right .questionnaire .row .staff {
+	width: 200px;float: right;text-align: right;
+}
+.content .right .questionnaire .subject {
+	padding: 40px 15px;
+	font-weight: bold;
+} 
+.content .right .questionnaire .subject .key {
+	line-height: 30px;
+	margin-bottom: 30px;
+}
+.content .right .questionnaire .subject .value {
+	padding-left: 25px;
+}
+.content .right .questionnaire .subject .value input {
+	width: 20px;height: 20px;
+}
+.content .right .btn {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-right: 50px;
+}
+.content .right .btn a {
+	display: block;
+	float: right;
+	width: 120px;
+	margin: 0 15px;
+	font-size: 14px;
+	background: #009dd9;
+	color: #fff;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.content .right .btn a.gray {
+	background: #ccc;
+	cursor: default;
+}
+.content .right .kk {
+	line-height: 30px;color: #009dd9;
+}

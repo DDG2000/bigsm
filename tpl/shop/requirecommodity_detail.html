@@ -1,0 +1,174 @@
+	{include="inc/usercenter/css"}
+    <title>订单详情</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+           	<div class="fl w940">
+           		<!-- 面包屑导航 -->
+	    		<div class="crumblenav" style="border:none;">
+	    			<a href="#">项目管理</a><a href="/index.php?act=shop&m=requirecommodity&w=list">我的报价</a><span class="current">报价详情</span>
+	    		</div>
+	    		<!-- 面包屑导航 -->
+	    		<div class="content-wrapper">
+					{$v=$data.offerinfo}
+	    			<!-- 编号日期等信息 -->
+					<table border="0" class="data-head-info">
+	    				<tr>
+	    					<td width="65" class="tar">采购编号：</td>
+	    					<td width="177">{$v.Vc_orderSn}</td>
+	    					<td width="65" class="tar">采购日期：</td>
+	    					<td width="161">{function="formatTime($v['Createtime'],'Y-m-d')"}</td>
+	    					<td width="65" class="tar">截止日期：</td>
+	    					<td>{function="formatTime($v['D_end'],'Y-m-d')"}</td>
+	    				</tr>
+	    				<tr>
+	    					<td class="tar">采购人：</td>
+	    					<td>{$v.Vc_contact}</td>
+	    					<td class="tar">采购单位：</td>
+	    					<td>{$v.Vc_company}</td>
+	    					<td class="tar">采购状态：</td>
+	    					<td>{if="$v.I_publish_status==5"}已成交{else}未成交{/if}</td>
+	    				</tr>
+	    				<tr>
+	    					<td class="tar">报价状态：</td>
+	    					<td>{if="$v.I_offer_status==1"}
+								已报价
+							{elseif="$v.I_offer_status==2"}
+								未报价
+							{elseif="$v.I_offer_status==3"}
+								请确认订货函
+							{elseif="$v.I_offer_status==4"}
+								已成交
+							{/if}
+							</td>
+	    					<td class="tar">报价日期：</td>
+	    					<td>{function="formatTime($v['offertime'],'Y-m-d')"}</td>
+	    				</tr>
+	    			</table>
+	       			<!-- 编号日期等信息 -->
+	       			<!-- 数据列表 -->
+	       			<table class="data-list-detail">
+	       				<tr>
+	       					<th>品名</th>
+	       					<th>材质</th>
+	       					<th>规格</th>
+	       					<th>数量</th>
+	       					<th>单位</th>
+	       					<th>钢厂</th>
+	       					<th>含税报价/元</th>
+	       					<th>出库费</th>
+	       					<th>库房</th>
+	       					<th>备注</th>
+	       				</tr>
+						{loop="$data.commoditylist"}
+						
+						{$vo=$value}
+							<!-- 一个名称的结构 -->
+							<input type="hidden" name="corderID[]" value="{$vo.id}"/>
+							<tr>
+								<td rowspan="{function="count($vo.metalist)"}">{$vo.Vc_item}</td>
+								<td rowspan="{function="count($vo.metalist)"}">{$vo.Vc_stuff}</td>
+								<td rowspan="{function="count($vo.metalist)"}">{$vo.Vc_specification}</td>
+								<td rowspan="{function="count($vo.metalist)"}">{$vo.N_amount}</td>
+								<td rowspan="{function="count($vo.metalist)"}">
+									{if="$vo.I_unitType==1"}
+										件
+									{elseif="$vo.I_unitType==2"}
+										根
+									{elseif="$vo.I_unitType==3"}
+										吨
+									{/if}
+								</td>
+								{$v=$vo.metalist[0];}
+								<td>{$v.factorys}<input type="hidden" name="factorys[{$vo.id}][]" value="{$v.factorys}"></td>
+								<td><input type="text" name="price[{$vo.id}][]" value="{$v.price}"/></td>
+								<td>
+									<select name="outType[{$vo.id}][]">
+										<option value="1"{if="$v.outType==1"} selected{/if} >包出</option>
+										<option value="2"{if="$v.outType==2"} selected{/if} >自提</option>
+									</select>
+								</td>
+								<td><input type="text" value="{$v.warehouse}" name="warehouse[{$vo.id}][]"/></td>
+								<td><input type="text" value="{$v.memo}" name="memo[{$vo.id}][]"/></td>
+							</tr>
+							{loop="$vo.metalist"}
+								{if="$counter>0"}
+								{$v=$value;}
+									<tr>
+										<td>{$v.factorys}<input type="hidden" name="factorys[{$vo.id}][]" value="{$v.factorys}"></td>
+										<td><input type="text" name="price[{$vo.id}][]" value="{$v.price}"/></td>
+										<td>
+											<select name="outType[{$vo.id}][]">
+												<option value="1"{if="$v.outType==1"} selected{/if} >包出</option>
+												<option value="2"{if="$v.outType==2"} selected{/if} >自提</option>
+											</select>
+										</td>
+										<td><input type="text" value="{$v.warehouse}" name="warehouse[{$vo.id}][]"/></td>
+										<td><input type="text" value="{$v.memo}" name="memo[{$vo.id}][]"/></td>
+									</tr>
+								{/if}
+							{/loop}
+						{/loop}
+	       			</table>
+       				<!-- 一个名称的结构 -->
+					{if="!empty($data.orderletterlist)"}
+						<!-- 数据列表 -->
+						<div class="data-detail-head">—————————————————————————————<span>收到的电子邀请函</span>————————————————————————————</div>
+						{loop="data.orderletterlist"}
+						{$vo=$value}
+						{if="$vo.I_status==1"}
+							<a href="javascript:;" data-id="{$vo.letterid}" class="confirmLetterOrder">确认</a>
+						{else}
+							<span class="confirmLetterOrder">已确认,请与卖家联系</span>
+						{/if}
+						<table class="data-list-detail no">
+							<thead>
+								<th>品名</th>
+								<th>材质</th>
+								<th>规格</th>
+								<th>数量/{if="$vo.I_unitType==1"}件{elseif="$vo.I_unitType==2"}根{elseif="$vo.I_unitType==3"}吨{/if}</th>
+								<th>钢厂</th>
+								<th>含税报价</th>
+								<th>出库费</th>
+								<th>库房</th>
+								<th>备注</th>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{$vo.Vc_item}</td>
+									<td>{$vo.Vc_stuff}</td>
+									<td>{$vo.Vc_specification}</td>
+									<td>{$vo.num}</td>
+									<td>{$vo.factory}</td>
+									<td>{$vo.price}</td>
+									<td>{if="$vo.outType==1"}包出{else}自提{/if}</td>
+									<td>{$vo.warehouse}</td>
+									<td>{$vo.memo}</td>
+								</tr>
+								<tr class="total">
+									<td colspan="9">
+										<span>采购单位：<b>{$vo.buyername}</b></span>
+										<span>联系电话：<b>{$vo.buyertel}</b></span>
+										<span>付款方式：<b>{if="$vo.I_payType==1"}现款{else}银行承兑{/if}</b></span>
+										<span>交货地：<b>{if="$vo.proname==$vo.cityname"}{$vo.cityname}{else}{$vo.proname}{$vo.cityname}{/if}</b></span>
+										<span>总金额：￥<b>{$vo.totalprice}</b></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						{/loop}
+
+					{/if}
+	       			
+	    		</div>
+           	</div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

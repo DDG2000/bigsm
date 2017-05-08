@@ -1,0 +1,44 @@
+    {include="inc/usercenter/css"}
+    <title>卖家中心 - 设置报价类别</title>
+
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="content-main-con no">
+            		<div class="companyinfo no">
+            			<div class="fs0 m-form">
+            				<form action="#" method="post" id="js-setGetType">
+            					<div class="form-item chkbox" id="wg-radio">
+                                    <label class="title">接收产品报价类别：</label>
+                                    {loop="data.mallclass"}
+                                    {$vo=$value}
+            						    <label class="chk{if="$vo.id==$I_mallclassID"} selected{/if}">{$vo.Vc_name}</label><input type="radio" name="mallClassID" value="{$vo.id}"{if="$vo.id==$I_mallclassID"} checked{/if}>
+                                    {/loop}
+            					</div>
+            					<div class="fs0 ib-a form-item chk-select" id="wg-checkbox">
+									<input type="hidden" name="itemClassIds" class="ids">
+									{loop="data.subitemclass"}
+									{$vo=$value}
+									<label for="chk{$vo.id}"{if="isset($itemClassArr[$vo.id])"} class="selected"{/if}>{$vo.Vc_name}</label>
+									<input type="checkbox" value="{$vo.id}" id="chk{$vo.id}"{if="isset($itemClassArr[$vo.id])"} checked{/if}>
+									{/loop}
+								</div>
+            					<input class="hidden" type="hidden" id="selected-value" value="1"/>
+            					<button type="submit" class="submit">确定</button>
+            				</form>
+            			</div>
+            		</div>
+                </div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

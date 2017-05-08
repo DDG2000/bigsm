@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss_stat"}
+{if="isset($extend.js)"}
+	{$extend.js}
+{/if}
+</head>
+
+<body>
+<div id="main">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.html}</a>
+			 {/if}
+		{/loop}
+	</div>
+
+	{if="isset($extend.search)"}
+	<div class="table">
+	<form name="form1" method="post" action="" check="1">
+	<div class="b_line1" style="padding:8px;">
+			{loop="$extend.search"}
+				{$key}:{$value}
+			{/loop}
+			<a class="buta" style="display:inline-block;float:none;margin-left:15px;" />搜索</a>
+			{loop="$extend.hides"}
+			<input type="hidden" name="{$key}" value="{$value}">
+			{/loop}
+	</div>
+	</form>	
+	</div>
+	{/if}
+
+	<div class="table">
+		<div id="container" style="min-width:400px;height:400px;border:1px solid #c0c0c0;margin:5px auto 10px"></div>
+	<div>
+
+	<div class="table">
+	<table>
+	<tr class="tr_bt">
+		<td width="25">序号</td>
+		{loop="$list.ths"}
+		<td width="{$value.wid}">{$value.val}</td>
+		{/loop}
+	</tr>
+	{loop="$list.tds"}
+	<tr>
+		<td>{$counter+1}</td>
+		{$value}
+	</tr>
+	{else}
+	<tr>
+		<td width="25" colspan="20">没有数据！</td>
+	</tr>
+	{/loop}
+	</table>
+	</div>
+
+	<div class="table">
+	<table>
+	<tr class="tr_bt">
+		<td><strong>提示信息</strong></td>
+	</tr>
+	{loop="helps"}
+	<tr><td>{$key+1}.{$value}</td></tr>
+	{/loop}
+	</table>
+	</div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+{if="$stat.items!=''"}
+$(function () {
+$('#container').css({height:{$stat.h},width:'{$stat.w}' }).highcharts({
+	chart: {type: 'bar'},
+	title: {
+		text: '{$stat.title}'
+	},
+	subtitle: {
+		text: '{$stat.subtitle}'
+	},
+	xAxis: {
+		categories: [{$stat.items}],//['12','23']
+		title: {
+			text: null
+		}
+	},
+	yAxis: {
+		min: 0,
+		title: {
+			text: '{$stat.ytitle}',
+			align: 'high'
+		},
+		labels: {
+			overflow: 'justify'
+		}
+	},
+	tooltip: {
+		valueSuffix: ' {$stat.yt2}'
+	},
+	plotOptions: {
+		bar: {
+			dataLabels: {
+				enabled: true
+			}
+			,showInLegend: false
+		}
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'top',
+		x: -100,
+		y: 100,
+		floating: true,
+		borderWidth: 1,
+		backgroundColor: '#FFFFFF',
+		shadow: true
+	},
+	credits: {
+		enabled: false
+	},
+	series: [{
+		name: '{$stat.yt1}',
+		data: [{$stat.datas}]//'[12,13]'
+	}]
+});
+});
+{/if}
+</script>

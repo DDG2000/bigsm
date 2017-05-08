@@ -1,0 +1,109 @@
+	{include="inc/usercenter/css"}
+    <title>订单管理 - 我的订单</title>
+</head>
+<body>
+    {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+            {include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="cb user-center-head">
+            		<img  src="{$Vc_photo}#" width="100" height="100" class="fl">
+        			<div class="fl user-center-info">
+						{if condition="$safelv==0"}
+							{$space = "";$level = "危险";}
+						{elseif condition="$safelv==1"}
+							{$space = "";$level = "一般";}
+						{elseif condition="$safelv==2"}
+							{$space = "";$level = "高";}
+						{/if}
+        				<p class="user-center-name">{$Vc_truename}</p>
+        				<div class="cb user-account-security">
+        					<span class="fl account-security-title">账户安全：</span>
+            				<div class="fl pr account-security-bar">
+            					<div class="pa account-security-process level{$safelv}"></div>
+            				</div>
+            				<span class="fl account-security-level level-{$safelv}">{$level}</span>
+            			</div>
+	        		</div>
+        			<div class="fl fl-a ib-i user-operation">
+        				<a href="##"><i class="i1"></i><br />待审核<em>{$status['10']}</em></a><a href="##"><i class="i2"></i><br />待评价<em>{$status['70']}</em></a><a href="##"><i class="i3"></i><br />待自提<em>0</em></a><a href="##"><i class="i4"></i><br />已完成<em>{$status['20']}</em></a>
+        			</div>
+            	</div>
+            	<div class="user-center-order">
+            		<div class="cb table-title">
+            			我的订单<a href="/index.php?act=user&m=order&w=list" target="_blank" class="fr showAll">查看全部订单</a>
+            		</div>
+            		<div class="table-myorder" id="order-list">
+						{if condition="$da"}
+							{loop="$da.data"}
+								<table>
+									{if condition="$value.I_status==10"}
+										{$space = "";$status = "等待审核";}
+									{elseif condition="$value.I_status==20"}
+										{$space = "";$status = "已完成";}
+									{elseif condition="$value.I_status==70"}
+										{$space = "";$status = "待评价";}
+									{elseif condition="$value.I_status==60"}
+										{$space = "";$status = "已取消";}
+									{/if}
+									<thead>
+										<tr>
+											<th colspan="9">
+												订单号： <span class="order-num">{$value.Vc_orderNO}</span><span class="order-date">{$value.Createtime}</span><span class="order-name">{$value.shopname}</span><span class="tel">{$value.Vc_phone}</span>
+											</th>
+											<th class="delete"><a href="javascript:void(0);" class="ib" data-id="{$value.id}" title="删除订单"></a></th>
+										</tr>
+									</thead>
+									<tr>
+										<td width="65">{$value.goods[0]['itemname']}</td>
+										<td width="48">{$value.goods[0]['stuffname']}</td>
+										<td width="104">{$value.goods[0]['specificationname']}</td>
+										<td width="45">{$value.goods[0]['factoryname']}</td>
+										<td width="75">{$value.goods[0]['warehouse']}</td>
+										<td width="63">{$value.goods[0]['N_weight']}</td>
+										<td rowspan="{function="count($value.goods,0)+1;"}" width="115">{$value.Vc_consignee}</td>
+										<td rowspan="{function="count($value.goods,0)+1;"}" width="130" class="money">￥{$value.N_amount_price}</td>
+										<td rowspan="{function="count($value.goods,0)+1;"}" width="132" class="prew status{$value.I_status}">{$status}</td>
+										<td rowspan="{function="count($value.goods,0)+1;"}">
+											{if condition="$value.I_status==10"}
+												<a href="javascript:void(0);" data-id="{$value.id}" class="cancel">取消订单</a>
+												<a href="/index.php?act=user&m=order&w=detail&id={$value.id}" target="_blank">订单详情</a>
+											{elseif condition="$value.I_status==20"}												{if condition="$value.I_isapp==1"}
+													<a href="/index.php?act=user&m=order&w=appraise&id={$value.id}" target="_blank">评价</a>
+												{elseif condition="$value.I_isapp==2"}
+													<a href="/index.php?act=user&m=order&w=appraisal&id={$value.id}" target="_blank">查看评价</a>
+												{/if}
+												<a href="/index.php?act=user&m=order&w=detail&id={$value.id}" target="_blank">查看电子订货函</a>
+												<a href="/index.php?act=user&m=order&w=detail&id={$value.id}" target="_blank">订单详情</a>
+											{elseif condition="$value.I_status==60"}
+												<a href="/index.php?act=user&m=order&w=detail&id={$value.id}" target="_blank">查看详情</a>
+											{/if}
+										</td>
+									</tr>
+									{loop="$value.goods"}
+										{if condition="$counter >0"}
+											<tr>
+												<td>{$value.itemname}</td>
+												<td>{$value.stuffname}</td>
+												<td>{$value.specificationname}</td>
+												<td>{$value.factoryname}</td>
+												<td>{$value.warehouse}</td>
+												<td>{$value.N_weight}</td>
+											</tr>
+										{/if}
+									{/loop}
+								</table>
+							{/loop}
+						{/if}
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+	{include="inc/usercenter/footer"}
+    {include="inc/js"}

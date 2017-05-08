@@ -1,0 +1,50 @@
+	{include="inc/usercenter/css"}
+    <title>卖家中心 - 首页轮播图管理</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="pr content-main-con no">
+					<form class="m-list-search" action="javascript:;" method="POST">
+    					<span class="text text-title">查询内容</span><input type="text" class="keywords"><button type="submit" class="search-submit">查询</button><a href="/index.php?act=shop&m=slides&w=add" target="_blank" class="btn">添加商铺首页轮播</a>
+        			</form>
+            		<div class="data-list-table data-slide-list ib-a" id="js-slide-list">
+            			<table border="0">
+            				<thead>
+            					<th width="50">排序号</th>
+            					<th width="100">名称</th>
+            					<th width="200">链接</th>
+								<th width="100">图片</th>
+								<th width="110">创建时间</th>
+								<th width="100">操作</th>
+            				</thead>
+            				<tbody>
+								{loop="data.list"}
+								{$vo=$value}
+								<tr>
+									<td>{$vo.I_order}</td>
+									<td>{$vo.Vc_name}</td>
+									<td>{$vo.Vc_linkurl}</td>
+									<td><img src="{$vo.Vc_url}#" width="100"></td>
+									<td>{function="formatTime($vo['Createtime'],'Y-m-d')"}</td>
+									<td><a href="/index.php?act=shop&m=slides&w=edit&id={$vo.id}">修改</a><a href="javascript:;" class="event-delete" data-id="{$vo.id}">删除</a></td>
+								</tr>
+								{/loop}
+								{if="empty($data['list'])"}
+								<tr data="it"><td colspan="3" align="center">无此相关数据！</td></tr>
+								{/if}			
+            				</tbody>
+            			</table>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

@@ -1,0 +1,96 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="table-responsive">
+        <form class="form-horizontal">
+            <div class="input-group col-md-3 col-sm-4 col-xs-12 form-group pull-right">
+                <input type="text" name="uname" id="nameSearch" class="form-control form-param-to" placeholder="手机号" value="{$param.phone}">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" id="nameSearchButton">搜索</button>
+                </span>
+            </div>
+        </form>
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+                <tr class="headings">
+                    <th class="column-title">ID </th>
+                    <th class="column-title">手机号</th>
+                    <th class="column-title">类型</th>
+                    <th class="column-title">参数</th>
+                    <th class="column-title">发送状态</th>
+                    <th class="column-title">发送时间</th>
+                </tr>
+            </thead>
+            <tbody>
+            {volist name="$page->items()" id="vo"}
+                <tr class="even pointer">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.Vc_phone}</td>
+                    <td>{$model->getName($vo.Vc_template)}</td>
+                    <td>{$model->parseJson($vo.Vc_json)}</td>
+                    <td>{$vo.I_deal==1?'成功':'失败'}</td>
+                    <td class="last">{$vo.Dt_send}</td>
+                </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+    {$page->render()}
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select[x-listen]').change(onListPageSelectionChange) ;
+        
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                url = new xxx.Url().removeParam('page') ;
+            
+            url.setParam('phone',encodeURIComponent(name)).go() ;
+        }) ;
+        
+        
+        $(".btn-change-approved").bind('click',function(){
+            if($(this).attr("sending")==1){
+                return;
+            }
+            var id_val = parseInt($(this).attr('id_val'));
+            var st_val = parseInt($(this).attr('st_val'));
+            if(id_val>0){
+                $(this).attr("sending",1);
+                
+                layer.confirm('确认要更改吗？', {
+                    icon: 3, 
+                    btn: ['确认','取消'], //按钮
+                    title:'提示',
+                }, function(index){
+                    layer.close(index);
+                    $.getJSON("{:url('/admin/user/changeAjax')}",{id:id_val,st:st_val},
+                    function(data){
+                        if(null != data.msg || '' != data.msg){
+                            layer.msg(data.msg);
+                        }
+                        
+                        if(data.code==200){
+                            location.reload();
+                        }else if(null != data.url || '' != data.url){
+                            window.location.href = data.url;
+                        }
+                        $(this).removeAttr("sending");
+                    });
+                });
+            }
+        });
+        
+        
+        
+        
+        
+        
+        
+    }) ;
+</script>

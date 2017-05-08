@@ -1,0 +1,63 @@
+	{include="inc/usercenter/css"}
+    <title>需求管理 - 我的物流信息需求</title>
+</head>
+<body>
+   {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">需求管理</a><span class="current">我的物流需求列表</span>
+        		</div>
+            	<div class="pr content-main-con">
+            		<div class="data-table-query fs0">
+        				<label class="ib"><input type="text" value="2015-09-09" data-type="datepicker"></label><span>至</span><label class="ib"><input type="text" value="2016-09-19" data-type="datepicker"></label>
+    					<a href="javascript:void(0);" class="ib btn-query">查询</a>
+    					<a href="/index.php?act=user&m=require&w=addlogistics" target="_blank" class="ib btn-add">发布物流需求</a>
+        			</div>
+            		<div class="data-list-table">
+            			<table>
+            				<thead>
+            					<th width="120">运输货品</th>
+            					<th width="80">数量</th>
+            					<th width="70">发布时间</th>
+								<th width="120">发货地</th>
+            					<th width="120">收货地</th>
+            					<th width="70">运输时间</th>
+            					<th width="70">联系人</th>
+            					<th width="105">联系电话</th>
+            					<th>操作</th>
+            				</thead>
+            				<tbody id="requirelogistics">
+								{loop="data.data"}
+									<tr class="{if="!($counter%2==0)"}even{/if}">
+										<td>{$value.Vc_name}</td>
+										<td>{$value.N_amount}吨</td>
+										<td>{function="formatTime($value.Createtime,'Y-m-d H:i')"}</td>
+										<td>{$value.Vc_send}吨</td>
+										<td>{$value.Vc_get}吨</td>
+										<td>{function="formatTime($value.D_transtime,'Y-m-d H:i')"}</td>
+										<td>{$value.Vc_contact}</td>
+										<td>{$value.Vc_contact_phone}</td>
+										<td>
+											<a href="/index.php?act=requirement&m=detail&id={$value.id}" target="_blank" class="btn-open">修改</a>|<a href="javascript:void(0);" data-id="{$value.id}" class="btn" data-event="delete">删除</a>|<a href="javascript:void(0);" class="btn" data-id="{$value.id}" data-event="cancel">撤销发布</a>
+										</td>
+									</tr>
+								{/loop}
+            				</tbody>
+            			</table>
+						<div id="pagestr">{$pagestr}</div>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}
+    
+

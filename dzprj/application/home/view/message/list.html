@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>云采网 - 消息中心</title>
+{include file='public/head' /}
+</head>
+	<body>
+		<!-- top -->
+	    {include file='public/top' /}
+	    <!-- top -->
+
+		<!-- 列表json获取地址：
+	    {:url('/message/getList',['page'=>1,'unreadOnly'=>1])}
+
+    	    请求参数：
+    	    page：页码
+    	    unreadOnly：1只查询未读消息，0查询所有消息
+
+	    返回参数：
+	    {
+	        count：记录总数
+	        current：当前页码
+	        size：分页大小
+	        {
+	            id：id
+			    Vc_title：标题
+			    Vc_content：内容
+			    Vc_url：跳转地址
+			    Createtime：创建日期
+			    I_read：0未读，1已读
+	        }
+	    } -->
+		<!-- content -->
+		<div class="mwrap cc cb mt25">
+			<div class="mside fl">
+				<div class="ms-title">消息</div>
+				<ul class="ms-list">
+					<li class="active"><a href="/message/myMessages">消息提醒</a></li>
+					<li><a href="/message/config">系统设置</a></li>
+				</ul>
+			</div>
+			<div class="fl mcontent">
+				<div class="mc-title">交易提醒</div>
+				<div class="mc-lwrap">
+					<div :controller="message" class="ms-controller">
+						<div class="empty" :visible="!@show">
+							暂无未读消息哟~~
+						</div>
+						<ul class="mc-list" :visible="@show">
+							<li :for="(index, el) in @data">
+								<div class="mc-top cb"><span class="fl mc-type">{{el.I_type == 2? '交易提醒':'系统消息'}}</span><span class="fl mc-text">{{el.Vc_title}}</span></div>
+								<div class="mc-b cb">
+									<span class="mc-date fl">{{el.Createtime}}</span><span class="mc-info fl">{{el.Vc_content}}</span>
+								</div>
+								<a :attr={href:el.Vc_url} target="_blank" class="btn" :class={active:el.I_read==1} :click="@setRead(el.id, index)" :visible="el.I_type==2">查看详情</a>
+							</li>
+						</ul>
+						<div class="pager1 fl-a cb" :visible="@show">
+							<div class="fr">
+								<a href="javacript:;" :click="@toIndex">首页</a>
+								<a href="javacript:;" :click="@prev">上一页</a>
+	                            <!--ms-for: (i, el) in @totalPage-->
+	                            <a href="javascript:;" :class="{active:@current === i+1}" :visible="!!@filter(i+1)" :click="@change(i+1,i)">{{i+1}}</a>
+	                            <!--ms-for-end:-->
+								<!-- <input type="text" ms-duplex="@go">
+								<a href="javacript:;" :click="@goto">跳转</a> -->
+	                            <a href="javacript:;" :click="@next">下一页</a>
+								<a href="javacript:;" :click="@toEnd">尾页</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- content -->
+	{include file='public/foot' /}
+    <script src="//cdn.bootcss.com/avalon.js/2.1.16/avalon.js"></script>
+    <script type="text/javascript">
+		avalon.config({debug: false});
+		
+		var isFirst = false;
+        var message = avalon.define({
+            $id:"message",
+            show:true,
+            error:false,
+            totalPage:[],
+            data:[],
+            current:1,
+			pageSize:1,
+			go:"",
+			setRead: function(id, index){
+				$.ajax({
+					url: '/message/content',
+					type: 'GET',
+					dataType: 'JSON',
+					data: {mid: id}
+				})
+				.done(function(res, status) {
+					if(status == "success") {
+						console.log('flag success');
+					}
+				})
+				.fail(function(res, status) {
+					console.log("e-status:"+status);
+					if(status >= 500) {
+						console.log('flag success');
+					}
+				});
+				
+				fetchData(this.current,true);
+			},
+			subpages: function(el, i){
+				if( i >= message.current && i < (message.current + 4) ) {
+					return true;
+				} else if(i >= (message.totalPage.length - 4)) {
+					return true;
+				} else {
+					return false;
+				}
+				
+			},
+            change: function(page){
+				if(page !== this.current) {
+					this.current = page;
+	                fetchData(page);
+				}
+            },
+            prev: function(){
+				var page = this.current;
+				if(page - 1 >= 1) {
+					this.current = page -1;
+	                fetchData(this.current);
+				}
+            },
+            next: function(){
+				var page = this.current;
+				if(page + 1 <= this.totalPage.length) {
+					this.current = page + 1;
+					fetchData(this.current);
+				}
+            },
+			toIndex: function(){
+				if(this.current == 1) {
+					return ;
+				}
+				this.current = 1;
+				fetchData(this.current);
+			},
+			toEnd: function(){
+				if(this.current == this.pageSize) {
+					return ;
+				}
+				this.current = this.pageSize;	
+				fetchData(this.current);
+			},
+			goto: function(){
+				this.current = this.go;
+				fetchData(this.current);
+			},
+			filter: function(i){				
+				if (i >= this.current && i < (this.current + 4)) {
+					return true;
+				} else if(i > this.pageSize - 4 && i < (this.current + 4)){
+					return true;
+				} else {
+					return false;
+				}
+				
+			}
+        });
+
+		function fetchData(page, isRead){
+			if(!isRead) {
+				isFirst && layer.load(2,{
+					shade:[0.2,"#fff"],
+				});
+			}
+			
+			isFirst = true;
+			$.getJSON('{:url('/message/getList')}', {page: page}, function(json) {
+				layer.closeAll();
+				var data = json.data;
+	            message.show = !!(data.count>0);
+	            message.data = data.data;
+				message.pageSize = Math.ceil(data.count/4);
+	            message.totalPage = new Array(Math.ceil(data.count/4));
+	            message.current = parseInt(data.current);
+				
+	        });
+		}
+		fetchData();
+    </script>
+	</body>
+</html>

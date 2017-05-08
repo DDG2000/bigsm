@@ -1,0 +1,104 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="table-responsive">
+        <form class="form-horizontal">
+            <div class="input-group col-md-3 col-sm-4 col-xs-12 form-group pull-right">
+                <input type="text" name="uname" id="nameSearch" class="form-control form-param-to" placeholder="用户/申请人/公司" value="{$param.uname}">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" id="nameSearchButton">搜索</button>
+                </span>
+            </div>
+           <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+                <select  x-listen  class="form-control form-param-to" name="certifyStatus">
+                    <option value="-1">认证状态</option>
+                    {volist name="$user->statusArray" id="vo"}
+                    {if condition="($key!=4) "}
+                   	 <option value="{$key}" {$key==$param.certifyStatus?"selected":""}>{$vo}</option>
+                    
+                    {/if}
+                    {/volist}
+                </select>
+            </div>
+        </form>
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+                <tr class="headings">
+                    <!-- <th>
+                        <input type="checkbox" id="check-all" class="flat"> 
+                    </th>-->
+                    <th class="column-title">ID </th>
+                    <th class="column-title">用户</th>
+                    <th class="column-title">申请人姓名</th>
+                    <th class="column-title">公司名称</th>
+                    <th class="column-title">公司地址</th>
+                    <th class="column-title">实际公司全称</th>
+                    <th class="column-title">实际公司地址</th>
+                    <th class="column-title">认证状态</th>
+                    <th class="column-title">申请时间</th>
+                    <th class="column-title no-link last"><span class="nobr">操作</span>
+                    </th>
+                    <!-- <th class="bulk-actions" colspan="7">
+                        <a class="antoo" style="color:#fff; font-weight:500;">批量操作 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                    </th> -->
+                </tr>
+            </thead>
+
+            <tbody>
+                 {volist name="$page->items()" id="vo"}
+                <tr class="even pointer">
+                <!-- 	<td class="a-center ">
+                        <input type="checkbox" class="flat" name="table_records">
+                    </td> -->
+                    <td class=" ">{$vo.id}</td>
+                    <td class=" ">{$vo.uname==null?$vo.umobile:$vo.uname}</td>
+                    <td class=" ">{$vo.Vc_applicantName}</td>
+                    <td class=" ">{$vo.Vc_name}</td>
+                    <td class=" ">{$vo.proname}{$vo.cityname}{$vo.areaname}{$vo.Vc_address}</td>
+                    <td class=" ">{$vo.Vc_erp_name}</td>
+                    <td class=" ">{$vo.Vc_erp_area}{$vo.Vc_erp_addr}</td>
+                    <td class=" ">{$user->statusArray[$vo.I_status]}</td>
+                    <td class=" ">{$vo.Createtime}</td>
+                    <td class=" last">
+            
+            
+            			{if condition="(checkPopedom('/admin/company/edit')) "}
+            			{if condition="($vo.I_status!=4) "}
+                <a href="{:url('/admin/company/edit',['id'=>$vo.I_userID])}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 认证审核</a>
+                		 {/if}
+               		{/if}
+            		
+            
+                
+             
+                    </td>
+                </tr>
+                
+                {/volist}
+            </tbody>
+        </table>
+    </div>
+    {$page->render()}
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select[x-listen]').change(onListPageSelectionChange) ;
+        
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                url = new xxx.Url().removeParam('page') ;
+            
+            url.setParam('uname',encodeURIComponent(name)).go() ;
+        }) ;
+        
+        
+        
+        
+        
+    }) ;
+</script>

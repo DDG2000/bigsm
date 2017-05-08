@@ -1,0 +1,34 @@
+	{include="inc/usercenter/css"}
+    <title>需求管理 - 新增融资</title>
+</head>
+<body>
+    {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">需求管理</a><a href="#">我的融资需求</a><span class="current">发布融资需求</span>
+        		</div>
+            	<div class="content-main-con">
+					<form class="tender-form" id="finance-form">
+						<ul>
+							<li><label class="title">融资项目名称</label><input type="text" name="Vc_name" data-rule="融资项目名称:required;"></li>
+							<li><label class="title">融资金额</label><input type="text" name="Vc_amount" data-rule="融资金额:required;integer(+);"></li>
+							<li><label class="title">融资期限</label><input type="text" name="Vc_deadline" data-type="datepicker" data-rule="融资期限:required;date;"></li>
+							<li><label class="title">期望利率</label><input type="text" name="Vc_rate" data-rule="期望利率:required;"></li>
+							<li><label class="title">联系人</label><input type="text" name="Vc_contact" data-rule="联系人:required;"></li>
+							<li><label class="title">联系电话</label><input type="text" name="Vc_contact_phone" data-rule="联系电话:required;mobile;"></li>
+							<li><label class="title"></label><button type="submit">提交</button></li>
+						</ul>
+					</form>
+                </div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

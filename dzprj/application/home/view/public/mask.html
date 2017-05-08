@@ -1,0 +1,43 @@
+<div class="masker hide" id="certifyMask">
+    {if condition='isset($_SESSION["user"])'}
+        <div class="mask"></div>
+        <div class="mask-wrap">
+            <div class="mask-title cb">
+                提示
+                <a href="javascript:;" class="fr close" title="关闭"><img src="/static/home/img/close.png"></a>
+            </div>
+            <div class="mask-content">
+                <p class="p1"><i></i>
+                    {if condition="$userCertifyStatusInfo==1"}
+                        认证中，请耐心等待
+                    {elseif condition="$userCertifyStatusInfo==2"}
+                        认证不通过，请修改信息后重新进行认证
+                    {elseif condition="$userCertifyStatusInfo==4"}
+                        抱歉，认证通过后才能使用该功能
+                    {elseif condition="empty($userCertifyStatusInfo)"}
+                        抱歉，认证通过后才能使用该功能
+                    {/if}
+                </p>
+                <p class="p2"><em class="time" id="counter">3</em>秒后自动关闭本弹窗</p>
+            </div>
+            {if condition="$userCertifyStatusInfo==1"}
+                <div class="mask-footer">
+                    <a href="javascript:;" class="noClick">随便逛逛</a>
+                    <a href="/account/certify" class="btn">我的认证</a>
+                </div>
+            {elseif condition="$userCertifyStatusInfo==2"}
+                <div class="mask-footer">
+                    <a href="javascript:;" class="noClick">暂不认证</a><a href="/account/certify" class="btn">重新认证</a>
+                </div>
+            {elseif condition="$userCertifyStatusInfo==4"}
+                <div class="mask-footer">
+                    <a href="javascript:;" class="noClick">暂不认证</a><a href="/account/certify" class="btn">马上认证</a>
+                </div>
+            {elseif condition="empty($userCertifyStatusInfo)"}
+                <div class="mask-footer">
+                    <a href="javascript:;" class="noClick">暂不认证</a><a href="/account/certify" class="btn">马上认证</a>
+                </div>
+            {/if}
+        </div>
+    {/if}
+</div>

@@ -1,0 +1,80 @@
+	{include="inc/usercenter/css"}
+	<title>集采管理 - 添加集采公告</title>
+</head>
+<body>
+	{include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="maincon-wrapper">
+            		<div class="crumblenav">
+            			<a href="#">集采管理</a><span class="current">添加集采公告</span>
+            		</div>
+            		<div class="maincon-inner modul-form">
+						<iframe name="norefrensh" style="display:none;"></iframe>
+            			<form action="http://www.bigsm.com/index.php?act=user&m=concentrated&w=add&submit" target="norefrensh" class="modul-form-col" method="GET" id="concentratedAdd" enctype="multipart/form-data">
+            				<div class="modul-form-item">
+            					<label class="modul-form-title">集采名称:</label>
+            					<input class="modul-form-text" type="text" name="Vc_name" data-rule="名称:required;chinese;"/>
+        					</div>
+        					<div class="modul-form-item">
+            					<label class="modul-form-title">集采类型:</label>
+            					<div class="modul-form-select">
+            						<input type="text" class="modul-form-select-text" data-rule="集采类型:required;"/>
+									<input type="text" class="hidden" name="I_itemClassId"/>
+									<ul class="modul-form-select-warpper">
+										{loop="$data.itemClassList"}
+											<li data-id="{$value.id}">{$value.Vc_name}</li>
+										{/loop}
+									</ul>
+            					</div>
+        					</div>
+        					<div class="modul-form-item">
+            					<label class="modul-form-title">品名:</label>
+								<input type="hidden" class="hidden" name="Vc_itemIds" value=""/>
+								<div class="ib wg-select-wrapper fs0 vmm">
+
+								</div>
+								<!--<span class="msg-box n-right" style="vertical-align:top;" for="Vc_itemIds"></span>-->
+        					</div>
+        					<div class="modul-form-item">
+            					<label class="modul-form-title">总重量:</label>
+            					<input class="modul-form-text" type="text" name="N_weight" data-rule="总重量:required;filter(filter(\D))">
+            					<span class="modul-form-tips msg-box n-right" for="N_weight" style="margin-top:10px;">吨</span>
+        					</div>
+        					<div class="modul-form-item">
+            					<label class="modul-form-title">项目地址:</label>
+            					<input class="modul-form-text" type="text" name="Vc_address" data-rule="项目地址:required;chinese;">
+        					</div>
+        					<div class="modul-form-item">
+            					<label class="modul-form-title">集采期限:</label>
+            					<div class="modul-form-select-date"><input type="text" class="modul-form-select-date-text" name="D_start"  data-provide="datepicker" data-rule="开始日期:require;"/></div>
+            					<span class="modul-form-select-space">—</span>
+            					<div class="modul-form-select-date"><input type="text" class="modul-form-select-date-text" name="D_end"   data-provide="datepicker" data-rule="结束日期:required;开始日期:match(gte, D_start, date)"/></div>
+        					</div>
+        					<div class="modul-form-item">
+        						<label class="modul-form-title">集采标书:</label>
+        						<label class="modul-form-file">
+        							选择文件<input type="file" name="Vc_doc" class="modul-form-file-text"/>
+        						</label>
+        						<span class="modul-form-file-name">鑫能裕丰集采标书.xlsx</span>
+        						<a href="##" class="modul-form-btn">删除</a>
+        					</div>
+        					<div class="modul-form-hr"></div>
+        					<div class="modul-form-action">
+        						<button type="submit">提交</button>
+        						<button type="reset">取消</button>
+        					</div>
+            			</form>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+	{include="inc/usercenter/footer"}
+    {include="inc/js"}

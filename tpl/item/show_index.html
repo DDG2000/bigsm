@@ -1,0 +1,420 @@
+
+	{include="inc/css"}
+	<title>钢材市场 - 自营商城</title>
+</head>
+
+<body>
+	{include="inc/header"} 
+	{include="inc/mainnav"}
+	<!-- 中间部分 -->
+	<div id="container" class="oh w1100 c">
+		<!-- 面包屑 -->
+		<div class="cb crumbnav">
+			<a href="index.html">首页</a><a href="index.html">钢材市场</a><span class="current">自营商城</span>
+			<div class="fr wgt-results">共搜索到<em>1280</em>个 资源</div>
+		</div>
+		<!-- 筛选条件模版 -->
+		<script type="text/html" id="self-shop-filter-template">
+			<!--<div class="filter-condition-wrapper">-->
+				<div class="cb filter-condition first">
+					<span class="fl filter-condition-name vmm">分类：</span>
+					<div class="fl ib-a fs0 filter-condition-con">
+						<a href="##" class="filter-condition-all active" data-id="0" data-type="I_itemClassID">全部</a>
+						<% if(self_shop_filter) {%>
+							<% self_shop_filter['itemClassList'].forEach(function(item){ %>
+								<a href="javascript:void(0)" data-id="<%= item.id %>" data-type="I_itemClassID">
+									<%= item.Vc_name%>
+								</a>
+							<% }) %>
+						<% } %>
+					</div>
+					<a href="##" class="fr filter-condition-more">+更多</a>
+				</div>
+				<div class="cb filter-condition">
+					<span class="fl filter-condition-name vmm">品名：</span>
+					<div class="fl ib-a fs0 filter-condition-con">
+						<a href="##" class="filter-condition-all active" data-id="0" data-type="I_itemID">全部</a>
+						<% if(self_shop_filter) {%>
+							<% self_shop_filter['itemList'].forEach(function(item){ %>
+								<a href="javascript:void(0)" data-id="<%= item.id %>" data-type="I_itemID">
+									<%= item.Vc_name%>
+								</a>
+							<% }) %>
+						<% } %>
+					</div>
+					<a href="##" class="fr filter-condition-more">+更多</a>
+				</div>
+				<div class="cb filter-condition">
+					<span class="fl filter-condition-name vmm">材质：</span>
+					<div class="fl ib-a fs0 filter-condition-con">
+						<a href="##" class="filter-condition-all active" data-id="0" data-type="I_stuffID">全部</a>
+						<% if(self_shop_filter) {%>
+							<% self_shop_filter['itemStuffList'].forEach(function(item){ %>
+								<a href="javascript:void(0)" data-id="<%= item.id %>" data-type="I_stuffID">
+									<%= item.Vc_name%>
+								</a>
+							<% }) %>
+						<% } %>
+					</div>
+					<a href="##" class="fr filter-condition-more">+更多</a>
+				</div>
+				<div class="cb filter-condition">
+					<span class="fl filter-condition-name vmm">规格：</span>
+					<div class="fl ib-a fs0 filter-condition-con">
+						<a href="##" class="filter-condition-all active" data-id="0" data-type="I_specificationID">全部</a>
+						<% if(self_shop_filter) {%>
+							<% self_shop_filter['itemSpecificationList'].forEach(function(item){ %>
+								<a href="javascript:void(0)" data-id="<%= item.id %>" data-type="I_specificationID">
+									<%= item.Vc_name%></a>
+							<% }) %>
+						<% } %>
+					</div>
+					<a href="##" class="fr filter-condition-more">+更多</a>
+				</div>
+				<div class="cb filter-condition">
+					<span class="fl filter-condition-name vmm">钢厂：</span>
+					<div class="fl ib-a fs0 filter-condition-con">
+						<a href="##" class="filter-condition-all active" data-id="0" data-type="I_factoryID">全部</a>
+						<% if(self_shop_filter) {%>
+							<% self_shop_filter['itemFactoryList'].forEach(function(item){ %>
+								<a href="javascript:void(0)" data-id="<%= item.id %>" data-type="I_factoryID">
+									<%= item.Vc_name%></a>
+							<% }) %>
+						<% } %>
+					</div>
+					<a href="##" class="fr filter-condition-more">+更多</a>
+				</div>
+			<!--</div>-->
+			<!--<div class="filter-condition-province">
+				<div class="province-wrapper">
+					<span class="title ib">地区：</span>
+					<ul class="list ib cb fl-li" id="self-shop-filter-area">
+						<% if(self_shop_filter) {%>
+							<% self_shop_filter['area'].forEach(function(item){ %>
+								<li><label><input type="checkbox" name="Vc_province" data-id="<%=item.ID%>" data-type="I_cityID"/><%= item.Vc_province%></label></li>
+							<% }) %>
+						<% } %>
+					</ul>
+				</div>
+				<div class="btn-wrapper tac">
+					<button type="submit">确定</button><button type="reset">取消</button>
+				</div>
+			</div>-->
+			<!--<div class="filter-province-search">
+				<!--<ul class="cb fl-li">
+					<li>品名<input type="text" text />
+						<div class="pa province-selector">
+							<% if(self_shop_filter) {%>
+								<% self_shop_filter['itemClassList'].forEach(function(item){ %>
+									<a href="javascript:void(0)" data-id="<%= item.id%>" data-type="I_itemID">
+										<%=item.Vc_name%>
+									</a>
+								<% }) %>
+							<% } %>
+						</div>
+					</li>
+					<li>材质<input type="text" text />
+						<div class="pa province-selector">
+							<% if(self_shop_filter) {%>
+								<% self_shop_filter['itemStuffList'].forEach(function(item){ %>
+									<a href="javascript:void(0)" data-id="<%= item.id%>" data-type="I_stuffID">
+										<%=item.Vc_name%>
+									</a>
+								<% }) %>
+							<% } %>
+						</div>
+					</li>
+					<li>规格<input type="text" text />
+						<div class="pa province-selector">
+							<% if(self_shop_filter) {%>
+								<% self_shop_filter['itemSpecificationList'].forEach(function(item){ %>
+									<a href="javascript:void(0)" data-id="<%= item.id%>" data-type="I_specificationID">
+										<%=item.Vc_name%>
+									</a>
+								<% }) %>
+							<% } %>
+						</div>
+					</li>
+					<li>钢厂<input type="text" text />
+						<div class="pa province-selector">
+							<% if(self_shop_filter) {%>
+								<% self_shop_filter['itemFactoryList'].forEach(function(item){ %>
+									<a href="javascript:void(0)" data-id="<%= item.id%>" data-type="I_factoryID">
+										<%=item.Vc_name%>
+									</a>
+								<% }) %>
+							<% } %>
+						</div>
+					</li>-->
+					<!--<li>厚度<input type="text" num /><em>—</em><input type="tex" num /></li>
+					<li>宽度<input type="text" num /><em>—</em><input type="tex" num /></li>-->
+					<!--<li><button type="submit">搜索</button></li>-->
+				<!--</ul>
+				<div class="row fs0">
+					<a href="##" class="ib vmm">默认</a><a href="##" class="ib vmm" price>价格</a>
+					<span class="ib vmm">价格区间（元）</span><input type="text" price data-type="N_price_min"/><em class="ib vmm">—</em><input type="text" price data-type="N_price_max"/>
+					<select class="ib vmm">
+						<option value="0" data-id="0">选择地区</option>
+						<% if(self_shop_filter) {%>
+							<% self_shop_filter['area'].forEach(function(item){ %>
+								<option value="<%=item.ID %>" data-type="I_cityID"><%= item.Vc_province%></option>
+							<% }) %>
+						<% } %>
+					</select>
+				</div>
+			</div>-->
+		</script>
+		<!-- 筛选条件模版 -->
+		<!-- 面包屑 -->
+		<!-- 选择条件进行查询和筛选 -->
+		<div class="filter-condition-form credit">
+			<div class="filter-condition-wrapper" id="self-shop-filter">
+				<div class="cb filter-condition first">
+					<span class="fl filter-condition-name vmm">分类：</span>
+					<div class="fl ib-a fs0 filter-condition-con">
+						<a href="##" class="filter-condition-all active" data-id="0" data-type="I_itemClassID">全部</a> {loop="$data.itemClassList"}
+						<a href="javascript:void(0)" data-id="{$value.id}" data-type="I_itemClassID">{$value.Vc_name}</a> {/loop}
+					</div>
+					<a href="##" class="fr filter-condition-more">+更多</a>
+				</div>
+				<div class="cb filter-condition">
+					<span class="fl filter-condition-name vmm">品名：</span>
+					<div class="fl ib-a fs0 filter-condition-con">
+						<a href="##" class="filter-condition-all active" data-id="0" data-type="I_itemID">全部</a> {loop="data.itemList"}
+						<a href="javascript:void(0)" data-id="{$value.id}" data-type="I_itemID">{$value.Vc_name}</a> {/loop}
+					</div>
+					<a href="##" class="fr filter-condition-more">+更多</a>
+				</div>
+				<div class="cb filter-condition">
+					<span class="fl filter-condition-name vmm">材质：</span>
+					<div class="fl ib-a fs0 filter-condition-con">
+						<a href="##" class="filter-condition-all active" data-id="0" data-type="I_stuffID">全部</a> {loop="data.itemStuffList"}
+						<a href="javascript:void(0)" data-id="{$value.id}" data-type="I_stuffID">{$value.Vc_name}</a> {/loop}
+					</div>
+					<a href="##" class="fr filter-condition-more">+更多</a>
+				</div>
+				<div class="cb filter-condition">
+					<span class="fl filter-condition-name vmm">规格：</span>
+					<div class="fl ib-a fs0 filter-condition-con">
+						<a href="##" class="filter-condition-all active" data-id="0" data-type="I_specificationID">全部</a> {loop="data.itemSpecificationList"}
+						<a href="javascript:void(0)" data-id="{$value.id}" data-type="I_specificationID">{$value.Vc_name}</a> {/loop}
+					</div>
+					<a href="##" class="fr filter-condition-more">+更多</a>
+				</div>
+				<div class="cb filter-condition">
+					<span class="fl filter-condition-name vmm">钢厂：</span>
+					<div class="fl ib-a fs0 filter-condition-con">
+						<a href="##" class="filter-condition-all active" data-id="0" data-type="I_factoryID">全部</a> {loop="data.itemFactoryList"}
+						<a href="javascript:void(0)" data-id="{$value.id}" data-type="I_factoryID">{$value.Vc_name}</a> {/loop}
+					</div>
+					<a href="##" class="fr filter-condition-more">+更多</a>
+				</div>
+			</div>
+			<div class="filter-condition-province">
+				<div class="province-wrapper">
+					<span class="title ib">地区：</span>
+					<ul class="list ib cb fl-li" id="self-shop-filter-area">
+						{loop="data.area"}
+						<li><label><input type="checkbox" name="Vc_province" data-id="{$value.ID}" data-type="I_cityID"/>{$value.Vc_province}</label></li>
+						{/loop}
+					</ul>
+				</div>
+				<!--<div class="btn-wrapper tac">
+					<button type="submit">确定</button><button type="reset">取消</button>
+				</div>-->
+			</div>
+			<form class="filter-province-search" action="##" id="self-shop-filter-form">
+				<ul class="cb fl-li">
+					<li>品名<input type="text" text data-keypress="false"/>
+						<input type="text" class="hidden" name="I_itemID">
+						<div class="pa province-selector">
+							{loop="data.itemClassList"}
+							<a href="javascript:void(0)" data-id="{$value.id}" data-type="I_itemID">{$value.Vc_name}</a> 
+							{/loop}
+						</div>
+					</li>
+					<li>材质<input type="text" text data-keypress="false"/>
+						<input type="text" class="hidden" name="I_stuffID">
+						<div class="pa province-selector">
+							{loop="data.itemStuffList"}
+							<a href="javascript:void(0)" data-id="{$value.id}" data-type="I_stuffID">{$value.Vc_name}</a> 
+							{/loop}
+						</div>
+					</li>
+					<li>规格<input type="text" text data-keypress="false"/>
+						<input type="text" class="hidden" name="I_specificationID">
+						<div class="pa province-selector">
+							{loop="data.itemSpecificationList"}
+							<a href="javascript:void(0)" data-id="{$value.id}" data-type="I_specificationID">{$value.Vc_name}</a> 
+							{/loop}
+						</div>
+					</li>
+					<li>钢厂<input type="text" text data-keypress="false"/>
+						<input type="text" class="hidden" name="I_factoryID">
+						<div class="pa province-selector">	
+							{loop="data.itemFactoryList"}
+							<a href="javascript:void(0)" data-id="{$value.id}" data-type="I_factoryID">{$value.Vc_name}</a>
+							{/loop}
+						</div>
+					</li>
+					<!--<li>厚度<input type="text" num /><em>—</em><input type="tex" num /></li>
+					<li>宽度<input type="text" num /><em>—</em><input type="tex" num /></li>-->
+					<li><button type="submit">搜索</button></li>
+				</ul>
+				<div class="row fs0">
+					<a href="##" class="ib vmm">默认</a><a href="##" class="ib vmm" price>价格</a>
+					<span class="ib vmm">价格区间（元）</span><input type="text" price name="N_price_min" maxlength="" data-keypress="number" /><em class="ib vmm">—</em><input type="text" data-keypress="number" price name="N_price_max"/>
+					<select class="ib vmm">
+						<option name="I_cityID" value="0">选择地区</option>
+						{loop="data.area"}
+							<option value="{$value.ID}" name="I_cityID">{$value.Vc_province}</option>
+						{/loop}
+					</select>
+				</div>
+			</form>
+		</div>
+		<!-- 选择条件进行查询和筛选 -->
+		<!-- 模版区域 -->
+		<script type="text/html" id="self-shop-list-template">
+			<% if(self_shop_list) {%>
+				<% var temp = self_shop_list.data; %>
+					<% temp.forEach(function(item,index){ %>
+						<div class="cb row" body count="<%= (index+1)%2==0?2:1 %>">
+							<div colum="1"><span ico class="fl" style="margin-top:15px;">自</span>
+								<%= item.itemname%>
+							</div>
+							<div colum="2">
+								<%= item.stuffname%>
+							</div>
+							<div colum="3">
+								<%= item.specificationname%>
+							</div>
+							<div colum="4">
+								<a href="javascript:void(0);">
+									<%= item.factoryname%>
+								</a>
+							</div>
+							<div colum="5">
+								<% if(item.provincename == item.cityname) {%>
+									<%= item.provincename%>
+										<%}else{%>
+											<%=item.cityname%>
+												<%}%>
+							</div>
+							<div colum="6">
+								<%= item.warehouse%>
+							</div>
+							<div colum="7">
+								<%= item.N_amount%>
+							</div>
+							<div colum="8">
+								<%= item.N_weight%>
+							</div>
+							<div colum="9">￥
+								<%= item.N_price%>
+							</div>
+							<div colum="10">
+								<%= item.Createtime %>
+							</div>
+							<div colum="11">
+								<div class="ib call">
+									<i class="ib"></i>
+									<div class="pa contact_info">
+										<p>QQ：
+											<%= item.Vc_service_qq%>
+										</p>
+										<p>电话：
+											<%= item.Vc_contact_phone%>
+										</p>
+										<p>手机：
+											<%= item.Vc_contact_phone%>
+										</p>
+									</div>
+								</div>
+								<a href="#" class="ib buy" data-id="<%= index %>">购买</a>
+							</div>
+						</div>
+						<% }) %>
+							<% } %>
+		</script>
+		<!-- 模版区域 -->
+		<!-- 数据区域 -->
+		<div class="self-shop" style="min-height:395px">
+			<div class="cb row" head>
+				<div colum="1">品名</div>
+				<div colum="2">材质</div>
+				<div colum="3">规格</div>
+				<div colum="4">钢厂</div>
+				<div colum="5">地区</div>
+				<div colum="6">仓库</div>
+				<div colum="7">数量</div>
+				<div colum="8">件重/吨 </div>
+				<div colum="9" sort="down"><a href="javascript:void(0);">销售单价</a></div>
+				<div colum="10" sort="up"><a href="javascript:void(0);">发布时间</a></div>
+			</div>
+			<div id="self-shop-list">
+				{loop="pageset.data"}
+				<div class="cb row" body count="{if=" $key%2 !==0 "}2{else}1{/if}">
+					<div colum="1"><span ico class="fl" style="margin-top:15px;">自</span>{$value.itemname}</div>
+					<div colum="2">{$value.stuffname}</div>
+					<div colum="3">{$value.specificationname}</div>
+					<div colum="4"><a href="javascript:void(0);">{$value.factoryname}</a></div>
+					<div colum="5">{if="$value.provincename==$value.cityname"}{$value.provincename}{else}{$value.cityname}{/if}</div>
+					<div colum="6">{$value.warehouse}</div>
+					<div colum="7">{$value.N_amount}</div>
+					<div colum="8">{$value.N_weight}</div>
+					<div colum="9">{$value.N_price}</div>
+					<div colum="10">{function="formatTime($value['Createtime'],'Y-m-d H:i:s')"}</div>
+					<div colum="11">
+						<div class="ib call">
+							<i class="ib"></i>
+							<div class="pa contact_info">
+								<p>QQ：{$value.Vc_service_qq}</p>
+								<p>电话：{$value.Vc_contact_phone}</p>
+								<p>手机：{$value.Vc_phone}</p>
+							</div>
+						</div>
+						<a href="#" class="ib buy" data-id="{$value.id}">购买</a>
+					</div>
+				</div>
+				{/loop}
+			</div>
+		</div>
+		<!-- 数据区域 -->
+		<!-- 分页 -->
+		<script type="text/html" id="pagenum-template">
+
+			<% var i = pagenumData.page,maxPage = i;%>
+
+				<a href="javascript:;" class="pagenum-btn" data-id="<%= i==1?1:pagenumData.page-1 %>">< 上一页</a>
+
+					<% if(pagenumData.pcount >= 10) {%>
+
+						<% maxPage += 9; %>
+
+							<% } else { %>
+								<% i=1 %>
+									<% maxPage = pagenumData.pcount; %>
+										<% } %>
+										<% for(;i<= maxPage;i++) { %>
+										<a href="##" class="pagenum-num <% if(i == pagenumData.page){ %>active <% } %>" data-id="<%= i %>">
+											<%= i %>
+										</a>
+										<% } %>
+
+				<a href="##" class="pagenum-btn" data-id="<%= pagenumData.page+1; %>">下一页 ></a>
+				<span class="pagenum-total">共<em><%= pagenumData.pcount; %></em>页</span>
+				<span class="ib pagenum-text">跳转到第</span>
+				<input type="text" class="pagenum-target" value="1" />
+				<span class="ib pagenum-text">页</span>
+				<a href="javascript:;" class="pagenum-btn-target">GO</a>
+		</script>
+		<div class="cb w credit-pagenum">
+			<!-- 分页 -->
+			<div class="pagenum fr tac ib-a fs0" id="pagenum"></div>
+			<!-- 分页 -->
+		</div>
+		<!-- 分页 -->
+	</div>
+	<!-- 中间部分 -->
+	{include="inc/_footer"} {include="inc/_foot"}

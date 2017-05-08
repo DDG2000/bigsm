@@ -1,0 +1,148 @@
+ {include="inc/css"}
+<title>钢材市场 - 招标需求</title>
+</head>
+
+<body>
+    {include="inc/header"}
+    {include="inc/mainnav"}
+    <!-- 中间部分 -->
+    <div id="container" class="oh w1100 c cb">
+        <div class="fl need-wrapper">
+            <div class="need-filter fl-li fs0">
+                <div class="row" line="1">
+                    <span class="ib title vmm">类型：</span>
+                    <a href="#" class="all active ib vmm">全部</a>
+                    <ul class="ib vmm db-a">
+                        <li><a href="#">产品需求</a></li>
+                        <li><a href="#">招标需求</a></li>
+                        <li><a href="#">融资需求</a></li>
+                        <li><a href="#">物流需求</a></li>
+                    </ul>
+                </div>
+                <div class="row" line="2">
+                    <span class="ib title vmt">区域：</span>
+                    <a href="#" class="ib active vmt all">全部</a>
+                    <ul class="ib db-a">
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                        <li><a href="#">成都</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="need-head">
+                <span class="s1">发布信息共<em>{$data.total}</em>条</span><span>招标<em>{$data.tennum}</em>条</span><span>融资<em>{$data.finnum}</em>条</span><span>物流<em>{$data.lognum}</em>条</span><span>产品<em>{$data.comnum}</em>条</span>
+                <form action="##" class="ib fs0 vmm">
+                    <div class="ib select">
+                        <input type="text" value="2015-01-01" data-type="datepicker"/>
+                    </div>
+                    <em class="ib space">至</em>
+                    <div class="ib select">
+                        <input type="text" value="2015-01-01" data-type="datepicker"/>
+                    </div>
+                    <input type="text" value="" class="search" placeholder="关键字搜索"/>
+                    <button class="ib vmm" type="submit">搜索</button>
+                </form>
+            </div>
+            <div class="need-con">
+                <ul>
+                    {loop="$data.data"} 
+                        {if="$value.I_requirementClassID==1"}
+                            <li class="cb" type="4">
+                                <span class="pa title">产品</span>
+                                <p>产品名称：{$value.commodityname}</p>
+                                <p>公司名称：{$value.Vc_company}</p>
+                                <p>交货地：{$value.Vc_province}{$value.Vc_city}</p>
+                                <p>付款方式：现款</p>
+                                <span class="pa date">{function="formatTime($value.Createtime,'Y-m-d H:i')"}</span>
+                                <span class="pa" status="1">报价中</span>
+                                <a href="http://www.bigsm.com/index.php?act=requirement&m=detail&id={$value.id}" class="pa product" btn="read">查看</a>
+                            </li>
+                        {elseif="$value.I_requirementClassID==2"}
+                            <li class="cb" type="1">
+                                <span class="pa title">招标</span>
+                                <p>招标项目：{$value.tendername}</p>
+                                <p>公司名称：{$value.Vc_company}</p>
+                                <p>招标时间：{function="formatTime($value.D_start,'Y-m-d H:i')"}—{function="formatTime($value.D_end,'Y-m-d H:i')"}</p>
+                                <p>招标书：<a href="{$value.Vc_excel}" class="down">下载</a></p>
+                                <span class="pa date">{function="formatTime($value.Createtime,'Y-m-d H:i')"}</span>
+                                <span class="pa" status="1">招标中</span>
+                                <a href="javascript:void(0);" class="pa" btn="read">查看</a>
+                            </li>
+                        {elseif="$value.I_requirementClassID==3"}
+                            <li class="cb" type="3">
+                                <span class="pa title">物流</span>
+                                <p>运输货品：{$value.logisticsname}</p>
+                                <p>发货地:{$value.Vc_send}</p>
+                                <p>收获地：{$value.Vc_get}</p>
+                                <p>运输时间：{$value.D_transtime}</p>
+                                <span class="pa date">{function="formatTime($value.Createtime,'Y-m-d H:i')"}</span>
+                                <span class="pa" status="1">招标中</span>
+                                <a href="javascript:void(0);" class="pa" btn="read">查看</a>
+                            </li>
+                        {elseif="$value.I_requirementClassID==4"}
+                            <li class="cb" type="2">
+                                <span class="pa title">融资</span>
+                                <p>融资项目：{$value.financename}</p>
+                                <p>融资金额：{$value.N_money}</p>
+                                <p>融资期限：{$value.Vc_deadline}</p>
+                                <p>期望利率：{$value.Vc_rate}</p>
+                                <span class="pa date">{function="formatTime($value.Createtime,'Y-m-d H:i')"}</span>
+                                <span class="pa" status="1">招标中</span>
+                                <a href="javascript:void(0);" class="pa" btn="read">查看</a>
+                            </li>
+                        {/if} 
+                    {/loop}
+                </ul>
+                <div id="pagestr">
+                    {$pagestr}
+                </div>
+            </div>
+        </div>
+        <div class="fr need-side">
+            <div class="need-pub">
+                <div class="head">发布需求</div>
+                <div class="con cb fl-a">
+                    <a href="#" type="5">特殊材料</a><a href="#" type="3">产品</a><a href="#" type="1">招标</a><a href="#" type="2">融资</a><a href="#" type="4">物流</a>
+                    <a href="#" class="pa" btn>去发布&nbsp;>></a>
+                </div>
+            </div>
+            <!-- 成交动态 -->
+            <div class="deel">
+                <div class="head">成交动态</div>
+                <div class="db-a con">
+                    <ul>
+                        {loop="$comfired"}
+                        <li>
+                            <a href="##">
+                                <div class="name">{$value.Vc_mobile}</div>
+                                <p>以<em>{$value.price}元 / {$value.I_unitType==1?'件':$value.I_unitType==2?'根':'吨'}</em>的价格成交<em>260{$value.I_unitType==1?'件':$value.I_unitType==2?'根':'吨'}</em></p>
+                                <p>{$value.Vc_item}&nbsp;{$value.Vc_stuff}&nbsp;&nbsp;{$value.Vc_specification}&nbsp;&nbsp;<span class="pa time">{$value.Createtime}</span></p>
+                            </a>
+                        </li>
+                        {/loop}
+                    </ul>
+                </div>
+            </div>
+            <!-- 成交动态 -->
+        </div>
+    </div>
+    <!-- 中间部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

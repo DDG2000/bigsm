@@ -1,0 +1,67 @@
+ {include="inc/usercenter/css"}
+<title>报价管理 - 集采详情</title>
+</head>
+<body>
+	{include="inc/shopcenter/header"}
+	<!-- 中间内容部分 -->
+	<div id="content">
+		<div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+			<!-- 内容区 -->
+			<div class="fr content-main">
+				<div class="crumblenav">
+					<a href="#">报价管理</a><span class="current">集采详情</span>
+				</div>
+				<div class="collection-detail">
+					{$vo=$data.data}
+					<div class="detail-head">
+						集采名称：{$vo.Vc_name}<span class="pub">发布时间：{function="formatTime($vo['Createtime'],'Y-m-d H:i')"}</span>状态：{if="$vo.I_status==10"}
+								审核中
+							{elseif="$vo.I_status==20"}
+								招标中
+							{elseif="$vo.I_status==30"}
+								已截至
+							{elseif="$vo.I_status==40"}
+								已成交
+							{elseif="$vo.I_status==50"}
+								审核不通过
+							{/if}
+					</div>
+					<div class="detail-wrapper">
+						<p class="detail-con-title">集采概况</p>
+						<div class="cb detail-con">
+							<div class="detail-con-left">
+								<div class="detail-con-item">
+									<span class="title">类型：</span>
+									<div class="detail-con-text">{$vo.itemclassname}</div>
+								</div>
+								<div class="detail-con-item">
+									<span class="title">品名：</span>
+									<div class="detail-con-text">
+									{loop="$vo.itemArr"}
+										{$value.Vc_name}
+									{/loop}
+									</div>
+								</div>
+								<div class="detail-con-item">
+									<span class="title">总重量：</span>
+									<div class="detail-con-text">{$vo.N_weight}吨</div>
+								</div>
+								<div class="detail-con-item">
+									<span class="title">项目地址：</span>
+									<div class="detail-con-text">{$vo.proname}{$vo.cityname}{$vo.disname}{$vo.Vc_address}</div>
+								</div>
+								<div class="detail-con-item">
+									<span class="title">集采期限：</span>
+									<div class="detail-con-text">{$vo.D_start}—{$vo.D_end}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 内容区 -->
+		</div>
+		<!-- 中间内容部分 -->
+		{include="inc/usercenter/footer"}
+    	{include="inc/js"}

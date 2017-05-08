@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>采购下单 - 确认</title>
+		{include file='public/head' /}
+	</head>
+	<body>
+		{include file="public/top-normal"}
+		<div class="crm crm-mb">
+			<div class="inner w1200 cc">
+				<a href="/">首页</a><em>></em><a href="/workroom/index">我的工作台</a><em>></em><a href="/project/listPage">我的项目</a><em>></em><span>采购下单</span>
+			</div>
+		</div>
+		<!-- content -->
+		<div class="content project-content">
+			<div class="w1200 cc inner">
+				<ul class="process-line progress-five w1100 cc tac ib-li">
+					<li class="active">
+						<div class="bg">
+							<span>1</span>
+						</div>
+						<p>选择项目</p>
+					</li>
+					<li class="active">
+						<div class="bg">
+							<span>2</span>
+						</div>
+						<p>填写订单</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>3</span>
+						</div>
+						<p>等待发货</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>4</span>
+						</div>
+						<p>确认收货</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>5</span>
+						</div>
+						<p>账单还款</p>
+					</li>
+				</ul>
+				<!--form-->
+				<div class="order-form cc form">
+					<div class="w1090 cc">
+						<div class="category">
+							<div class="category-title">订单信息确认</div>
+						</div>
+						<div class="project-apply-tips">行业：
+						 {volist name="$malls" id="vo"}
+							 {$vo.id==$form.I_industryID?$vo.Vc_name:''}
+						{/volist}
+						</div>
+						<div class="project-apply-info">
+							<div class="wrap">
+								<p class="title">基础信息</p>
+								<p>所属项目：{$form.projname}</p>
+								<p>联系人：{$form.Vc_contact}<span>{$form.Vc_phone}</span><span>{$form.province}{$form.province==$form.city?'':$form.city}{$form.district}{$form.Vc_address}</span>
+								</p>
+								<p class="title">运输要求</p>
+								<p>收货时间：{$form.D_transport_end}</p>
+								<p>备注：{$form.T_note}</p>
+							</div>
+							<table border="0" cellspacing="0" cellpadding="0">
+								<thead>
+									<th width="214">货物属性</th>
+									<th width="175">数量</th>
+									<th width="200">总量</th>
+									<th width="242">备注</th>
+								</thead>
+								<tbody>
+								{volist name="goods" id="vo" key="k"}
+									<tr>
+										<td class="first">{$vo.Vc_goods_name}</td>
+										<td>{$vo.N_plan_weight}{$vo.Vc_goods_uint}</td>
+										{if condition="$k==1"}
+											<td rowspan="{$goods|count}">{if condition="($form.numTun)"}{$form.numTun}吨{/if}<br>
+												{if condition="($form.numPice)"}{$form.numPice}件{/if}</td>
+											<td rowspan="{$goods|count}">{$form.T_note}</td>
+										{/if}
+									</tr>
+								{/volist}
+								</tbody>
+							</table>
+							
+						</div>
+						<div class="total" style="padding-top:50px;">
+							<p class="total-info">预估总价：<em><span id="totalPriceView">{$form.N_judge_totalprice}</span>元</em></p>
+							<p class="total-text">含：{volist name="$goods" id="vo" key="k"}{if condition="$key!=0"}&nbsp;+&nbsp;{/if}<span>{$vo.Vc_goods_name}<em>({$vo.N_judge_totalprice})</em></span>{/volist}</p>
+							<p class="total-text">本价格仅供下单参考，实际费用以最终协商为准</p>
+						</div>
+					</div>
+				</div>
+				<!--/form-->
+			</div>
+			 <form method="post" action="{:url('order/save')}" data-success="订单已提交！请耐心等待审核。" data-error="提交失败" class="ajaxForm">
+				<input type="hidden" name="I_projectID" value="{$form.I_projectID}">
+				<input type="hidden" name="I_industryID" value="{$form.I_industryID}">
+				<input type="hidden" name="I_provinceID" value="{$form.I_provinceID}">
+				<input type="hidden" name="I_cityID" value="{$form.I_cityID}">
+				<input type="hidden" name="I_districtID" value="{$form.I_districtID}">
+				<input type="hidden" name="Vc_address" value="{$form.Vc_address}">
+				<input type="hidden" name="Vc_contact" value="{$form.Vc_contact}">
+				<input type="hidden" name="Vc_phone" value="{$form.Vc_phone}">
+				<input type="hidden" name="D_transport_end" value="{$form.D_transport_end}">
+				<input type="hidden" name="T_note" value="{$form.T_note}">
+				<input type="hidden" name="N_judge_totalprice" value="{$form.N_judge_totalprice}">
+				<input type="hidden" name="T_judge_info" value="{$form.T_judge_info}">
+				<input type="hidden" name="Vc_Sn" value="{$form.Vc_Sn}">
+				{volist name="goods" id="vo" key="k"}
+					<input type="hidden" name="Vc_goods_code[]" value="{$vo.Vc_goods_code}" />
+					<input type="hidden" name="N_plan_weight[]" value="{$vo.N_plan_weight}"/>
+					<input type="hidden" name="Vc_goods_uint[]" value="{$vo.Vc_goods_uint}"/>
+				{/volist}
+				<div class="form-submit tac">
+				{if condition="!empty($form.pagesrc)"}
+					<a href="/order/createAll?isedit=1" class="form-submit-link">修改订单</a>
+					{else}
+					<a href="/order/create?id={$form.I_projectID}&isedit=1" class="form-submit-link">修改订单</a>
+					{/if}
+					<a href="javascript:;" class="form-submit-menu" id="submit">确认</a>
+				</div>
+			</form>
+		</div>
+		<!-- content -->
+		<!-- footer -->
+		{include file='public/foot' /}
+		<!-- footer -->
+		<script type="text/javascript">
+			$(".ajaxForm").ajaxForm({
+				button:"#submit",
+				settings:{
+					btn:["再来一单","查看订单"],
+					btn1: function(){
+						// window.history.back();
+						// console.log("1");
+						layer.closeAll();
+						location.href="/order/create?id={$form.I_projectID}";
+					},
+					btn2: function(){
+						// console.log("2");
+						location.href="/order/listpage"
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

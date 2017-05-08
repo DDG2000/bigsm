@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss_stat"}
+{if="isset($extend.js)"}
+	{$extend.js}
+{/if}
+</head>
+
+<body>
+<div id="main">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.html}</a>
+			 {/if}
+		{/loop}
+	</div>
+
+	{if="isset($extend.search)"}
+	<div class="table">
+	<form name="form1" method="post" action="" check="1">
+	<div class="b_line1" style="padding:8px;">
+			{loop="$extend.search"}
+				{$key}:{$value}
+			{/loop}
+			<a class="buta" style="display:inline-block;float:none;margin-left:15px;" />搜索</a>
+			{loop="$extend.hides"}
+			<input type="hidden" name="{$key}" value="{$value}">
+			{/loop}
+	</div>
+	</form>	
+	</div>
+	{/if}
+
+	<div class="table">
+		<div id="container" style="min-width:400px;height:400px;border:1px solid #c0c0c0;margin:5px auto 10px"></div>
+	</div>
+
+	<div class="table">
+	<table>
+	<tr class="tr_bt">
+		<td width="25">序号</td>
+		{loop="$list.ths"}
+		<td width="{$value.wid}">{$value.val}</td>
+		{/loop}
+	</tr>
+	{loop="$list.tds"}
+	<tr>
+		<td>{$counter+1}</td>
+		{$value}
+	</tr>
+	{else}
+	<tr>
+		<td width="25" colspan="20">没有数据！</td>
+	</tr>
+	{/loop}
+	</table>
+	</div>
+
+	<div class="table">
+	<table>
+	<tr class="tr_bt">
+		<td><strong>提示信息</strong></td>
+	</tr>
+	{loop="helps"}
+	<tr><td>{$key+1}.{$value}</td></tr>
+	{/loop}
+	</table>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+//分割显示
+var all_series = [{$stat.datas}];
+{if="$stat.datas!=''"}
+$(function () {
+	$('#container').css({height:{$stat.h},width:'{$stat.w}' }).highcharts({
+		chart: {
+			type: 'line'
+		},
+		title: {
+			text: '{$stat.title}'
+		},
+		subtitle: {
+			text: '{$stat.subtitle}'
+		},
+		xAxis: {
+			categories: [{$stat.items}]//['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+		},
+		yAxis: {
+			//min:0,
+			title: {
+				text: '{$stat.ytitle}'
+			}
+		},
+		tooltip: {
+			enabled: false,
+			formatter: function() {
+				return '<b>'+ this.series.name +'</b><br/>'+
+					this.x +': '+ this.y +'{$stat.yt2}';
+			}
+		},
+		plotOptions:{line:{dataLabels:{enabled: true}, enableMouseTracking: true}},
+		legend:{enabled:{function="iset($stat.legend, 'true')"}},
+		series: all_series//[{name: '2013年',data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]},{..}]
+
+	});
+	//只显示最后一个
+	$("#container .highcharts-legend-item:lt("+(all_series.length-1)+")").click();
+	
+});
+{/if}
+</script>

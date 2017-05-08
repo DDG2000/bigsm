@@ -1,0 +1,31 @@
+<div class="fr main-side">
+    {$v=$shopinfo}
+    <div class="side-logo">
+        公司logo
+    </div>
+    <div class="pr side-counts">
+        <p class="side-companyname">{$v.Vc_name}</p>
+        <p class="count"><span class="title">成交数量:</span>&nbsp;&nbsp;&nbsp;&nbsp;{$v.N_amount}吨</p>
+        <p class="count"><span class="title">成交金额:</span>&nbsp;&nbsp;{$v.N_money}</p>
+        <a href="javascript:void(0);" data-qq="{$v.Vc_service_qq}" class="contact-qq pa"><img src="{#TPL_IMG#}qq.png#" alt="qq客服" title="qq客服" width="25" height="25"></a>
+    </div>
+    <div class="cb side-companyinfo">
+        <div class="fl companyinfo-item">
+            <i class="ib i1"></i>{function="formatTime($v.Dt_open,'Y-m-d')"}
+        </div>
+        <div class="fr companyinfo-item">
+            <i class="ib i2"></i>{$v.Vc_contact_phone}
+        </div>
+        <div class="fl companyinfo-item">
+            <i class="ib i3"></i>{if="$v.proname==$v.cityname"}
+                {$v.proname}{$v.disname}{$v.Vc_address}
+                {else}
+                {$v.proname}{$v.cityname}{$v.disname}{$v.Vc_address}
+                {/if}
+        </div>
+    </div>
+    <div class="companyinfo-comment">
+        <p><span class="title">认证信息：</span> 公司三证   认证成功</p>
+        <p><span class="title">经营范围：</span> {loop="$v.itemClassArr"}{$vo=$value}{$vo.Vc_name}&nbsp;{/loop}</p>
+    </div>
+</div>

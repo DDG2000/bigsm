@@ -1,0 +1,134 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="table-responsive">
+        <form class="form-horizontal">
+         	<div class="col-md-2 col-sm-12 col-xs-12 form-group">
+            	{if condition="(checkPopedom('/admin/project/add')) "}
+                <a href="{:url('/admin/project/add')}" class="btn btn-sm btn-success" type="button"><i class="fa fa-plus-square"></i> 新增项目</a>
+                {/if}
+            </div>
+            <div class="input-group col-md-3 col-sm-4 col-xs-12 form-group pull-right">
+                <input type="text" name="uname" id="nameSearch" class="form-control form-param-to" placeholder="项目名/申请人/公司名" value="{$param.uname}">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" id="nameSearchButton">搜索</button>
+                </span>
+            </div>
+           <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+                <select  x-listen  class="form-control form-param-to" name="projStatus">
+                    <option value="-1">项目状态</option>
+                    {volist name="$proj->statusArray" id="vo"}
+                  {if condition="$key!=3"}
+                   	 <option value="{$key}" {$key==$param.projStatus?"selected":""}>{$vo}</option>
+                   {/if}
+                    {/volist}
+                </select>
+            </div>
+        </form>
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+                <tr class="headings">
+                    <!-- <th>
+                        <input type="checkbox" id="check-all" class="flat"> 
+                    </th>-->
+                    <th class="column-title">ID </th>
+                    <th class="column-title">申请人</th>
+                    <th class="column-title">公司名</th>
+                    <th class="column-title">项目名</th>
+                    <th class="column-title">项目周期</th>
+                    <th class="column-title">申请额度</th>
+                    <th class="column-title">申请垫资天数</th>
+                    <th class="column-title">签约额度</th>
+                    <th class="column-title">签约垫资天数</th>
+                    <th class="column-title">签约总金额</th>
+                    <th class="column-title">当前可用额度</th>
+                    <th class="column-title">项目状态</th>
+                    <th class="column-title">申请时间</th>
+                    <th class="column-title no-link last"><span class="nobr">操作</span>
+                    </th>
+                    <!-- <th class="bulk-actions" colspan="7">
+                        <a class="antoo" style="color:#fff; font-weight:500;">批量操作 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                    </th> -->
+                </tr>
+            </thead>
+
+            <tbody>
+                 {volist name="$page->items()" id="vo"}
+                <tr class="even pointer">
+                <!-- 	<td class="a-center ">
+                        <input type="checkbox" class="flat" name="table_records">
+                    </td> -->
+                    <td class=" ">{$vo.aid}</td>
+                    <td class=" ">{$vo.Vc_applicantName}</td>
+                    <td class=" ">{$vo.Vc_erp_name}</td>
+                    <td class=" ">{$vo.Vc_ct_name==null?$vo.projname:$vo.Vc_ct_name}</td>
+                    <td class=" ">{$vo.D_start}—{$vo.D_end}</td>
+                    <td class=" ">{$vo.N_loan_amount==null?'—':$vo.N_loan_amount.'万元'}</td>
+                    <td class=" ">{$vo.I_loan_life==null?'—':$vo.I_loan_life.'天'}</td>
+                    
+                    
+                    <td class=" ">{$vo.N_loan_maxprice==null?'—':$vo.N_loan_maxprice.'万元'}</td>
+                    <td class=" ">{$vo.I_ct_loan_life==null?'—':$vo.I_ct_loan_life.'天'}</td>
+                    <td class=" ">{$vo.N_ct_totalprice==null?'—':$vo.N_ct_totalprice.'万元'}</td>
+                    <td class=" ">{$vo.N_usable_loan==null?'—':$vo.N_usable_loan.'万元'}</td>
+                    
+                    <td class=" ">{$proj->statusArray[$vo.I_status]}</td>
+                    <td class=" ">{$vo.applytime}</td>
+                    <td class=" last">
+            
+            
+            			{if condition="(checkPopedom('/admin/project/edit')) "}
+                <a href="{:url('/admin/project/edit',['id'=>$vo.aid])}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 审核编辑</a>
+                		 
+               		{/if}
+            			{if condition="(checkPopedom('/admin/project/addorder')) "}
+            			{if condition="(!empty($vo.Vc_code))&&($vo.I_status==2)"}
+                <a href="{:url('/admin/project/addorder',['id'=>$vo.aid])}" class="btn btn-primary btn-xs"><i class="fa fa-file-text"></i> 采购下单</a>
+                		 {/if}
+               		{/if}
+               		
+            			{if condition="(checkPopedom('/admin/project/vieworder')) "}
+            			{if condition="(!empty($vo.Vc_code))&&($vo.I_status==2)"}
+                <a href="{:url('/admin/project/vieworder',['id'=>$vo.aid])}" class="btn btn-success btn-xs"><i class="fa fa-file-text-o"></i> 查看订单</a>
+                		 {/if}
+               		{/if}
+               		
+            			{if condition="(checkPopedom('/admin/project/viewbill')) "}
+            			{if condition="(!empty($vo.Vc_code))&&($vo.I_status==2)"}
+                <a href="{:url('/admin/project/viewbill',['id'=>$vo.aid])}" class="btn btn-dark btn-xs"><i class="fa fa-folder"></i> 查看账单</a>
+                		 {/if}
+               		{/if}
+            
+                
+             
+                    </td>
+                </tr>
+                
+                {/volist}
+            </tbody>
+        </table>
+    </div>
+    {$page->render()}
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select[x-listen]').change(onListPageSelectionChange) ;
+        
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                url = new xxx.Url().removeParam('page') ;
+            
+            url.setParam('uname',encodeURIComponent(name)).go() ;
+        }) ;
+        
+        
+        
+        
+        
+    }) ;
+</script>

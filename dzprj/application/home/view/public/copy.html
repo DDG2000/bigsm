@@ -1,0 +1,25 @@
+<div class="copy">
+    <div class="w1200 cb cc">
+        <div class="copy-nav fl">
+
+            {volist name="articles" id="vo"}
+            {if condition="($vo.I_position==2)"}
+            <dl>
+                <dt>{$vo.Vc_name}</dt>
+                {if condition="(isset($vo.contents))"}
+                {volist name='$vo.contents' id='v'}
+                <dd><a href="/help/getById?class={$vo.id}&type=1&id={$v.id}">{$v.Vc_name}</a></dd>
+                {/volist}
+                {/if}
+            </dl>
+            {/if}
+            {/volist}
+        </div>
+        <div class="fr ewm">
+            <div class="img">
+                <img src="/static/home/img/ewm.jpg?x=111" width="100" height="100"/>
+            </div>
+            <p>扫一扫，关注我们</p>
+        </div>
+    </div>
+</div>

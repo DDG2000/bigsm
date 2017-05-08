@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+<link href="../style/link.css#" rel="stylesheet" type="text/css" />
+<script src="../js/jquery-1.7.2.min.js#" type="text/javascript"></script>
+<script src="../include/dtree/SCDtree.js#" type="text/javascript"></script>
+<script src="../js/jquery.base.js#" type="text/javascript"></script>
+<!--[if IE 6]>
+<script type="text/javascript" src="../js/DDPN.js#"></script>
+<script type="text/javascript" src="../js/ie6scroll.js#" ></script>
+<![endif]-->
+<script type="text/javascript">
+$(function(){
+	$("a[name='submit_tree']").click(function(){
+		var IdList='',inputName = $("#returnInput").val();
+		if($("#Type").val()==2){
+			$(":input[type=checkbox]").each(function(){
+				if($(this).attr("checked")){
+					IdList += (IdList==''?'':',')+$(this).val();
+				}
+			});
+		}else{
+			IdList = $(":input[type=radio][checked]").val();
+		}
+		if(IdList=='') {alert('至少选择一项才能提交');return false;}
+		parent.$("input[name='"+inputName+"']").val(IdList).removeAttr("disabled");
+		parent.hidePopWin();
+	});
+});
+</script>
+</head>
+<body>
+<div id="main">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.innerHtml}</a>
+			 {/if}
+		{/loop}
+	</div>
+
+	<form name="form1"  method="post" action="">
+	<div class="table">
+	<table>
+		<tr>
+			<td>
+			<input type="hidden" id="Type" value="{$Type}">
+			<input type="hidden" id="returnInput" value="{$returnInput}">
+
+			<script type="text/javascript">
+			<!--
+			d = new dTree('d');
+			d.config.checkType = {$Type};
+			d.add(0,-1,'{$title}');
+			{loop="params"}
+				{$value}
+			{/loop}
+			document.write(d);
+			//-->
+			</script>
+
+			</td>
+		</tr>
+	</table>
+	</div>
+	<div class="{$extend.isb?'btn clearfix':'fix'}">
+		<a name="submit_tree" class="but3" onclick="">提交</a>
+		<a name="reset" class="but3" onclick="">重置</a>
+	</div>
+	</form>
+
+</div>
+</body>
+</html>

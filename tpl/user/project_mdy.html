@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>卖家中心 - 项目管理 - 修改项目</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="style/user/base.css">
+	<link rel="stylesheet" href="style/user/index.css">
+	<link rel="stylesheet" href="style/user/skin.css"/>
+</head>
+<body>
+    <!-- 头部 -->
+    <div id="header">
+        <div class="c w1100 cb top">
+            你好！欢迎来到聚能
+            <a href="#" class="ib top-userMenu top-userMenu-login">立即登录</a><a href="#" class="ib top-userMenu">立即注册</a>
+            <div class="fr top-userCtr">
+                <a href="#" class="ib">我的聚能</a>
+                <em>|</em>
+                <a href="#" class="ib">卖家中心</a>
+                <span class="ib">交易中心：8:00-17:00</span>
+            </div>
+        </div>
+        <div class="header-con">
+            <div class="c cb w1100">
+                <a href="#" class="fl logo"><h1>聚能</h1></a>
+                <span class="fl header-con-title">我的会员中心</span>
+                <div class="con fl ib-a c-fff header-con-nav">
+                    <a href="#">钢材首页</a>
+                    <a href="#">自营商城</a>
+                    <a href="#">消息</a>
+                </div>
+                <form class="fr header-con-search fs0">
+                    <input type="text" class="ib vmm" value="请输入产品名称">
+               		<button type="submit" class="ib vmm">搜索</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 头部 -->
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+            <!-- 侧边菜单 -->
+            <div class="fl  db-a content-side">
+                <ul>
+                    <li>
+                        订单管理
+                        <div class="content-side-submenu">
+                            <a href="#">订单查询</a>
+                        </div>
+                    </li>
+                    <li>
+                        产品发布管理
+                        <div class="content-side-submenu">
+                            <a href="#">添加产品</a>
+                            <a href="#">产品管理</a>
+                        </div>
+                    </li>
+                    <li>
+                        资源单管理
+                        <div class="content-side-submenu">
+                            <a href="#">我的集采</a>
+                        </div>
+                    </li>
+                    <li>
+                        账户管理
+                        <div class="content-side-submenu">
+                            <a href="#">基本信息</a>
+                            <a href="#">公司简介</a>
+                            <a href="#">认证信息</a>
+                        </div>
+                    </li>
+                    <li>
+                        报价管理
+                        <div class="content-side-submenu">
+                            <a href="#">产品报价</a>
+                            <a href="#">集采报名</a>
+                            <a href="#">报价设置</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 侧边菜单 -->
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="management-wrapper">
+            		<div class="crumblenav">
+            			<a href="#">项目管理</a><a href="#">我的项目</a><span class="current">新增项目</span>
+            		</div>
+            		<div class="management-wrapper-inner">
+            			<form action="##" class="fs0 form-project-add">
+            				<div class="form-item">
+            					<label class="form-item-title">项目类型：</label>
+            					<div class="wg-select">
+            						<input type="text" name="type" value="基础建设"/>
+            						<ul class="wg-select-wrapper">
+            							<li>基础建设</li>
+            							<li>高级建设</li>
+            						</ul>
+            					</div>
+            				</div>
+            				<div class="form-item">
+            					<label class="form-item-title">项目名称：</label>
+            					<input type="text" value="华西一建设"/>
+            				</div>
+            				<div class="form-item">
+            					<label class="form-item-title">项目地址：</label>
+            					<input type="text" value="四川省成都市高新区高新路1号"/>
+            				</div>
+            				<div class="form-item">
+            					<label class="form-item-title">项目业主：</label>
+            					<input type="text" value="鑫能集团"/>
+            				</div>
+            				<div class="form-item">
+            					<label class="form-item-title">项目周期：</label>
+            					<label class="select-wrapper"><input type="text" value="2016-01-01"/></label><em class="space">—</em><label class="select-wrapper"><input type="text" value="2016-08-01"/></label>
+            				</div>
+            				<div class="form-item">
+            					<label class="form-item-title">申请垫资金额：</label>
+            					<input type="text" value="750.00"/>
+            					<span class="form-item-tips">万元</span>
+            				</div>
+            				<div class="form-item">
+            					<label class="form-item-title">垫资期限：</label>
+            					<input type="text" value="365"/>
+            					<span class="form-item-tips">天</span>
+            				</div>
+            				<div class="form-item">
+            					<label class="form-item-title">垫资成本：</label>
+            					<input type="text" value="12%"/>
+            					<span class="form-item-tips">年化率12%-36%</span>
+            				</div>
+            				<div class="form-item">
+            					<label class="form-item-title">联系人姓名：</label>
+            					<input type="text" value="李小"/>
+            				</div>
+            				<div class="form-item">
+            					<label class="form-item-title">联系电话：</label>
+            					<input type="text" value="1852001569"/>
+            				</div>
+            				<div class="form-item unwaring" id="chkbox">
+            					<label class="form-item-title">项目企业类型：</label>
+            					<label class="form-item-chkbox selected"><input type="checkbox" checked/>私营企业</label>
+            					<label class="form-item-chkbox"><input type="checkbox"/>有限责任公司</label>
+            					<label class="form-item-chkbox"><input type="checkbox"/>股份有限公司</label>
+            					<label class="form-item-chkbox"><input type="checkbox"/>其他</label>
+            				</div>
+            				<div class="hr"></div>
+            				<div class="form-item">
+            					<button type="submit">提交</button><button type="reset">取消</button>
+            				</div>
+            			</form>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    <!--  页脚  -->
+    <div id="footer">
+        <div class="footer-con">
+          <div class="ad tac w">
+              <div class="c ad-inner"></div>
+          </div>
+          <div class="footer-nav">
+              <div class="c cb w1100">
+              	<dl>
+              		<dt>下单指南</dt>
+              		<dd><a href="#">下单流程</a></dd>
+              		<dd><a href="#">用户说明</a></dd>
+              		<dd><a href="#">联系客服</a></dd>
+              	</dl>
+              	<dl>
+              		<dt>下单指南</dt>
+              		<dd><a href="#">下单流程</a></dd>
+              		<dd><a href="#">用户说明</a></dd>
+              		<dd><a href="#">联系客服</a></dd>
+              	</dl>
+              	<dl>
+              		<dt>下单指南</dt>
+              		<dd><a href="#">下单流程</a></dd>
+              		<dd><a href="#">用户说明</a></dd>
+              		<dd><a href="#">联系客服</a></dd>
+              	</dl>
+              	<dl>
+              		<dt>下单指南</dt>
+              		<dd><a href="#">下单流程</a></dd>
+              		<dd><a href="#">用户说明</a></dd>
+              		<dd><a href="#">联系客服</a></dd>
+              	</dl>
+              	<dl>
+              		<dt>下单指南</dt>
+              		<dd><a href="#">下单流程</a></dd>
+              		<dd><a href="#">用户说明</a></dd>
+              		<dd><a href="#">联系客服</a></dd>
+              	</dl>
+              </div>
+          </div>
+	    	<div class="footer-abt">
+	    		<div class="w1100 c cb footer-abt-links">
+	    			<div class="fl">
+	    				友情链接：<a href="#">银联支付</a><a href="#">长城软件</a>
+	    			</div>
+	    			<div class="fr ib-a">
+	    				<a href="#">关于我们</a>|<a href="#">网站公告</a>|<a href="#">人才招聘</a>|<a href="#">联系我们</a>|<a href="#">法律说明</a>|<a href="#">安全保障</a>
+	    			</div>
+	    		</div>
+	    		<div class="footer-abt-cprt tac c-fff">
+					四川鑫能裕丰电子商务有限公司&nbsp;版权所有<a href="#">蜀ICP备140000000000号</a>
+	    		</div>
+	    	</div>
+        </div>
+    </div>
+    <!--  页脚  -->
+</body>
+<script src="js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#chkbox label.form-item-chkbox").click(function(ev){
+		
+			var $this = $(this),
+				$chk = $this.find("input[type='checkbox']");
+			
+			$chk.prop("checked",function(index,val){	
+	
+				$this.toggleClass("selected");
+				return !val;
+				
+			});
+			console.log($chk.prop("checked"));
+			ev.preventDefault();
+			ev.stopPropagation();
+			
+		})
+		
+		var $ipt = $("form div.wg-select input");
+		var $select =$ipt.next().find("li");
+		
+		$ipt.focusin(function(ev){
+			
+			$(this).next().slideDown(350);
+			
+		}).focusout(function(){
+			
+			$(this).next().slideUp(350);
+			
+		});
+		
+		$select.click(function(){
+			$ipt.val($(this).text());
+		})
+	})
+</script>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file='public/head'}
+    <title>云采网首页</title>
+</head>
+<body>
+    {include file="public/top_small"}
+    <div class="error-page w1200 cc pr">
+        <div class="bg"><img src="/static/home/img/404.png"></div>
+        <div class="auto">
+            <div class="text"><img src="/static/home/img/fly.png"></div>
+            <div class="auto-go"><img src="/static/home/img/clock.png"><em class="time">3</em>秒后自动返航</div>
+        </div>
+        <a class="go" href="/index"><img src="/static/home/img/go.png"></a>
+    </div>    
+    {include file="public/copy"}
+    {include file="public/sideBar"}
+    <!-- mod13 -->
+    {include file="public/foot-normal"}
+    <script type="text/javascript">
+		$(".time").on("counter", function(){
+            var $this = $(this),
+                time = 3;
+            var timer = setInterval(function(){
+                $this.html(--time);
+                if(time <= 0) {
+                    clearInterval(timer);
+                    location.replace('/index');
+                }
+            },1000);
+        }).trigger('counter');   
+    </script>
+</body>
+</html>

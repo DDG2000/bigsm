@@ -1,0 +1,122 @@
+	{include="inc/css"}
+    <title>商铺客户评价</title>
+</head>
+<body>
+    {include="inc/shop/header"}
+    <!-- banner -->
+    {include="inc/shop/banner"}
+    <!-- banner -->
+    <!-- 中间内容部分 -->
+    <div id="container">
+		<div class="c w1100">
+			<!-- 商铺首页导航 -->
+			{include="inc/shop/nav"}
+			<!-- 商铺首页导航 -->
+			<div class="cb w">
+				<!-- 首页中间部分 -->
+				<div class="fl main-left main-left-appraisal">
+					<!-- 全部商铺评价 -->
+					<div class="stars-list">
+						<div class="stars-headinfo">
+							<div class="headinfo-item">
+								<span class="title ib">品质</span>
+								<div class="headinfo-item-star">
+									<span style="width:{$sumQuality*20}%;"></span>
+								</div>
+								<em class="headinfo-item-total">{$sumQuality}</em>分
+							</div>
+							<div class="headinfo-item">
+								<span class="title ib">物流</span>
+								<div class="headinfo-item-star">
+									<span style="width:{$sumTimely*20}%;"></span>
+								</div>
+								<em class="headinfo-item-total">{$sumTimely}</em>分
+							</div>
+							<div class="headinfo-item">
+								<span class="title ib">服务</span>
+								<div class="headinfo-item-star">
+									<span style="width:{$sumServer*20}%;"></span>
+								</div>
+								<em class="headinfo-item-total">{$sumServer}</em>分
+							</div>
+							<div class="headinfo-item">
+								<span class="title ib">发票</span>
+								<div class="headinfo-item-star">
+									<span style="width:{$sumInvoice*20}%;"></span>
+								</div>
+								<em class="headinfo-item-total">{$sumInvoice}</em>分
+							</div>
+						</div>
+						<div class="stars-list-wrapper">
+							<div class="row" type="head">
+								<div class="colum1" type="colum">
+									评价心得
+								</div>
+								<div class="colum2" type="colum">
+									产品质量
+								</div>
+								<div class="colum3" type="colum">
+									物流及时性
+								</div>
+								<div class="colum4" type="colum">
+									服务态度
+								</div>
+								<div class="colum5" type="colum">
+									发票及时性
+								</div>
+								<div class="colum6" type="colum">
+									评论者
+								</div>
+							</div>
+							{loop="$data.data"}
+							{$v=$value;}
+								<div class="row" type="body">
+									<div class="colum1" type="colum">
+										{$v.Vc_text}
+										{if="!empty($v.T_images)"}
+											{loop="$v.T_images"}
+											{$vo=$value}
+											<img alt="" src="{$vo}#">
+											{/loop}
+										
+										{/if}
+									</div>
+									<div class="colum2" type="colum">
+										<div class="stars">
+											<span class="stars-bg" style="width:{$v.quality*20}%;"></span>
+										</div>
+									</div>
+									<div class="colum3" type="colum">
+										<div class="stars">
+											<span class="stars-bg" style="width:{$v.timely*20}%;"></span>
+										</div>
+									</div>
+									<div class="colum4" type="colum">
+										<div class="stars">
+											<span class="stars-bg" style="width:{$v.server*20}%;"></span>
+										</div>
+									</div>
+									<div class="colum5" type="colum">
+										<div class="stars">
+											<span class="stars-bg" style="width:{$v.invoice*20}%;"></span>
+										</div>
+									</div>
+									<div class="colum6" type="colum">
+										{$v.Vc_truename}<br />{function="formatTime($v['Createtime'],'Y-m-d H:i')"}
+									</div>
+								</div>
+							{/loop}
+						</div>
+					</div>
+					<!-- 全部商铺评价 -->
+				</div>
+				<!-- 首页中间部分 -->
+				<!-- 首页右侧 -->
+				<!--{include="inc/shop/company"}-->
+				<!-- 首页右侧 -->
+			</div>
+		</div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

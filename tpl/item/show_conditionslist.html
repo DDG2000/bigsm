@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table>
+
+<tr class="tr1">
+	<td>搜索</td>
+	<td>数据</td>
+	
+</tr>
+<tr data="itemClassList">
+<td>分类</td>
+  <td>
+{loop="data.itemClassList"}
+{$vo=$value}
+
+	{$vo.id}-{$vo.Vc_name}
+{/loop}
+</td>
+	
+</tr>
+
+<tr data="itemList">
+<td>品名</td>
+  <td>
+{loop="data.itemList"}
+{$vo=$value}
+
+	{$vo.id}-{$vo.Vc_name}
+{/loop}
+</td>
+	
+</tr>
+
+<tr data="itemStuffList">
+<td>材质</td>
+  <td>
+{loop="data.itemStuffList"}
+{$vo=$value}
+
+	{$vo.id}-{$vo.Vc_name}
+{/loop}
+</td>
+</tr>
+<tr data="itemSpecificationList">
+<td>规格</td>
+  <td>
+{loop="data.itemSpecificationList"}
+{$vo=$value}
+
+	{$vo.id}-{$vo.Vc_name}
+{/loop}
+</td>
+</tr>
+
+<tr data="itemFactoryList">
+<td>钢厂</td>
+  <td>
+{loop="data.itemFactoryList"}
+{$vo=$value}
+
+	{$vo.id}-{$vo.Vc_name}
+{/loop}
+</td>
+</tr>
+
+<tr data="area">
+<td>地区</td>
+  <td>
+{loop="data.area"}
+{$vo=$value}
+
+	{$vo.ID}-{$vo.Vc_province}
+{/loop}
+</td>
+</tr>
+
+</table>
+<table>
+<tr class="tr1">
+	<td data='hiden'>id</td>
+	<td>品名</td>
+	<td>规格</td>
+	<td>材质</td>
+	<td>钢厂</td>
+	<td>交货地</td>
+	<td>仓库</td>
+	<td>数量</td>
+	<td>件重/吨</td>
+	<td>重量/吨</td>
+	<td>价格</td>
+	<td>联系人</td>
+	<td>QQ</td>
+	<td>电话</td>
+	<td>手机</td>
+	<td>时间</td>
+	
+</tr>
+
+{loop="pageset.data"}
+{$vo=$value}
+<tr data="it">
+	<td>{$vo.id}</td>
+	<td>{$vo.itemname}</td>
+	<td>{$vo.specificationname}</td>
+	<td>{$vo.stuffname}</td>
+	<td>{$vo.factoryname}</td>
+	{if="$vo.provincename==$vo.cityname"}
+	<td>{$vo.provincename}</td>
+	{else}
+	<td>{$vo.provincename}{$vo.cityname}</td>
+	{/if}
+	<td>{$vo.warehouse}</td>
+	<td>{$vo.N_amount}</td>
+	<td>{$vo.N_weight}</td>
+	<td>{$vo.N_amount * $vo.N_weight}</td>
+	<td>{$vo.N_price}</td>
+	<td>{$vo.Vc_contact}</td>
+	<td>{$vo.Vc_service_qq}</td>
+	<td>{$vo.Vc_contact_phone}</td>
+	<td>{$vo.Vc_phone}</td>
+	<td>{function="formatTime($vo['Createtime'],'Y-m-d H:i:s')"}</td>
+</tr>
+{/loop}
+
+</table>
+<div id="pages" class="page">{$pagestr}</div>
+</body>
+</html>

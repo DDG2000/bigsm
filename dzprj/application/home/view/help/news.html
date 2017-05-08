@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        {include file='public/head'}
+        <title>云采网 - 早报</title>
+    </head>
+<body>
+<!-- header -->
+{include file="public/top"}
+<!-- header -->
+<!-- content -->
+<div class="crm nbg bd">
+    <div class="w1200 cc">
+		{if condition="$type==1"}
+			<a href="/">首页</a><em>></em><a href="/help/newsList">早报</a><em>></em><span>详细内容</span>
+		{else}
+			<a href="/">首页</a><em>></em><span>早报</span>
+		{/if}
+        
+    </div>
+</div>
+<!-- content -->
+<div class="content w1200 cc cb mt10">
+    <div class="help">
+		{if condition="$type==1"}
+            <div class="article">
+                <div class="article-header">
+                    <h3>{$data.Vc_name}</h3>
+                    <h5>{$data.D_releasetime|strtotime|date="Y-m-d H:i:s",###}</h5>
+                </div>
+                <div class="article-content">
+                    {$data.T_content}
+                </div>
+            </div>
+            <!-- 文章 -->
+		{else}
+            <!-- 列表 -->
+            <div class="article">
+                <div class="article-list">
+                    <ul>
+                        {volist name="data" id="vo"}
+                            <li class="cb"><a href="/help/news?type=1&id={$vo.id}" class="fl">{$vo.Vc_name}</a><span class="time fr">{$vo.D_releasetime|strtotime|date="Y-m-d",###}</span></li>
+                        {/volist}
+                    </ul>
+                </div>
+                <!-- 分页 -->
+    			<div class="cb pager fl-li">
+    				<div class="fr">
+    					{$data->render()}
+    				</div>
+    			</div>
+    			<!-- 分页 -->
+            </div>
+		{/if}
+    </div>
+</div>
+{include file="public/foot"}
+</body>
+</html>

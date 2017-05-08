@@ -1,0 +1,78 @@
+	{include="inc/usercenter/css"}
+	<title>卖家中心 - 添加产品</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<form class="content-main-con no" id="js-product-form">
+        			<div class="fs0 m-form m-form-full">
+    					<div class="cb form-item chkbox" id="type-checkbox">
+    						<label>行业：</label>
+							{loop="$data.mallClassList"}
+							{$vo=$value}
+								<label for="mall{$vo.id}" class="chk selected">{$vo.Vc_name}</label>
+								<input type="radio" name="I_mallClassID" value="{$vo.id}" id="mall{$vo.id}" checked>
+							{/loop}
+    						<a href="#" class="btn push-right">查看帮助</a>
+    					</div>
+						<div class="pr form-item-wrapper">
+							<a href="javascript:;" class="form-item-file-label" id="js-product-upload">选择文件</a>
+						</div>
+						<span class="form-item-tips" id="js-product-upload-filename"></span>
+						<a href="javascript:;" class="ib form-upload-btn" id="js-product-upload-btn">上传</a>
+						<a href="/index.php?act=shop&m=commodity&w=downloadexl" class="form-down" target="_blank">点击下载模版</a>
+        			</div>
+    				<table class="product-add-table" border="1" bordercolor="#F5F5F5" id="js-product-type">
+    					<thead class="fs14 tac">
+    						<th>类型</th>
+    						<th>品名</th>
+    						<th>材质</th>
+    						<th>规格(mm)</th>
+    						<th>钢厂</th>
+    						<th>仓库</th>
+    						<th>可供件数</th>
+    						<th>件吨</th>
+    						<th>销售单价</th>
+    					</thead>
+    					<tbody>
+    						<tr>
+    							<td>
+									<select name="I_itemClassID">
+									{loop="data.itemClassList"}
+									{$vo=$value}
+										<option value="{$vo.id}"{if="$counter==1"} selected{/if}>{$vo.Vc_name}</option>
+									{/loop}
+									</select>
+								</td>
+    							<td><select name="I_itemID"><option></option></select></td>
+    							<td><select name="I_stuffID"><option></option></select></td>
+    							<td><select name="I_specificationID"><option></option></select></td>
+    							<td><select name="I_factoryID"><option></option></select></td>
+    							<td>
+									<select name="I_warehouseID">
+									{loop="data.wareHouseList"}
+										{$v=$value}
+											<option value="{$v.id}" selected>{$v.Vc_name}</option>
+										{/loop}
+									</select>
+								</td>
+    							<td><input name="N_amount" type="text"/></td>
+								<td><input name="N_weight" type="text"/></td>
+								<td><input name="N_price" type="text"/></td>
+    						</tr>
+    					</tbody>
+    				</table>
+					<button type="submit" class="product-add-submit" id="js-product-add">保存</button>
+                </form>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

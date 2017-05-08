@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+{$vo=$data}
+<table>
+
+<tr>
+<td>供货单位{$vo.shopname}</td>
+<td>联系电话{$vo.shoptel}</td>
+<td>状态：{if="$vo.I_status==1"}
+				等待卖家确认
+		{else}
+				卖家已确认，请联系卖家
+		{/if}</td>
+</tr>
+</table>
+
+<table>
+
+<tr class="tr1">
+	
+	<td>品名</td>
+	<td>材质</td>
+	<td>规格</td>
+	<td>数量/
+	{if="$vo.I_unitType==1"}
+				件
+	{elseif="$vo.I_unitType==2"}
+			根
+	{elseif="$vo.I_unitType==3"}
+			吨
+		{/if}	
+	</td>
+	<td>钢厂</td>
+	<td>含税报价</td>
+	<td>出库费</td>
+	<td>库房</td>
+	<td>备注</td>
+	
+	
+</tr>
+
+<tr data="it" >
+	<td>{$vo.Vc_item}</td>
+	<td>{$vo.Vc_stuff}</td>
+	<td>{$vo.Vc_specification}</td>
+	<td>{$vo.num}</td>
+	<td>{$vo.factory}</td>
+	<td>{$vo.price}</td>
+	<td>
+	{if="$vo.outType==1"}
+				包出
+		{else}
+				自提
+		{/if}
+	
+	</td>
+	
+	<td>
+	{$vo.warehouse}
+	</td>
+	<td>
+	{$vo.memo}
+	</td>
+	
+	
+</tr>
+<table>
+<tr>
+	<td>采购单位:{$vo.buyername}</td>
+	<td>联系电话:{$vo.buyertel}</td>
+	<td>付款方式:
+	{if="$vo.I_payType==1"}现款{else}银行承兑{/if}
+	</td>
+	<td>交货地：
+	{if="$vo.proname==$vo.cityname"}
+	{$vo.cityname}
+	{else}
+	{$vo.proname}{$vo.cityname}
+	{/if}
+	</td>
+	<td>总金额：
+	{$vo.totalprice}
+
+</tr>
+
+</table>
+
+
+
+
+</body>
+</html>

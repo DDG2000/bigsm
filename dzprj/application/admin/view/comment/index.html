@@ -1,0 +1,141 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+                <div class="x_content">
+                    <div class="table-responsive">
+                     <form class="form-horizontal">
+						 <div class="input-group col-md-3 col-sm-4 col-xs-12 form-group pull-right">
+							 <input type="text" name="keywords" id="nameSearch" class="form-control form-param-to" placeholder="用户名/手机号/内容" value="{$param.keywords}">
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-primary" id="nameSearchButton">搜索</button>
+							</span>
+						 </div>
+						 <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+							 <select  x-listen  class="form-control form-param-to" name="applystatus">
+								 <option value="">处理状态</option>
+								 {volist name="$commentModel->statusArray" id="vo"}
+
+								 <option value="{$key}" {$key==$param.applystatus?"selected":""}>{$vo}</option>
+
+								 {/volist}
+							 </select>
+						 </div>
+                    	 
+
+                   </form>
+                        <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+							<tr class="headings">
+								<!-- <th>
+									<input type="checkbox" id="check-all" class="flat">
+								</th> -->
+								<th class="column-title">ID </th>
+								<th class="column-title">用户</th>
+								<th class="column-title">反馈内容</th>
+								<th class="column-title">联系电话</th>
+								<th class="column-title">处理状态 </th>
+								<th class="column-title">反馈时间 </th>
+								<th class="column-title">处理时间 </th>
+								<th class="column-title no-link last"><span class="nobr">操作</span>
+								</th>
+							</tr>
+                        </thead>
+
+                        <tbody>
+                            {volist name="$page->items()" id="vo"}
+								<tr class="even pointer">
+								<!-- 	<td class="a-center ">
+									    <input type="checkbox" class="flat" name="table_records">
+									</td> -->
+									<td class=" ">{$vo.id}</td>
+									<td class=" ">{$vo.username}</td>
+									<td class=" ">{$vo.Vc_content|cutstrnohtml=16}</td>
+									<td class=" ">{$vo.Vc_phone}</td>
+									<td class=" ">{$commentModel->statusArray[$vo.I_status]}</td>
+									<td class=" ">{$vo.Createtime}</td>
+									<td class=" ">{$vo.D_replaytime}</td>
+									<td class=" last">
+								{if condition="(checkPopedom('/admin/comment/edit')) "}
+								<a href="{:url('admin/comment/edit',['id'=>$vo.id])}" class="btn btn-info btn-xs "><i class="fa fa-pencil"></i>审核处理 </a>
+                            {/if}
+                            {if condition="(checkPopedom('/admin/comment/del')) "}
+                            <a href="javascript:void(0);" data-href="{:url('admin/comment/del',['id'=>$vo.id])}"  class="btn btn-danger btn-xs js-ajax-delete"  ><i class="fa fa-trash-o"></i> 删除 </a>
+                        	 {/if}
+									</td>
+								</tr>
+                            {/volist}
+                        </tbody>
+                        </table>
+                    </div>
+                    {$page->render()}
+                </div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+	 $(document).ready(function() {
+		 $('select[x-listen]').change(onListPageSelectionChange);
+		 $('#nameSearchButton').click(function(){
+			 var name = $('#nameSearch').val() ,
+					 url = new xxx.Url().removeParam('page') ;
+
+			 url.setParam('keywords',encodeURIComponent(name)).go() ;
+		 }) ;
+
+		 //回复
+		 $(".replyed").bind('click',function(){
+			 if($(this).attr("sending")==1){
+				 return;
+			 }
+			 var st_val = $(this).attr('st_val');
+			 var status_val = $(this).attr('status_val');
+			 var id_val = '';
+			 if($(this).hasClass("btn-audit-checkbox")){
+				 var vals = getCheckBoxVals("#listForm table tbody");
+				 id_val = vals.join();
+			 }else{
+				 id_val = parseInt($(this).attr('id_val'));
+			 }
+			 submitForm(id_val,st_val,status_val);
+		 });
+
+		 function submitForm(id_val,st_val,status_val){
+			 if(null == id_val || '' == id_val || id_val <= 0){
+				 layer.msg("请先选择");
+			 }
+			 if(status_val==2){
+				 layer.msg("已回复");
+				 return false;
+			 }
+			 layer.confirm('确认已回复？', {
+				 icon: 3,
+				 btn: ['确认','取消'], //按钮
+				 title:'提示',
+			 }, function(index){
+				 $(this).attr("sending",1);
+				 layer.close(index);
+				 $.getJSON("{:url('/comment/reply')}",{id:id_val,check:st_val},
+						 function(data){
+							 if(null != data.msg || '' != data.msg){
+								 layer.msg(data.msg);
+							 }
+
+							 if(data.code==200){
+								 window.location.reload();
+							 }else if(null != data.url || '' != data.url){
+								 window.location.href = data.url;
+							 }else{
+								 $(this).removeAttr("sending");
+							 }
+						 });
+			 });
+		 }
+
+	 })
+</script>
+
+
+
+
+

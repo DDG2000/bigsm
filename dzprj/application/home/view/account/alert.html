@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>云采网 - 认证信息</title>
+			{include file='public/head' /}
+	</head>
+	<body>
+		<!-- top -->
+		{include file='public/top' /}
+		<!-- top -->
+		<!-- header -->
+		
+		<!-- header -->
+		<!-- content -->
+		<div class="mwrap cc cb mt25">
+			<div class="mside fl">
+				<div class="ms-title">账户设置</div>
+				<ul class="ms-list">
+					<li class="active"><a href="{:url('account/certify')}">认证信息</a></li>
+					<li><a href="{:url('account/index')}">个人资料</a></li>
+				</ul>
+			</div>
+			<div class="fl mcontent">
+				<div class="mc-title">认证信息</div>
+				<div class="mc-lwrap">
+					<div class="mc-ferror">
+						<p>未认证企业账号<a href="{:url('account/certify')}">请认证</a></p>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<!-- content -->
+		<!-- footer -->
+		{include file='public/foot' /}
+		<!-- footer -->
+	</body>
+</html>

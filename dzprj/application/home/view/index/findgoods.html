@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{include file='public/head'}
+		<title>找货首页</title>
+	</head>
+	<body>
+		{include file='public/top_small'}
+		<!-- content -->
+		<div class="content main">
+			<div class="banner" id="banner">
+				{include file="public/banner"}
+				<!-- <div class="banner-text">
+					<div class="text2">{$param.Salers|num_format}个优质卖家
+						<div class="text3">发布你的采购清单<span>一键比价</span></div>
+					</div>
+				</div> -->
+				<div class="w1200 float-wrapper">
+					<div class="float-tips pa">
+						<div class="mask"></div>
+						<div class="wrap">
+							<span></span>
+							<h3>询价找货</h3>
+							<p>写下你的采购需求<br />我们给你找货！</p>
+							{if condition="(isset($_SESSION['user']))"}
+							<a href="/find_goods/toForm">我要找货</a>
+							{else}
+							<a href="/index/findGoodsIndex">我要找货</a>
+							{/if}
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="public/notice"}
+			<div class="mod mod3">
+				<ul class="fl-li cb w1200 cc">
+					<li>
+						<i class="i1"></i>
+						<span>采货快</span>
+						<p>授信支付、先提货后付款</p>
+					</li>
+					<li>
+						<i class="i2"></i>
+						<span>随心还</span>
+						<p>随借随还、最长还款期60天</p>
+					</li>
+					<li>
+						<i class="i3"></i>
+						<span>享免息</span>
+						<p>开通即享3天免息</p>
+					</li>
+					<li>
+						<i class="i4"></i>
+						<span>有惊喜</span>
+						<p>有授信、享优惠</p>
+					</li>
+				</ul>
+			</div>
+			<div class="mod4 mod4">
+				<ul class="w1200 cc cb fl-li">
+					<li>
+						{if condition="($param.Salers)"}
+						<span>{$param.Salers|num_format}</span>
+						<p>我们拥有优质卖家（个）</p>
+						{/if}
+					</li>
+					<li>
+						{if condition="($param.Needs)"}
+						<span>{$param.Needs|num_format}</span>
+						<p>平台累计解决采购需求（次）</p>
+						{/if}
+					</li>
+					<li>
+						{if condition="($param.Deels)"}
+						<span>{$param.Deels|num_format}</span>
+						<p>累计撮合交易（吨）</p>
+						{/if}
+					</li>
+				</ul>
+			</div>
+			<div class="my-adss my-adss1">
+				<ul class="w1200 cc cb fl-li">
+					<li class="li1">发布订单</li>
+					<li class="li2">获取报价</li>
+					<li class="li3">等待报价</li>
+					<li class="li4">采购</li>
+				</ul>
+			</div>
+			<div class="mod mod2 tac w1200 cc">
+				<h3 class="mod-title">合作卖家</h3>
+				<ul class="brand-list">
+					{volist name="links" id="vo"}
+						{if condition="$key < 12"}
+							<li><a{$vo.Vc_link==''?'':' href="'.$vo.Vc_link.'"'} target="_blank"><img src="{$Think.config.img_url}{$vo.Vc_logo}" width="200" height="200"></a></li>
+						{/if}
+					{/volist}
+				</ul>
+			</div>
+		</div>
+		{include file="public/copy"}
+		<!-- content -->
+		{include file="public/sideBar"}
+		{include file="public/foot-normal"}
+	</body>
+</html>

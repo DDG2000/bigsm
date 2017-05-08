@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss_mdy"}
+
+{if="isset($extend.js)"}
+	{$extend.js}
+{/if}
+
+</head>
+<body>
+<div id="main">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.innerHtml}</a>
+			 {/if}
+		{/loop}
+	</div>
+	{if="isset($extend.marks)"}
+	<div class="mbt">
+		{$extend.marks}
+	</div>
+	{/if}
+
+	<form name="form" method="post" action="{$action}" {if="isset($extend.multipart)"}enctype="multipart/form-data"{/if} target="{if="!isset($extend.target)"}hideframe{/if}" check="1">
+	<div class="table">
+	<table>
+		<tr class="tr_bt">
+			<td><strong>{$title}</strong></td>
+		</tr>
+	</table>
+	<table>
+	{* attrs:设置过滤及特殊处理-isc=""检查必填项,nums数字字符串,email邮箱地址 (如果太复杂，建议直接拼写input字符串,ty='other'即可) *}
+	{loop="params"}
+	{if="$value.name!=''"}
+		<tr>
+			<td class="td1">{if="strpos($value.attrs.' '.$value.val,'isc')!==false&&strpos($value.attrs.' '.$value.val,'ennull')===false"}<font style="color:red;">*</font> {/if}{$value.name}</td>
+            {if="$value.tip!=''"}
+            	<td class="td2">
+            {else}
+            	<td class="td2" colspan="2" style="width:auto;">
+            {/if}
+			{if="$value.ty=='text'"}
+            <input type="text" name="{$key}" value="{$value.val}" class="txt_put2" {$value.attrs}>
+			{elseif="$value.ty=='textarea'"}
+            <textarea name="{$key}" class="txt_put3" {$value.attrs}>{$value.val}</textarea>
+			{else}
+            {$value.val}
+			{/if}
+            {if="$value.tip!=''"}
+				<td class="{$value.tipw}">{$value.tip}</td>
+            {/if}
+            </td>
+		</tr>
+	{else}
+	</table>
+	<table><tr><td>{$value.val}</td></tr></table>
+	<table>
+	{/if}
+	{/loop}
+	</table>
+	</div>
+	{*class="btn clearfix" 随屏走， fix 固定在底部*}
+    {if="$title=='修改用户密码'"}
+	<div style="margin-top:10px;">
+    {else}
+    <div id="btndiv" class="fix">
+    {/if}
+		<a name="submit" class="but3" onclick="">提交</a>
+		{if="iset($extend.btn_reset,true)"}
+		<a name="reset" class="but3" onclick="">重置</a>
+		{else}
+		<a name="" class="but3" onclick="location.reload();">重置</a>
+		{/if}
+		{loop="hides"}
+		<input type="hidden" name="{$key}" value="{$value}">
+		{/loop}
+	</div>
+	</form>
+
+</div>
+
+
+</body>
+</html>
+<iframe id="hideframe" name="hideframe" style="display:none;">

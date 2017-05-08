@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+{include file='public/head'}
+<title>我的账单</title>
+</head>
+<body>
+    {include file="public/top"}
+    <!-- content -->
+    <div class="content w1200 cc cb mt24">
+        {include file="public/sideNav"}
+        <div class="fr w1000 list-page list-page-bill">
+            <div class="list-tab cb">
+                <ul class="fl-li fl" id="myTab" role="tablist">
+                    <li role="presentation" class="{$type==4?"active":""}"><a href="{:url('listpage',array('type'=>4))}"  role="tab" id="home-tab">全部({$count.finish+$count.wait+$count.overdate})</a>
+                   </li>
+                   <li role="presentation" class="{$type==1?"active":""}"><a href="{:url('listpage',array('type'=>1))}"  role="tab" id="profile-tab">已还款<em>({$count.finish})</em></a>
+                   </li>
+                   <li role="presentation" class="{$type==2?"active":""}"><a href="{:url('listpage',array('type'=>2))}" role="tab" id="profile-tab2">待还款<em>({$count.wait})</em></a>
+                   </li>
+                  <li role="presentation" class="{$type==3?"active":""}"><a href="{:url('listpage',array('type'=>3))}" role="tab" id="profile-tab3">已逾期<em>({$count.overdate})</em></a>
+                   </li>
+               </ul>
+                <span class="fr total-info">已逾期：<em>{$count.overdatemoney}元</em></span>
+            </div>
+            <form class="list-search mt16">
+                <div class="list-search-words cb">
+                    <div class="input-wrap fl pr">
+                        <input type="text" name="keyword" id="nameSearch"  placeholder="订单号/品名/材质/规格/产地" value="{if condition="isset($param.keyword)"}{$param.keyword}{/if}"/>
+                        <button type="submit" id="nameSearchButton"></button>
+                    </div>
+                    <a href="javascript:;" class="list-search-menu fl">{$isSearch==1?'收起筛选':'展开筛选'}</a>
+                    <div class="fr exprots">
+                        <select name="exportType" class="fl" id="exportType">
+                            <option value="4">全部</option>
+                            <option value="1">已还款</option>
+                            <option value="2">待还款</option>
+                            <option value="3">已逾期</option>
+                        </select>
+                        <a href="/bill/exportexl" target="_blank" class="exports-btn" id="exports-btn">导出</a>
+                    </div>
+                </div>
+                <ul class="list-search-type cb fl-li {$isSearch==1?'':' hide'}">
+                    <li>
+                        账单状态
+                        <select x-listen class="form-control" name="orderStatus">
+                            <option value="">全部</option>
+                            {volist name="$model->statusArray" id="vo"}
+                           	 <option value="{$key}" {if condition="isset($param.orderStatus)"}{$key==$param.orderStatus?"selected":""}{/if}>{$vo}</option>
+                            {/volist}
+                        </select>
+                    </li>
+                    <li>
+                        所属行业
+                        <select x-listen class="form-control" name="industryId">
+                            <option value="">全部</option>
+                            {volist name="$malls" id="vo"}
+                           	 <option value="{$vo.Vc_industry}" {if condition="isset($param.industryId)"}{$vo['Vc_industry']==$param.industryId?"selected":""}{/if}>{$vo.Vc_industry}</option>
+                            {/volist}
+                        </select>
+                    </li>
+                    <li>
+                        所属项目
+                        <select x-listen class="form-control" name="projId">
+                            <option value="">全部</option>
+                            {volist name="$projs" id="vo"}
+                           	 <option value="{$vo.I_projectID}" {if condition="isset($param.projId)"}{$vo.I_projectID==$param.projId?"selected":""}{/if} >{$vo.ct_projname==null?$vo.projname:$vo.ct_projname}</option>
+                            {/volist}
+                        </select>
+                    </li>
+                </ul>
+            </form>
+            <div class="list-header cb list-header-billdetail list-header-billdetai2">
+                <div class="exchange fl">
+                    <label for="checkAll" class="checker" data-type="checkbox">全选</label>
+                    <input type="checkbox" id="checkAll"/>
+                    <!-- <a href="javascript:;" class="apply">异常申诉</a> -->
+                    <a href="javascript:;" class="btn" id="confirmMore">批量确认</a>
+                </div>
+                <!-- <div class="fr fl-a btn-wrap">
+                    <a href="#" class="btn">上一页</a>
+                    <a href="#" class="btn next">下一页</a>
+                </div> -->
+            </div>
+            <div class="list-header list-header-billdetail">
+                <ul class="cb fl-li">
+                    <li class="li1">货物详情</li>
+                    <li class="li2">垫资金额（元）</li>
+                    <li class="li3">垫资天数</li>
+                    <li class="li4">结算金额（元）</li>
+                    <li class="li5">到货日期</li>
+                    <li class="li6">还款日期</li>
+                    <li class="li7">账单状态</li>
+                    <li class="li8">交易操作</li>
+                </ul>
+            </div>
+            <div class="list-table list-table-billdetail list-table-billdetai2">
+    			{volist name='$listdata' id='vo'}
+                <table>
+                    <thead>
+                        <th width="20"></th>
+                        <th width="287">
+                            <span class="date">{$vo.Createtime|getDateStrYmd}</span>
+                            <span class="fr">订单号：{$vo.Vc_orderSn==null?$vo.Vc_Sn:$vo.Vc_orderSn}</span>
+                        </th>
+                        <th class="th2" width="190"><span>所属项目：{$vo.Vc_ct_name==null?$vo.projname:$vo.Vc_ct_name}</span></th>
+                        <th width="100"></th>
+    					<th></th>
+    					<th></th>
+                        <th width="90"></th>
+                        <th width="90"></th>
+                    </thead>
+                    <tbody>
+    					{volist name='$vo.billlist' id='vo2' key="k"}
+                        <tr{if condition="$vo2.Vc_billstatus=='已逾期'"} bad{/if}>
+                            <td class="none1">
+                                {if condition="!(isset($vo2.I_isconfirm)&&$vo2.I_isconfirm==1)"}
+                                    <label for="oid{$key}" class="checker" data-type="checkbox"></label>
+                                    <input type="checkbox" id="oid{$key}" value="{$vo2.id}">
+                                {/if}
+                            </td>
+                            <td class="td1">
+                                <span>{$vo2.Vc_goods_breed}</span>
+                                <small>材质：{$vo2.Vc_goods_material}&nbsp;&nbsp;&nbsp;规格：{$vo2.Vc_goods_spec}&nbsp;&nbsp;&nbsp;</small>
+                                <small>产地：{$vo2.Vc_goods_factory}</small>
+                            </td>
+                            <td>
+                                <span>{$vo2.N_loan_amount}<em class="fr">{$vo2.I_loan_days}天</em></span>
+                                <small>垫资利息：{$vo2.N_loan_interest}元</small>
+                            </td>
+                            <td rowspan="1" class="tac auto">
+                                {$vo2.N_settlement}
+                            </td>
+    						<td rowspan="1" class="none">{$vo2.Dt_arrived|getDateStrYmd}</td>
+    						<td rowspan="1" class="none">{$vo2.Dt_repayment|getDateStrYmd}</td>
+                            <td class="tac none" rowspan="1">
+                                <span class="status">{$vo2.Vc_billstatus}</span>
+                            </td>
+                            <td class="tac none" rowspan="1">
+    							{if condition="isset($vo2.I_isconfirm)&&$vo2.I_isconfirm==1"}
+    				 				<span class="yes">已确认</span>
+    				 			{else}
+    				 		  		<a href="javascript:;" data-ajax="{:url('/bill/confirm',['id'=>$vo2.id])}" class="btn">确认</a>
+    				 			{/if}
+                                <a href="javascript:;" data-ajax="{:url('/order/appeal',['Vc_orderSn'=>$vo.Vc_orderSn,'Vc_goods_breed'=>$vo2.Vc_goods_breed,'Vc_goods_material'=>$vo2.Vc_goods_material,'Vc_goods_spec'=>$vo2.Vc_goods_spec,'Vc_goods_factory'=>$vo2.Vc_goods_factory,'I_type'=>2])}" class="error appeal-btn">异常申诉</a>
+                            </td>
+                        </tr>
+    					<tr class="space">
+    						<td colspan="6"></td>
+    					</tr>
+    					{/volist}
+                    </tbody>
+                </table>
+    			{/volist}
+            </div>
+            <!-- 分页 -->
+            <div class="cb pager fl-li">
+                <div class="fr">
+                    {$list->render()}
+                </div>
+            </div>
+            <!-- 分页 -->
+        </div>
+    </div>
+    <!-- content -->
+<!-- sideBar -->
+{include file="public/sideBar"}
+<!-- sideBar -->
+{include file='public/foot'}
+<!-- xxx -->
+<script type="text/javascript" src="/static/admin/js/xxx/core.js"></script>
+<script type="text/javascript">
+    $(".list-table-billdetail a.btn").btnAjax({
+        type:"GET"
+    });
+
+    var $checkbtn = $("#checkAll"),
+        $checkbtnLabel = $checkbtn.prev("label"),
+        $checkList = $(".list-table-billdetail input[type='checkbox']"),
+        $checkListLabel = $(".list-table-billdetail label.checker"),
+        len = $checkList.length;
+
+    $checkbtn.on("change", function(){
+        $checkList.prop("checked",$(this).prop("checked"));
+        if($(this).prop("checked")) {
+            $checkListLabel.addClass('active');
+        } else {
+            $checkListLabel.removeClass('active');
+        }
+    });
+
+    $checkList.on("change", function(){
+        if($checkList.filter(":checked").length !== len) {
+            $checkbtn.prop('checked', false);
+            $checkbtnLabel.removeClass('active');
+        } else {
+            $checkbtn.prop('checked', true);
+            $checkbtnLabel.addClass('active');
+        }
+    });
+
+    // 批量确认
+    $("#confirmMore").on("click", function(){
+        var ids = [];
+
+        $checkList.filter(":checked").each(function(){
+            ids.push($(this).val());
+        });
+        if(!ids.length) {
+            layer.msg("必须选中至少一项",{time:1500})
+            return false;
+        }
+        ids = ids.join(",");
+
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: "{:url('/bill/confirm')}"+'?id='+ids
+        })
+        .done(function(res) {
+            console.log("success");
+            if(res.code == 200) {
+                layer.alert("批量更新成功", function(){
+                    layer.closeAll();
+                    location.reload();
+                });
+            } else {
+                layer.alert("批量更新失败");
+            }
+        })
+        .fail(function(res) {
+            if(res.status == 500) {
+                layer.msg("服务器出bug了，请与管理员联系！",{time:1500});
+            } else {
+                layer.msg("网络错误，请检查",{time:1500});
+            }
+        });
+    });
+
+/**
+ * 列表页筛选跳转函数
+ * @return {[type]} [description]
+ */
+    function onListPageSelectionChange () {
+        var $this = $(this) , val = $this.val() , name = $this.attr('name'),
+            clear=$this.data('clear') || '' , url = new xxx.Url() ,
+            clearArray = clear.split(',') , emptyVal = $this.data('empty') || -1;
+        if ('*' == clear) {
+            url.removeAllParams() ;
+        } else if (clearArray.length > 0) {
+            for (var i = clearArray.length - 1; i >= 0; i--) {
+                url.removeParam(clearArray[i]) ;
+            };
+        }
+        (val && val != emptyVal) ? url.setParam(name,val) : url.removeParam(name) ;
+        url.removeParam('page').go() ;
+    }
+
+    $(document).ready(function(){
+        $('select[x-listen]').change(onListPageSelectionChange) ;
+
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                url = new xxx.Url().removeParam('page') ;
+
+            url.setParam('keyword',encodeURIComponent(name)).go() ;
+        });
+    });
+
+    ;(function(){
+
+        var $btn = $("#exports-btn"),
+            $exportType = $("#exportType"),
+            link = $btn.attr("href"),
+            parm = "exportType";
+            
+        $exportType.on("change", function(){
+            $btn.attr("href",link+"?"+parm+"="+$(this).val());
+        });
+        
+    })();
+</script>
+</body>
+</html>

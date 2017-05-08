@@ -1,0 +1,557 @@
+@charset "utf-8";
+
+/*
+KISSY CSS Reset
+理念：清除和重置是紧密不可分的
+特色：1.适应中文 2.基于最新主流浏览器
+维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
+*/
+
+/* 在IE状态下初始化标签 */
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+
+
+/* 清除内外边距 */
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+
+/* structural elements 结构元素 */
+
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+
+/* list elements 列表元素 */
+
+pre,
+
+/* text formatting elements 文本格式元素 */
+
+fieldset,
+lengend,
+button,
+input,
+textarea,
+
+/* form elements 表单元素 */
+
+th,
+td,
+
+/* table elements 表格元素 */
+
+div,
+select {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+
+/* 设置默认字体 */
+
+body,
+button,
+input,
+select,
+textarea {
+    font: 12px/1 "Microsoft YaHei", Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+    /* 用 ascii 字符表示，使得在任何编码下都无问题 */
+}
+
+body,
+a {
+    color: #666;
+}
+
+
+/* button 鼠标样式为手型 */
+
+button {
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 18px;
+    /* 18px / 12px = 1.5 */
+}
+
+h2 {
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+h4,
+h5,
+h6 {
+    font-size: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+i,
+em,
+b,
+address,
+cite,
+dfn,
+var {
+    font-style: normal;
+}
+
+
+/* 将斜体扶正 */
+
+code,
+kbd,
+pre,
+samp,
+tt {
+    font-family: "Courier New", Courier, monospace;
+}
+
+
+/* 统一等宽字体 */
+
+small {
+    font-size: 12px;
+}
+
+
+/* 小于 12px 的中文很难阅读，让 small 正常化 */
+
+
+/* 重置列表元素 */
+
+ul,
+ol {
+    list-style: none;
+}
+
+
+/* 重置浏览器默认样式 select */
+
+select,
+option,
+option select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+/* 文本域去除可以自动调节大小的按钮 */
+
+textarea {
+    resize: none;
+    overflow-y: scroll;
+}
+
+/* 重置文本格式元素 */
+
+a {
+    text-decoration: none;
+    outline: none;
+    blr: expression(this.onFocus=this.blur());
+}
+
+/*a:hover { text-decoration: underline;}*/
+
+abbr[title],
+acronym[title] {
+    /* 注：1.ie6 不支持 abbr; 2.这里用了属性选择符，ie6 下无效果 */
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+q:before,
+q:after {
+    content: '';
+}
+
+/* 重置表单元素 */
+
+legend {
+    color: #000;
+}
+
+/* for ie6 */
+
+fieldset,
+img {
+    border: none;
+    /* img 搭车：让链接里的 img 无边框  注：optgroup 无法扶正*/
+}
+
+button,
+input,
+textarea {
+    font-size: 100%;
+    /* 使得表单元素在 ie 下能继承字体大小 */
+}
+
+/* 重置表格元素 */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 重置 hr */
+
+hr {
+    border: none;
+    height: 1px;
+}
+
+/* 表单 在浏览器上的默认样式*/
+
+input,
+button,
+button:focus,
+textarea,
+textarea:focus {
+    outline: none;
+    border: none;
+}
+
+/* 让非ie浏览器默认也显示垂直滚动条，防止因滚动条引起的闪烁 */
+
+
+
+/* ie7以下两个以上的 li浮动产生的空白间隙bug */
+
+li *{
+    +vertical-align: top;
+    _vertical-align: top;
+    *zoom: 1;
+}
+
+/* ie下图片标签上有空白 */
+
+img {
+    vertical-align: middle;
+    *vertical-align: top;
+}
+
+/* ie下input标签文本居中 */
+
+input {
+    vertical-align: middle;
+    line-height: inherit;
+}
+
+/* 以下为自用公共样式 */
+
+
+/* 浮动 */
+
+.fl,
+.fl-li li,
+.fl-a a,.fl-span span{
+    float: left;
+    *display: inline;
+}
+
+.fr,
+.fr-li li,
+.fr-a a,.fr-span span{
+    float: right;
+    *display: inline;
+}
+
+/* 清除浮动 */
+.cb:after,.cb-li li:after{
+    content: ".";
+    display: block;
+    height: 0px;
+    overflow: hidden;
+    visibility: hidden;
+    clear: both;
+}
+
+/* 内联块级元素 */
+
+.ib,
+.ib-li li,
+.ib-a a,
+.ib-span span,
+.ib-i i,.ib-em em{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+.usn {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+/* 相对定位 */
+
+.pr {
+    position: relative;
+    *zoom: 1;
+}
+
+
+/* 绝对定位 */
+
+.pa {
+    position: absolute;
+}
+
+
+/* vertical */
+
+.vmm {
+    vertical-align: middle;
+}
+
+.vmt {
+    vertical-align: top;
+}
+
+.csp {
+    cursor: pointer;
+}
+
+
+/* 超出隐藏 */
+
+.oh {
+    overflow: hidden;
+}
+
+.oh-x {
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.oa-x {
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.oa-y {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.os-x {
+    overflow-x: scroll;
+}
+
+.os-y {
+    overflow-y: scroll;
+}
+
+
+/* 文本居中 */
+
+.tac {
+    text-align: center;
+}
+
+
+/* 文本居左 */
+
+.tal {
+    text-align: left;
+}
+
+
+/* 文本居右 */
+
+.tar {
+    text-align: right;
+}
+
+
+/* 字体大小为0 解决行内块级元素之间的间距问题 */
+
+.fs0 {
+    font-size: 0px;
+}
+
+
+/* 字体大小 */
+
+.fs12 {
+    font-size: 12px;
+}
+
+.fs14 {
+    font-size: 14px;
+}
+
+.fs16 {
+    font-size: 16px;
+}
+
+.fs18 {
+    font-size: 18px;
+}
+
+.fs20 {
+    font-size: 20px;
+}
+
+
+/* color */
+
+.c-000,
+.c-000 a {
+    color: #000;
+}
+
+.c-fff,
+.c-fff a {
+    color: #fff;
+}
+
+.c-333,
+.c-333 a {
+    color: #333;
+}
+
+.c-666,
+.c-666 a {
+    color: #666;
+}
+
+.c-999,
+.c-999 a {
+    color: #999;
+}
+
+.c-c00,
+.c-c00 a {
+    color: #c00;
+}
+
+.c-444,
+.c-444 a {
+    color: #444;
+}
+
+
+/* 文本字体 */
+
+.ffs {
+    font-family: "Times New Roman", Times, Baskerville, Georgia, serif;
+}
+
+
+/* 超出省略号 */
+
+
+.hide {
+    display: none;
+}
+
+.db,
+.db-a a,
+.db-span span {
+    display: block;
+}
+
+/* 页面公共块 */
+
+.w {
+    width: 100%;
+}
+
+.w110 {
+    width: 110%;
+}
+
+.w1100 {
+    width: 1100px
+}
+
+.w940{
+	width: 940px;
+}
+
+.c {
+    margin: 0 auto;
+    _margin-left: auto;
+    _margin-right: auto;
+}
+
+.mt10{
+	margin-top: 10px;
+}
+
+.mt12{
+	margin-top: 12px;
+}
+
+input.hidden {
+    border: none!important;
+    width: 0px!important;
+    height: 0px!important;
+    display: block!important;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+/* jquery.Jcrop.min.css v0.9.12 (build:20130126) */
+.jcrop-holder{direction:ltr;text-align:left;}
+.jcrop-vline,.jcrop-hline{background:#FFF url(../../image/Jcrop.gif);font-size:0;position:absolute;}
+.jcrop-vline{height:100%;width:1px!important;}
+.jcrop-vline.right{right:0;}
+.jcrop-hline{height:1px!important;width:100%;}
+.jcrop-hline.bottom{bottom:0;}
+.jcrop-tracker{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;height:100%;width:100%;}
+.jcrop-handle{background-color:#333;border:1px #EEE solid;font-size:1px;height:7px;width:7px;}
+.jcrop-handle.ord-n{left:50%;margin-left:-4px;margin-top:-4px;top:0;}
+.jcrop-handle.ord-s{bottom:0;left:50%;margin-bottom:-4px;margin-left:-4px;}
+.jcrop-handle.ord-e{margin-right:-4px;margin-top:-4px;right:0;top:50%;}
+.jcrop-handle.ord-w{left:0;margin-left:-4px;margin-top:-4px;top:50%;}
+.jcrop-handle.ord-nw{left:0;margin-left:-4px;margin-top:-4px;top:0;}
+.jcrop-handle.ord-ne{margin-right:-4px;margin-top:-4px;right:0;top:0;}
+.jcrop-handle.ord-se{bottom:0;margin-bottom:-4px;margin-right:-4px;right:0;}
+.jcrop-handle.ord-sw{bottom:0;left:0;margin-bottom:-4px;margin-left:-4px;}
+.jcrop-dragbar.ord-n,.jcrop-dragbar.ord-s{height:7px;width:100%;}
+.jcrop-dragbar.ord-e,.jcrop-dragbar.ord-w{height:100%;width:7px;}
+.jcrop-dragbar.ord-n{margin-top:-4px;}
+.jcrop-dragbar.ord-s{bottom:0;margin-bottom:-4px;}
+.jcrop-dragbar.ord-e{margin-right:-4px;right:0;}
+.jcrop-dragbar.ord-w{margin-left:-4px;}
+.jcrop-light .jcrop-vline,.jcrop-light .jcrop-hline{background:#FFF;filter:alpha(opacity=70)!important;opacity:.70!important;}
+.jcrop-light .jcrop-handle{-moz-border-radius:3px;-webkit-border-radius:3px;background-color:#000;border-color:#FFF;border-radius:3px;}
+.jcrop-dark .jcrop-vline,.jcrop-dark .jcrop-hline{background:#000;filter:alpha(opacity=70)!important;opacity:.7!important;}
+.jcrop-dark .jcrop-handle{-moz-border-radius:3px;-webkit-border-radius:3px;background-color:#FFF;border-color:#000;border-radius:3px;}
+.solid-line .jcrop-vline,.solid-line .jcrop-hline{background:#FFF;}
+.jcrop-holder img,img.jcrop-preview{max-width:none;}

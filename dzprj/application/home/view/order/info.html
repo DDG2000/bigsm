@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    {include file='public/head'}
+    <title>云采网 - 订单详情</title>
+    <style></style>
+</head>
+<body>
+<!-- top -->
+{include file="public/top"}
+<!-- top -->
+<!-- crm -->
+<div class="crm nbg bd">
+    <div class="w1200 cc">
+        <em class="crm-inner"><!--占位用的，勿删--></em><a href="/">首页</a><em>></em><a href="/workroom/index">我的工作台</a><em>></em><a href="/order/listPage">交易记录</a><em>></em><span>订单详情</span>
+    </div>
+</div>
+<!-- crm -->
+<div class="content w1200 cc cb mt10">
+    <div class="w1200 list-page">
+        <div class="order-detail cb">
+            <div class="fl order-detail-info">
+	                <div class="order-detail-header">订单信息       
+					  
+					  </div>
+                <div class="order-detail-inner">
+                    <p>订单号：{$data.Vc_orderSn==null?$data.Vc_Sn:$data.Vc_orderSn}</p>
+                    
+                    <p>订单状态：
+                      {switch name="$data.I_status"}
+										    {case value="0"}待审核{/case}
+										    {case value="1"}待发货{/case}
+										    {case value="2"}已同步，详见货品列表{/case}
+										    {case value="-1"}审核未通过{/case}
+										    {case value="5"}已冻结{/case}
+										    {case value="6"}已关闭{/case}
+						{/switch}
+                    
+                    
+                    </p>
+                    
+                    
+                    <p>所属项目：{$data.projinfo.Vc_ct_name==null?$data.projinfo.projname:$data.projinfo.Vc_ct_name}</p>
+                    <p>创建时间：{$vo.Createtime|getDateStrYmd}</p>
+                     {if condition="empty($expressinfo.Vc_orderstatus)"}
+                    <p>收货人：{$data.Vc_contact}</p>
+                    <p>联系电话：{$data.Vc_phone}</p>
+                    <p>收货地址：{$data.proname}{$data.proname==$data.cityname?'':$data.cityname}{$data.areaname}{$data.Vc_address}</p>
+                     {else}
+                     	{if condition="!empty($expressinfo.Vc_contact)"}
+                     		
+                     	<p>收货人：{$expressinfo.Vc_contact}</p>
+                        <p>联系电话：{$expressinfo.Vc_contact_phone}</p>
+                        <p>收货地址：{$expressinfo.Vc_arrivedplace}</p>
+                     	{else}
+                     	<p>收货人：{$data.Vc_contact}</p>
+                        <p>联系电话：{$data.Vc_phone}</p>
+                        <p>收货地址：{$data.proname}{$data.proname==$data.cityname?'':$data.cityname}{$data.areaname}{$data.Vc_address}</p>
+                     	{/if}
+                     {/if}
+                </div>
+            </div>
+            <div class="fl order-detail-status">
+                <p class="status-text"><b>物流状态：
+                {if condition="$expressinfo.Vc_orderstatus==null"}
+                    正在处理
+                {else}
+                    {$expressinfo.Vc_orderstatus}
+                {/if}
+                </b></p>
+                {if condition="empty($expressinfo.Vc_orderstatus)"}
+                    暂无物流信息
+                {else}
+                    {if condition="!empty($expressinfo.Dt_arrived)"}
+                        <div class="cb">
+                            <div class="fl">
+                                <p>{$expressinfo.Dt_arrived|getDateStrYmdHi}</p>
+                            </div>
+                            <div class="fl">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;您的订单已到货</p>
+                                {if condition="$expressinfo.Vc_contact != null"}
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{$expressinfo.Vc_contact == null?'':'签收人：'.$expressinfo.Vc_contact}{$expressinfo.Vc_contact_phone==null?'':'，&nbsp;联系电话：'.$expressinfo.Vc_contact_phone}</p>
+                                {/if}
+                                {if condition="$expressinfo.Vc_arrivedplace!=null"}
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;到货地址：{$expressinfo.Vc_arrivedplace}</p>
+                                {/if}                                
+                            </div>
+                        </div>
+                    {/if}
+                    {if condition="!empty($expressinfo.Dt_senddate)"}
+                        <div class="cb">
+                            <div class="fl">
+                                <p>{$expressinfo.Dt_senddate|getDateStrYmdHi}</p>
+                            </div>
+                            <div class="fl">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;您的订单已发货，&nbsp;运单号：{$expressinfo|output='Vc_waybillSn'}</p>
+                                {if condition="!empty($expressinfo.Vc_express)"}<p>&nbsp;&nbsp;&nbsp;&nbsp;物流公司：{$expressinfo|output='Vc_express'}</p>{/if}
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;货运人：<span class="current">{$expressinfo|output='Vc_shipper'}，</span>&nbsp;联系电话：{$expressinfo|output='Vc_shipper_phone'}&nbsp;{$expressinfo.Vc_truckID}</p>
+                            </div>
+                        </div>
+                    {/if}
+                    {if condition="!empty($expressinfo.Dt_purchase)"}
+                        <p>{$expressinfo.Dt_purchase|getDateStrYmdHi}&nbsp;&nbsp;&nbsp;&nbsp;您的订单已配货</p>
+                    {/if}
+                    {if condition="!empty($expressinfo.Dt_checkdate)"}
+                        <p>{$expressinfo.Dt_checkdate|getDateStrYmdHi}&nbsp;&nbsp;&nbsp;&nbsp;您的订单已开始处理</p>
+                    {/if}
+                {/if}
+            </div>
+        </div>
+        <div class="list-header oinfo-list-header">
+            <ul class="cb fl-li">
+                <li class="li1">货物详情</li>
+                <li class="li2">单价（元）</li>
+                <li class="li3">数量</li>
+                <li class="li4">实际总价（元）</li>
+                <li class="li5">订单状态</li>
+                <li class="li6">到货日期</li>
+                <li class="li7">交易操作</li>
+            </ul>
+        </div>
+        <div class="list-table list-table-detail oinfo">
+            <table>
+                <thead>
+                <th class="th1">
+                    <span class="date"></span>
+                </th>
+                <th class="th2"></th>
+                <th class="th3"></th>
+                <th class="th4"></th>
+                <th class="th5"></th>
+                <th class="th6"></th>
+                </thead>
+                <tbody>
+                {volist name='$data.orderlist' id='vo2' key="k"}
+                <tr{$k <= 5 ?"":" style='display:none;'"}>
+                    <td class="td1">
+                        <span>{$vo2.Vc_goods_class}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$vo2.Vc_goods_breed}</span>
+                        <small>材质：{$vo2.Vc_goods_material}&nbsp;规格：{$vo2.Vc_goods_spec}</small>
+                        <small>产地：{$vo2.Vc_goods_factory}</small>
+                    </td>
+                    <td>
+                        {if condition="$vo2.Vc_goods_uint=='吨'"}
+                            <span>{$vo2.N_ac_price==null||$vo2.N_ac_price==0?$vo2.N_judge_price:$vo2.N_ac_price}<em class="fr">{$vo2.N_ac_weight}&nbsp;{$vo2.N_ac_weight==null?'':$vo2.Vc_goods_uint}</em></span>
+                        {if condition="$vo2.N_plan_weight!=0"}<small>申请数量：{$vo2.N_plan_weight}&nbsp;{$vo2.Vc_goods_uint}</small>{/if}
+                        {else}
+                        <!-- {$unit=$vo2.N_ac_weight==null?$vo2.N_plan_weight:$vo2.N_ac_weight} -->
+                            <span>{$vo2.N_ac_price==null||$vo2.N_ac_price==0?$vo2.N_judge_price:$vo2.N_ac_price}<em class="fr">{$vo2.N_ac_weight}&nbsp;{$vo2.N_ac_weight==null?'':$vo2.Vc_goods_uint}</em></span>
+                        {if condition="$vo2.N_plan_weight!=0"}<small>申请数量：{$vo2.N_plan_weight|intval}&nbsp;{$vo2.Vc_goods_uint}</small>{/if}
+                        {/if}
+                        {if condition="$vo2.N_judge_totalprice!=0"}<small>预计总价：{$vo2.N_judge_totalprice}</small>{/if}
+                    </td>
+                    {if condition="$vo2.I_goods_src==2 || $k == 1"}
+                        <td class="tac" {if condition="((($vo.I_status==0) || ($vo.I_status==1) || ($vo.I_status==6)||($vo.I_status==-1)) && ($k==1) && ($vo2.I_goods_src==1))"} rowspan="{$vo.orderlist|count}"{/if}>
+                            {if condition="$vo2.N_ac_settlement!=null && $vo2.N_ac_settlement!=0"}
+                            {$vo2.N_ac_settlement}
+                            {else}<p class="tac">暂无</p>
+                            {/if}
+                        </td>
+                        <td class="tac" {if condition="((($vo.I_status==0) || ($vo.I_status==1) || ($vo.I_status==6)||($vo.I_status==-1)) && ($k==1) && ($vo2.I_goods_src==1))"} rowspan="{$vo.orderlist|count}"{/if}>
+                            <p>
+                                {if condition="$vo.I_status==0&&$k>1"}{else/}
+                                <span class="status">{$vo2.Vc_orderstatus==null?$model->statusArray[$vo.I_status]:$vo2.Vc_orderstatus}</span>
+                                {/if}
+                            </p>
+                            {if condition="$vo2.Vc_orderstatus=='已发货'||$vo2.Vc_orderstatus=='已到货'||$vo2.Vc_orderstatus=='待发货'"}
+                            <a href="{:url('/order/expressInfo',['id'=>$vo2.id,'orderSn'=>$vo2.Vc_orderSn])}">查看物流</a>
+                            {/if}
+                        </td>
+                        <td class="date" {if condition="((($vo.I_status==0) || ($vo.I_status==1) || ($vo.I_status==6)||($vo.I_status==-1)) && ($k==1) && ($vo2.I_goods_src==1))"} rowspan="{$vo.orderlist|count}"{/if}>
+                        {if condition="$vo2.Dt_arrived!=null"}
+                            {$vo2.Dt_arrived|strtotime|date="Y-m-d H:i",###}
+                        {/if}
+                        </td>
+                        <td class="tac auto" {if condition="((($vo.I_status==0) || ($vo.I_status==1) || ($vo.I_status==6)||($vo.I_status==-1)) && ($k==1) && ($vo2.I_goods_src==1))"} rowspan="{$vo.orderlist|count}"{/if}>
+                            {if condition="$vo.I_status==0&&$k==1"}
+                            <a href="{:url('/order/edit',['id'=>$vo.id])}">修改订单</a>
+                            <a href="javascript:;" data-ajax="{:url('/order/cancel',['id'=>$vo.id])}" class="cancel-order-btn">取消订单</a>
+                            <!-- <a href="#">我要催单</a> -->
+                            <!-- <p>联系司机：{$vo2.Vc_shipper_phone}</p> -->
+                            {elseif condition="$vo2.Vc_orderstatus=='已发货'||$vo2.Vc_orderstatus=='已到货'||$vo2.Vc_orderstatus=='待发货'"}
+                            {if condition="$vo2.Vc_orderstatus=='已到货'"}
+                                {if condition="isset($vo2.I_isconfirm)&&$vo2.I_isconfirm==1"}
+                                    <span class="yes">已确认</span>
+                                {else}
+                                    <a data-ajax="{:url('/order/confirm',['oid'=>$vo.id,'id'=>$vo2.id,'orderSn'=>$vo2.Vc_orderSn])}" href="javascript:;" class="menu isOk">确认订单</a>
+                                {/if}
+                            {/if}
+                            <a href="javascript:;" data-ajax="{:url('/order/appeal',
+                         		  ['Vc_orderSn'=>$vo2.Vc_orderSn,'Vc_goods_breed'=>$vo2.Vc_orderSn,'Vc_goods_material'=>$vo2.Vc_goods_material,'Vc_goods_spec'=>$vo2.Vc_goods_spec,'Vc_goods_factory'=>$vo2.Vc_goods_factory,'I_type'=>1])}" class="error appeal-btn">异常申诉</a><!-- ajaxPost方式提交T_appeal申诉内容 -->
+                            <a href="javascript:void(0);" data-url="{:url('/order/create',['id'=>$vo.I_projectID])}" data-ajax="{:url('/order/iscanbuy',['id'=>$vo.I_projectID])}" class="rebuy">再次购买</a>
+                            {/if}
+                        </td>
+                    {/if}
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            {if condition="count($vo.orderlist)>5"}
+                <a href="javascript:;" class="table-more" data-total="{$vo.orderlist|count}" data-current="5">展开更多</a>
+            {/if}
+        </div>
+    </div>
+</div>
+<!-- content -->
+{include file="public/foot"}
+<script type="text/javascript" src="/static/admin/js/xxx/core.js"></script>
+<script type="text/javascript">
+
+    /**
+     * 列表页筛选跳转函数
+     * @return {[type]} [description]
+     */
+    function onListPageSelectionChange () {
+        var $this = $(this) , val = $this.val() , name = $this.attr('name'),
+                clear=$this.data('clear') || '' , url = new xxx.Url() ,
+                clearArray = clear.split(',') , emptyVal = $this.data('empty') || -1 ;
+        if ('*' == clear) {
+            url.removeAllParams() ;
+        } else if (clearArray.length > 0) {
+            for (var i = clearArray.length - 1; i >= 0; i--) {
+                url.removeParam(clearArray[i]) ;
+            };
+        }
+        (val && val != emptyVal) ? url.setParam(name,val) : url.removeParam(name) ;
+        url.removeParam('page').go() ;
+    }
+
+    $(document).ready(function(){
+        $('select[x-listen]').change(onListPageSelectionChange) ;
+
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                    url = new xxx.Url().removeParam('page') ;
+
+            url.setParam('keyword',encodeURIComponent(name)).go() ;
+        }) ;
+    }) ;
+    
+    $("a.isOk").btnAjax({
+        success:"确认成功"
+    })
+    
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+{include file='public/head'}
+<title>云采网 - 交易记录</title>
+</head>
+<body>
+    {include file="public/top"}
+    <!-- content -->
+    <div class="content w1200 cc cb mt24">
+        {include file="public/sideNav"}
+        <div class="fr w1000 list-page">
+            <form>
+                <ul class="list-tab cb fl-li nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                    <li role="presentation" class="{$type==4?"active":""}"><a href="{:url('listpage',array('type'=>4))}" role="tab" id="home-tab">全部</a></li>
+                    <li role="presentation" class="{$type==1?"active":""}"><a href="{:url('listpage',array('type'=>1))}" role="tab" id="profile-tab">待发货<b>({$count.wait})</b></a></li>
+                    <li role="presentation" class="{$type==2?"active":""}"><a href="{:url('listpage',array('type'=>2))}" role="tab" id="profile-tab2">已发货<b>({$count.inpro})</b></a></li>
+                    <li role="presentation" class="{$type==3?"active":""}"><a href="{:url('listpage',array('type'=>3))}" role="tab" id="profile-tab3">已送达<b>({$count.finish})</b></a></li>
+                <!--     <li role="presentation" class="{$type==5?"active":""}"><a href="{:url('listpage',array('type'=>5))}" role="tab" id="profile-tab4">已完成</a></li>
+                    <li role="presentation" class="{$type==0?"active":""}"><a href="{:url('listpage',array('type'=>0))}" role="tab" id="profile-tab5">待审核</a></li>
+         -->        </ul>
+                <div class="list-search mt16">
+                    <div class="list-search-words cb">
+                        <div class="input-wrap fl pr">
+                            <input type="text" id="nameSearch" name="keyword" value="{if condition="isset($param.keyword)"}{$param.keyword}{/if}" placeholder="订单号/品名/材质/规格/产地"/>
+                            <button type="submit" id="nameSearchButton"></button>
+                        </div>
+                        <a href="javascript:;" class="list-search-menu fl">{$isSearch==1?'收起筛选':'展开筛选'}</a>
+                    </div>
+                    <ul class="list-search-type cb fl-li{$isSearch==1?'':' hide'}">
+                        <li>
+                            订单状态
+                            <select x-listen class="form-control " name="orderStatus">
+                                <option value="-2">全部</option>
+                                {volist name="$model->statusArray" id="vo"}
+                               	    <option value="{$key}" {if condition="isset($param.orderStatus)"}{$key==$param.orderStatus?"selected":""}{/if}>{$vo}</option>
+                                {/volist}
+                            </select>
+                        </li>
+                        <li>
+                            所属行业
+                            <select x-listen class="form-control" name="industryId">
+                                <option value="">全部</option>
+                                {volist name="$malls" id="vo"}
+                               	    <option value="{$vo.id}" {if condition="isset($param.industryId)"}{$vo['id']==$param.industryId?"selected":""}{/if}>{$vo.Vc_name}</option>
+                                {/volist}
+                            </select>
+                        </li>
+                        <li>
+                            货物大类
+                            <select x-listen class="form-control " name="className">
+                                <option value="">全部</option>
+                                {volist name="$goodclass" id="vo"}
+                               	 <option value="{$vo.Vc_goods_class}"{if condition="isset($param.className)"}{$vo.Vc_goods_class==$param.className?"selected":""}{/if} >{$vo.Vc_goods_class}</option>
+                                {/volist}
+                            </select>
+                        </li>
+                        <li class="long">
+                            所属项目
+                            <select x-listen class="form-control " name="projId">
+                                 <option value="">全部</option>
+                                 {volist name="$projs" id="vo"}
+                                    <option value="{$vo.I_projectID}" {if condition="isset($param.projId)"}{$vo.I_projectID==$param.projId?"selected":""}{/if} >{$vo.ct_projname==null?$vo.projname:$vo.ct_projname}</option>
+                                 {/volist}
+                             </select>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+            <div class="list-header list-header-order">
+                <ul class="cb fl-li">
+                    <li class="li1">货物详情</li>
+                    <li class="li2">单价（元）</li>
+                    <li class="li3">数量</li>
+                    <li class="li4">实际总价（元）</li>
+                    <li class="li5">订单状态</li>
+                    <li class="li6">交易操作</li>
+                </ul>
+                {if condition="count($listdata)>0"}
+                <!-- <div class="fl-a cb btn-wrap">
+                    <div class="fr">
+                        <a href="#" class="btn">上一页</a>
+                        <a href="#" class="btn next">下一页</a>
+                    </div>
+                </div> -->
+                {/if}
+            </div>
+            <!-- 进行中的订单 -->
+            {volist name='$listdata' id='vo'}
+			<table class="ctl-table middle">
+				<thead>
+					<th width="30"></th>
+					<th class="tal" width="276">{$vo.Createtime|getDateStrYmd}<em class="fr">订单号：{$vo.Vc_orderSn==null?$vo.Vc_Sn:$vo.Vc_orderSn}</em></th>
+					<th width="218" class="pr tal"><span class="pa pa-name">所属项目：{$vo.Vc_ct_name==null?$vo.projname:$vo.Vc_ct_name}</span></th>
+					<th width="205"></th>
+					<th width="115"></th>
+					<th width="155">
+					  {if condition="$vo.Vc_orderSn!=null"}
+							  {if condition="$vo.I_status==6"}
+							  订单已关闭
+							  {elseif condition="$vo.I_status==5"}
+							  订单已冻结
+							  {/if}
+					  {/if}
+					</th>
+				</thead>
+				<tbody>
+                    {volist name='$vo.orderlist' id='vo2' key="k"}
+                        <tr{$k <= 5 ?"":" style='display:none;'"}>
+                            <td colspan="2" class="tal pl">
+                                <p class="name">{$vo2.Vc_goods_class}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$vo2.Vc_goods_breed}</p>
+                                <p class="spec">材质：{$vo2.Vc_goods_material}<span>规格：{$vo2.Vc_goods_spec}</span></p>
+                                <p class="spec" style="margin-top:5px">产地：{$vo2.Vc_goods_factory}</p>
+                            </td>
+                            <td class="tal">
+                                <div class="text">
+                                    {if condition="$vo2.Vc_goods_uint=='吨'"}
+                                        <p class="name cb"><em class="fl">{$vo2.N_ac_price==null||$vo2.N_ac_price==0?$vo2.N_judge_price:$vo2.N_ac_price}</em><em class="fr">{$vo2.N_ac_weight}&nbsp;{$vo2.N_ac_weight==null?'':$vo2.Vc_goods_uint}</em></p>
+                                    {if condition="$vo2.N_plan_weight!=0"}<p class="spec">申请数量：{$vo2.N_plan_weight}&nbsp;{$vo2.Vc_goods_uint}</p>{/if}
+                                    {else}
+                                        <p class="name cb"><em class="fl">{$vo2.N_ac_price==null||$vo2.N_ac_price==0?$vo2.N_judge_price:$vo2.N_ac_price}</em><em class="fr">{$vo2.N_ac_weight}&nbsp;{$vo2.N_ac_weight==null?'':$vo2.Vc_goods_uint}</em></p>
+                                    {if condition="$vo2.N_plan_weight!=0"}<p class="spec">申请数量：{$vo2.N_plan_weight|intval}&nbsp;{$vo2.Vc_goods_uint}</p>{/if}
+                                    {/if}
+                                    {if condition="$vo2.N_judge_totalprice!=0"}<p class="spec" style="margin-top:5px">预计总价：{$vo2.N_judge_totalprice}</p>{/if}
+                                </div>
+                            </td>
+                            {if condition="$vo2.I_goods_src==2 || $k == 1"}
+                                <td class="{$vo2.N_ac_settlement==null?'tac':'tal'}"{if condition="((($vo.I_status==0) || ($vo.I_status==1) || ($vo.I_status==6)||($vo.I_status==-1)) && ($k==1) && ($vo2.I_goods_src==1))"} rowspan="{$vo.orderlist|count}" colitem{/if}>
+                                    <div class="text">
+                                        {if condition="$vo2.N_ac_settlement!=null && $vo2.N_ac_settlement!=0"}
+                                        <p class="name">实际总价：{$vo2.N_ac_settlement}</p>
+                                            <p class="spec">到货时间：{$vo2.Dt_arrived|strtotime|date="Y-m-d",###}</p>
+                                        {else}<p class="tac">暂无</p>
+                                        {/if}
+
+                                    </div>
+                                </td>
+                                <td{if condition="((($vo.I_status==0) || ($vo.I_status==1) || ($vo.I_status==6)||($vo.I_status==-1)) && ($k==1) && ($vo2.I_goods_src==1))"} rowspan="{$vo.orderlist|count}" colitem{/if}>
+                                    {if condition="$vo.I_status==0&&$k>1"}
+                                    {else/}
+                                        <span class="status">{$vo2.Vc_orderstatus==null?$model->statusArray[$vo.I_status]:$vo2.Vc_orderstatus}</span>
+                                        <a href="{:url('/order/orderInfo',['id'=>$vo.id])}" class="link">订单详情</a>
+                                    {/if}
+                                    {if condition="$vo2.Vc_orderstatus=='已发货'||$vo2.Vc_orderstatus=='已到货'||$vo2.Vc_orderstatus=='待发货'"}
+                                        <a href="{:url('/order/expressInfo',['id'=>$vo2.id,'orderSn'=>$vo2.Vc_orderSn])}" class="link">查看物流</a>
+                                    {/if}
+                                </td>
+                                <td{if condition="((($vo.I_status==0) || ($vo.I_status==1) || ($vo.I_status==6)||($vo.I_status==-1)) && ($k==1) && ($vo2.I_goods_src==1))"} rowspan="{$vo.orderlist|count}" colitem{/if}>
+                                    <div class="space"></div>
+                                    {if condition="$vo.I_status==0&&$k==1"}
+                                      <a href="{:url('/order/edit',['id'=>$vo.id])}" class="link">修改订单</a>
+                                      <a href="javascript:;" data-ajax="{:url('/order/cancel',['id'=>$vo.id])}" class="link link-hlight-ccc cancel cancel-order-btn">取消订单</a>
+                                        {elseif condition="$vo2.Vc_orderstatus=='已发货'||$vo2.Vc_orderstatus=='已到货'||$vo2.Vc_orderstatus=='待发货'"}
+                                        {if condition="$vo2.Vc_orderstatus=='已到货'"}
+                                            {if condition="isset($vo2.I_isconfirm)&&$vo2.I_isconfirm==1"}<a class="btn none">已确认</a>
+                                                {else}
+                                                <a href="javascript:;" data-ajax="{:url('/order/confirm',['oid'=>$vo.id,'id'=>$vo2.id,'orderSn'=>$vo2.Vc_orderSn])}" data-success="确认成功" data-error="确认失败" class="btn">确认订单</a>
+                                            {/if}
+                                        {/if}
+                                      <a href="javascript:;" data-ajax="{:url('/order/appeal',['Vc_orderSn'=>$vo2.Vc_orderSn,'Vc_goods_breed'=>$vo2.Vc_orderSn,'Vc_goods_material'=>$vo2.Vc_goods_material,'Vc_goods_spec'=>$vo2.Vc_goods_spec,'Vc_goods_factory'=>$vo2.Vc_goods_factory,'I_type'=>1])}" class="link error appeal-btn">异常申诉</a><!-- ajaxPost方式提交T_appeal申诉内容 -->
+                                      <a href="javascript:void(0);" class="link buy rebuy" data-url="{:url('/order/create',['id'=>$vo.I_projectID])}" data-ajax="{:url('/order/iscanbuy',['id'=>$vo.I_projectID])}">再次购买</a>
+                                    {/if}
+                                </td>
+                            {/if}
+                        </tr>
+                    {/volist}
+				</tbody>
+			</table>
+            {if condition="count($vo.orderlist)>5"}
+                <a href="javascript:;" class="table-more" data-total="{$vo.orderlist|count}" data-current="5">展开更多</a>
+            {/if}
+            {/volist}
+			<!-- 进行中的订单 -->
+             <!-- 分页 -->
+             <div class="cb pager fl-li">
+                 <div class="fr">
+                     {$list->render()}
+                 </div>
+             </div>
+             <!-- 分页 -->
+        </div>
+    </div>
+    <!-- content -->
+    <!-- sideBar -->
+    {include file="public/sideBar"}
+    <!-- sideBar -->
+    {include file="public/foot"}
+    <script type="text/javascript">
+
+        $(".ctl-table a.btn[href]").btnAjax();
+        // $(".ctl-table a.cancel").btnAjax({
+        //     success:"取消成功",
+        //     isConfirm:true
+        // });
+
+        /**
+         * 列表页筛选跳转函数
+         * @return {[type]} [description]
+         */
+        
+        function onListPageSelectionChange () {
+            var $this = $(this) , val = $this.val() , name = $this.attr('name'),
+                clear=$this.data('clear') || '' , url = new xxx.Url() ,
+                clearArray = clear.split(',') , emptyVal = $this.data('empty') || -2 ;
+            if ('*' == clear) {
+                url.removeAllParams() ;
+            } else if (clearArray.length > 0) {
+                for (var i = clearArray.length - 1; i >= 0; i--) {
+                    url.removeParam(clearArray[i]) ;
+                };
+            }
+            (val && val != emptyVal) ? url.setParam(name,val) : url.removeParam(name) ;
+            url.removeParam('page').go() ;
+        }
+
+        $(document).ready(function(){
+            $('select[x-listen]').change(onListPageSelectionChange) ;
+
+            $('#nameSearchButton').click(function(){
+                var name = $('#nameSearch').val() ,
+                    url = new xxx.Url().removeParam('page') ;
+
+                url.setParam('keyword',encodeURIComponent(name)).go() ;
+            });
+        });
+        
+    </script>
+</body>
+</html>

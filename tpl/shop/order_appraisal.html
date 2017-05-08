@@ -1,0 +1,88 @@
+	{include="inc/usercenter/css"}
+    <title>订单管理 - 订单评价</title>
+</head>
+<body>
+   {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">交易管理</a><a href="/index.php?act=shop&m=order&w=list">我的订单</a><span class="current">订单评价</span>
+        		</div>
+				<div class="review">
+					<div class="review-order">
+						<div class="review-order-header cb">
+							<span class="title fl">商品信息</span><span class="title fl">评价状态</span>
+						</div>
+						<div class="review-order-content cb">
+							<div class="review-order-info fl">
+								{loop="data.goods"}
+								<div class="row">
+									<div class="colum colum1">{$value.itemname}</div>
+									<div class="colum colum2">{$value.stuffname}</div>
+									<div class="colum colum3">{$value.specificationname}</div>
+									<div class="colum colum4">{$value.factoryname}</div>
+									<div class="colum colum5">{$value.warehouse}</div>
+									<div class="colum colum6">{$value.N_amount}</div>
+									<div class="colum colum7">{$value.N_weight}</div>
+								</div>
+								{/loop}
+								<div class="date">
+									购买时间：{$data.Createtime}
+								</div>
+							</div>
+							<div class="review-order-status fr">
+								<a href="javascript:void(0);">已评价</a>
+							</div>
+						</div>
+					</div>
+					<div class="review-warapper">
+						<div class="review-item">
+							产品质量
+							<div class="compare-my-item ib">
+								<div class="inner pa star{$data.app.quality}"></div>
+								<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+							</div>
+						</div>
+						<div class="review-item">
+							物流及时性
+							<div class="compare-my-item ib">
+								<div class="inner pa star{$data.app.timely}"></div>
+								<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+							</div>
+						</div>
+						<div class="review-item">
+							服务态度
+							<div class="compare-my-item ib">
+								<div class="inner pa star{$data.app.server}"></div>
+								<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+							</div>
+						</div>
+						<div class="review-item">
+							发票及时性
+							<div class="compare-my-item ib">
+								<div class="inner pa star{$data.app.invoice}"></div>
+								<a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a><a href="javascript:;"></a>
+							</div>
+						</div>
+						<div class="review-comment">
+							<span class="comm-title ib">评论</span>
+							<p class="ib comm-content">{$data.app.Vc_text}</p>
+						</div>
+						<div class="comm-imglist">
+							{loop="$data.app.T_images"}
+								<img src="{$value}#" />
+							{/loop}
+						</div>
+					</div>
+				</div>
+    		</div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

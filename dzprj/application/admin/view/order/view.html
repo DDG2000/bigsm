@@ -1,0 +1,164 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="x_content">
+        <br>
+        <form  class="form-horizontal form-label-left" novalidate>
+            <input type="hidden" name="id" value="{$data|output='id'}">
+            
+			 <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">物流追踪</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                   <ul class="list-unstyled timeline">
+                   {if condition="!empty($data.Dt_checkdate)"}
+                    <li>
+                      <div class="block">
+                        <div class="tags">
+                          <p class="tag" style="text-align:center;">
+                            <span>{$data.Dt_checkdate|get_week}</span>
+                          </p>
+                        </div>
+                        <div class="block_content">
+                          <h2 class="title">
+                                            <span>订单已开始处理</span> 
+                                      </h2>
+                          <div class="byline">
+                            <span>{$data.Dt_checkdate|getDateStrYmdHi}</span> 
+                          </div>
+                          <p class="excerpt">
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    {/if}
+                     {if condition="!empty($data.Dt_purchase)"}
+                    <li>
+                      <div class="block">
+                        <div class="tags">
+                            <p class="tag" style="text-align:center;">
+                            <span>{$data.Dt_purchase|get_week}</span>
+                          </p>
+                        </div>
+                        <div class="block_content">
+                          <h2 class="title">
+                                            <span>订单已通知采购</span> 
+                                      </h2>
+                          <div class="byline">
+                            <span>{$data.Dt_purchase|getDateStrYmdHi}</span> 
+                          </div>
+                          <p class="excerpt">
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                      {/if}
+                         {if condition="!empty($data.Dt_pickup)"}
+                    <li>
+                      <div class="block">
+                        <div class="tags">
+                            <p class="tag" style="text-align:center;">
+                            <span>{$data.Dt_pickup|get_week}</span>
+                          </p>
+                        </div>
+                        <div class="block_content">
+                          <h2 class="title">
+                                            <span>订单已装车</span>  
+                                      </h2>
+                          <div class="byline">
+                            <span>{$data.Dt_pickup|getDateStrYmdHi}</span> 
+                          </div>
+                          <p class="excerpt">
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    {/if}
+                    {if condition="!empty($data.Dt_senddate)"}
+                    <li>
+                      <div class="block">
+                        <div class="tags">
+                            <p class="tag" style="text-align:center;">
+                            <span>{$data.Dt_senddate|get_week}</span>
+                          </p>
+                        </div>
+                        <div class="block_content">
+                          <h2 class="title">
+                                            <span>订单已发货</span> 
+                                      </h2>
+                          <div class="byline">
+                            <span>{$data.Dt_senddate|getDateStrYmdHi}</span> 
+                          </div>
+                          <p class="excerpt">
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                       {/if}
+                         {if condition="!empty($data.Dt_arrived)"} 
+                       
+                    <li>
+                      <div class="block">
+                        <div class="tags">
+                            <p class="tag" style="text-align:center;">
+                            <span>{$data.Dt_arrived|get_week}</span>
+                          </p>
+                        </div>
+                        <div class="block_content">
+                          <h2 class="title">
+                                           <span>订单已到达</span> 
+                                      </h2>
+                          <div class="byline">
+                            <span>{$data.Dt_arrived|getDateStrYmdHi}</span>
+                          </div>
+                          <p class="excerpt">
+                          <i class="fa fa-user fa-fw"></i> 收货人：{$data|output='Vc_contact'}
+                          <i class="fa fa-phone fa-fw"></i> 电话：{$data|output='Vc_contact_phone'}
+                         <br/> <i class="fa fa-cubes fa-fw"></i> 货物详情：<br>
+                          {$data.Vc_goods_breed} {$data.Vc_goods_material} {$data.Vc_goods_spec} {$data.N_ac_weight}{$data.Vc_goods_uint}
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                        {/if}
+                  </ul>
+                </h5>
+            </div>
+            
+           
+          
+           <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" > 物流信息</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                 <ul class="list-unstyled">
+	              	<li><i class="fa fa-reorder (alias) fa-fw"></i> 运单号：{$data|output='Vc_waybillSn'}</li>
+	              	<li><i class="fa fa-user fa-fw"></i> 收货人：{$data|output='Vc_contact'}</li>
+	              	<li><i class="fa fa-phone fa-fw"></i> 收货人电话：{$data|output='Vc_contact_phone'}</li>
+	              	<li><i class="fa fa-university fa-fw"></i> 物流公司：{$data|output='Vc_express'}</li>
+	              	<li><i class="fa fa-truck fa-fw"></i> 承运司机：{$data|output='Vc_shipper'}</li>
+	              	<li><i class="fa fa-phone-square fa-fw"></i> 司机电话：{$data|output='Vc_shipper_phone'}</li>
+	              	<li><i class="fa fa-paper-plane-o fa-fw"></i> 发货地：{$data.Vc_sendplace}</li>
+	              	<li><i class="fa fa-paper-plane fa-fw"></i> 到货地：{$data|output='Vc_arrivedplace'}</li>
+              	 </ul>
+                </h5>
+            </div>
+           
+            <div class="clearfix"></div>
+            <div class="ln_solid"></div>
+            <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                    <button onclick="history.go(-1);return false;" class="btn  btn-primary"><i class="fa fa-reply"></i> 返回</button>
+              
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    
+</script>

@@ -1,0 +1,88 @@
+	{include="inc/usercenter/css"}
+    <title>卖家中心 - 产品管理</title>
+
+</head>
+<body>
+	{include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+        		<div class="cb filter-wrapper">
+        			<div class="fl" id="product-filter">
+        				<a href="javascript:;" class="filter-menu{if="empty($ispublished)"} active{/if}" data-id="">全部产品</a>
+						<a href="javascript:;" class="filter-menu{if="$ispublished==2"} active{/if}" data-id="2">已发布</a><a href="javascript:;" class="filter-menu{if="$ispublished==1"} active{/if}" data-id="1">未发布</a>
+        			</div>
+					
+    				<form action="/index.php?act=shop&m=commodity&w=list&submit" method="POST" class="fr fs0 filter-form-search" id="js-search-product-form">
+						<!-- date: 2016.06.30 comment: 待添加类型筛选 -->
+						<input type="hidden" name="page" value="{$data.page}">
+						<input type="hidden" name="psize" value="">
+						<input type="hidden" name="ispublished" value="{function="iset($ispublished)"}">
+    					<input type="text" placeholder="请输入关键字" name="sKey" class="ib vmm" value="{function="iset($sKey)"}">
+    					<label class="ib form-label-date vmm tac"><input type="text" value="{function="iset($starttime)"}" class="datetime" data-type="datepicker" name="starttime"></label><em class="ib vmm">至</em>
+    					<label class="ib form-label-date vmm tac"><input type="text" value="{function="iset($endtime)"}" class="datetime" data-type="datepicker" name="endtime"></label>
+    					<button type="submit" class="ib filter-form-submit vmm tac">搜索</button>
+    				</form>
+        		</div>
+        		<div class="product-list-wrapper">
+        			<table class="w product-list-all">
+	        			<thead>
+	        				<th width="37"><input type="checkbox" id="btn-checkAll"></th>
+	        				<th width="46">类别</th>
+	        				<th width="85">类型</th>
+	        				<th width="59">品名</th>
+	        				<th width="92">材质</th>
+	        				<th width="110">规格</th>
+	        				<th width="52">钢厂</th>
+	        				<th width="100">仓库</th>
+	        				<th width="26">件数</th>
+	        				<th width="65">件/吨</th>
+	        				<th width="100">销售单价</th>
+	        				<th width="72">发布时间</th>
+	        				<th>状态</th>
+	        			</thead>
+	        			<tbody id="js-product-list-check">
+							{loop="data.data"}
+							{$vo=$value}
+								<tr>
+									<td><input type="checkbox" value="{$vo.id}"></td>
+									<td>{$vo.mallclassname}</td>
+									<td>{$vo.itemclassname}</td>
+									<td>{$vo.itemname}</td>
+									<td>{$vo.stuffname}</td>
+									<td>{$vo.specificationname}</td>
+									<td>{$vo.factoryname}</td>
+									<td>{$vo.warehouse}</td>
+									<td>{$vo.N_amount}</td>
+									<td>{$vo.N_weight}</td>
+									<td>￥{$vo.N_price}</td>
+									<td>
+									{if="!empty($vo.Dt_publish)"}
+									
+									{function="formatTime($vo['Dt_publish'],'Y-m-d')"}
+									{else}
+									-- --
+									{/if}
+									</td>
+									<td class="unrelease">{if="$vo.I_publish==0"}未发布{else}已发布{/if}</td>
+								</tr>
+							{/loop}
+	        			</tbody>
+	        		</table>
+        			<div class="product-list-opreation" id="js-product-list-action">
+	        			<a href="javascript:;" class="product-btn-edit" data-event="edit">编辑选中</a>|<a href="javascript:;" data-event="delete">删除选中</a>| <a href="javascript:;" data-event="release">发布</a>|<a href="javascript:;" data-event="cancel">撤销发布</a>|
+						<a href="/index.php?act=shop&m=commodity&w=exportexl&page={$data.page}&ispublished={function="iset($ispublished)"}&sKey={function="iset($sKey)"}&starttime={function="iset($starttime)"}&endtime={function="iset($endtime)"}" target="_blank">导出</a>
+	        		</div>
+					<div id="pagestr">
+						{$pagestr}
+					</div>
+        		</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

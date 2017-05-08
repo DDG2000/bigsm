@@ -1,0 +1,68 @@
+	{include="inc/usercenter/css"}
+<title>项目管理 - 我的集采</title>
+</head>
+<body>
+ 	{include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">项目管理</a><span class="current">我的集采</span>
+        		</div>
+            	<div class="data-list-wrapper">
+            		<div class="data-table-query fs0">
+        				<label class="ib "><input type="text" value="2015-9-9"></label><span>至</span><label class="ib"><input type="text" value="2015-9-9"></label>
+    					<select class="ib"><option>审核中</option></select>
+    					<a href="##" class="ib btn-query">查询</a>
+    					<a href="/index.php?act=user&m=concentrated&w=add" class="data-btn-add ib" target="_blank">添加集采公告</a>
+            		</div>
+            		<table class="mycollection" id="js-ie-concentrated">
+            			<thead>
+            				<th width="138">集采名称</th>
+            				<th width="62">类型</th>
+            				<th width="167">集采期限</th>
+            				<th width="153">发布时间</th>
+            				<th width="68">状态</th>
+            				<th width="60">报名数量</th>
+            				<th width="104">标书</th>
+            				<th>操作</th>
+            			</thead>
+            			<tbody>
+							{loop="$data.data"}
+								<tr {if condition="$counter%2!==0"}class="even"{/if}>
+									<td><a href="/index.php?act=user&m=concentrated&w=detail&id={$value.id}" class="link">{$value.Vc_name}</a></td>
+									<td>{$value.itemclassname}</td>
+									<td>{$value.D_start}—{$value.D_end}</td>
+									<td>{$value.Createtime}</td>
+									<td class="status{$value.I_status/10}">
+										{if condition="$value.I_status==10"}
+											待审核
+										{elseif condition="$value.I_status==20"}
+											报名中
+										{elseif condition="$value.I_status==30"}
+											已截止
+										{else}
+											已成交
+										{/if}
+									</td>
+									<td>{$value.I_numbers}</td>
+									<td><a href="javascript:(0);" class="search" title="预览">预览</a><a href="{$value.Vc_doc}" class="download ie-download" title="下载" download="{$value.Vc_name}.xls" target="_blank">下载</a>{if condition="$value.I_status==10"}<a href="##" class="share" title="重新上传">重新上传</a>{/if}</td>></td>
+									<td><a href="/index.php?act=user&m=concentrated&w=publish&id={$value.id}" target="_blank" class="pub">发布中标公告</a>|<a href="/index.php?act=user&m=concentrated&w=detail&id={$value.id}" target="_blank" class="delete">详情</a></td>
+								</tr>
+							{/loop}
+            			</tbody>
+            		</table>
+					<div id="pagestr">
+						{$pagestr}
+					</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+ 	{include="inc/usercenter/footer"}
+    {include="inc/js"}

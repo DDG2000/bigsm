@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        {include file='public/head'}
+        <title>云采网 - 帮助中心</title>
+    </head>
+<body>
+<!-- header -->
+{include file="public/top-help"}
+<!-- header -->
+<!-- content -->
+<div class="crm nbg bd">
+    <div class="w1200 cc">
+        <a href="/">首页</a><em>></em><span>帮助中心</span>
+    </div>
+</div>
+<!-- content -->
+<div class="content w1200 cc cb mt37">
+	<div class="fl side-nav sideHelp w180">
+        <ul>
+		{volist name="class" id="vo"}
+		    <li {if condition="$vo.id==$classId"} class="active"{/if}><a href="{$vo.Vc_link}">{$vo.Vc_name}</a></li>
+		{/volist}
+            {if condition="isset($_SESSION['user'])"}
+			<li><a href="/help/feedback">意见反馈</a></li>
+            {/if}
+        </ul>
+	</div>
+    <div class="fr w1000 help">
+		{if condition="$type==1 || isset($id)"}
+            <div class="article">
+                <div class="article-header">
+                    <h3>{$data.Vc_name}</h3>
+                    <h5>{$data.D_releasetime|strtotime|date="Y-m-d",###}</h5>
+                </div>
+                <div class="article-content">
+                    {$data.T_content}
+                </div>
+            </div>
+            <!-- 文章 -->
+		{else}
+            <!-- 列表 -->
+            <div class="article">
+                <div class="article-list">
+                    <ul>
+                        {volist name="data->items()" id="vo"}
+                            <li class="cb{if condition="$key==0"} no{/if}"><a href="/help/getById?class={$classId}&id={$vo.id}&type=1" class="fl">{$vo.Vc_name}</a><span class="time fr">{$vo.D_releasetime|strtotime|date="Y-m-d",###}</span></li>
+                        {/volist}
+                    </ul>
+                </div>
+                <!-- 分页 -->
+    			<div class="cb pager fl-li">
+    				<div class="fr">
+    					{$data->render()}
+    				</div>
+    			</div>
+    			<!-- 分页 -->
+            </div>
+		{/if}
+    </div>
+</div>
+{include file="public/foot"}
+</body>
+</html>

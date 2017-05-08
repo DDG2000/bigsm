@@ -1,0 +1,65 @@
+    {include="inc/usercenter/css"}
+    <link rel="stylesheet" href="{#TPL_EDITOR#}umeditor/themes/default/css/umeditor.min.css#">
+    <title>卖家中心 - 公司简介</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="pr content-main-con no">
+            		<div class="cb content-main-con-head line">
+            			<span class="head-title">公司简介</span>
+            		</div>
+            		<form class="pr companyinfo" id="company-info-submit">
+            			<textarea id="company-editor" name="T_desc" style="width:906px;height:450px;">{if="$issubed==1"}{$data.T_desc}{/if}</textarea>
+                        <button type="submit">保存</button>
+            		</form>
+                </div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}
+    <script src="{#TPL_EDITOR#}/umeditor/umeditor.config.js#"></script>
+    <script src="{#TPL_EDITOR#}/umeditor/umeditor.min.js#"></script>
+    <script>
+        var um = UM.getEditor('company-editor', {
+            focus: true,
+            autoHeight: false
+        });
+
+        function getContent() {
+
+            return UM.getEditor('company-editor').getContent();
+        }
+
+        $("#company-info-submit").on("submit", function(){
+
+            $.ajax({
+                url:"/index.php?act=shop&m=account&w=info-save",
+                data:$(this).serializeArray(),
+                type:"POST",
+                dataType:"json",
+                success: function(data){
+                    if(data.err == 0){
+                        layer.alert("保存成功",function(index){
+                            layer.close(index);
+                            location.reload();
+                        });
+                    } else {
+                        layer.alert(data.msg);
+                    }
+                }
+            });
+            return false;
+        });
+
+        
+
+    </script>

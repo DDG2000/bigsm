@@ -1,0 +1,138 @@
+	{include="inc/usercenter/css"}
+    <title>订单管理 - 全部订单</title>
+</head>
+<body>
+   {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+			<script type="text/javascript">
+					window.search = {
+						I_status:"I_status={$I_status}",
+						starttime:"starttime={$starttime}",
+						endtime:"endtime={$endtime}",
+						keyword:"keyword={$keyword}"
+					};
+			</script>
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">交易管理</a><span class="current">我的订单</span>
+        		</div>
+            	<div class="user-center-order">
+            		<form class="cb filter-wrapper filter-myorder" id="js-orderForm">
+	        			<div class="fl" id="js-orderFilter">
+							{if="$I_status==10"}
+								<a href="javascript:void(0);" class="filter-menu">全部订单</a><a href="javascript:void(0);" class="filter-menu active" data-status="10">待审核</a>
+								<a href="javascript:void(0);" class="filter-menu" data-status="20">已完成</a><a href="javascript:void(0);" class="filter-menu" data-isapp="1">待评价</a>
+							{elseif="$I_status==20"}
+								<a href="javascript:void(0);" class="filter-menu">全部订单</a><a href="javascript:void(0);" class="filter-menu" data-status="10">待审核</a>
+								<a href="javascript:void(0);" class="filter-menu active" data-status="20">已完成</a><a href="javascript:void(0);" class="filter-menu" data-isapp="1">待评价</a>
+							{elseif="$I_status==70"}
+								<a href="javascript:void(0);" class="filter-menu">全部订单</a><a href="javascript:void(0);" class="filter-menu" data-status="10">待审核</a>
+								<a href="javascript:void(0);" class="filter-menu" data-status="20">已完成</a><a href="javascript:void(0);" class="filter-menu active" data-isapp="1">待评价</a>
+							{elseif="$I_isapp==1"}
+								<a href="javascript:void(0);" class="filter-menu">全部订单</a><a href="javascript:void(0);" class="filter-menu" data-status="10">待审核</a>
+								<a href="javascript:void(0);" class="filter-menu" data-status="20">已完成</a><a href="javascript:void(0);" class="filter-menu active" data-isapp="1">待评价</a>
+							{else}
+								<a href="javascript:void(0);" class="filter-menu active">全部订单</a><a href="javascript:void(0);" class="filter-menu" data-status="10">待审核</a>
+								<a href="javascript:void(0);" class="filter-menu" data-status="20">已完成</a><a href="javascript:void(0);" class="filter-menu" data-isapp="1">待评价</a>
+							{/if}
+	        			</div>
+	    				<div class="fl fs0 filter-form-search">
+	    					<label class="ib form-label-date vmm tac"><input type="text" value="{$starttime}" data data-type="datepicker" name="starttime" placeholder="开始时间"/></label><em class="ib vmm">至</em>
+	    					<label class="ib form-label-date vmm tac"><input type="text" value="{$endtime}" data data-type="datepicker" name="endtime" placeholder="结束时间"/></label>
+	    					<input type="text" placeholder="请输入搜索关键字" name="keyword" value="{$keyword}"/>
+	    					<a href="javascript:void(0);" class="ib filter-form-submit vmm tac" id="js-searchForm">搜索</a>
+	    				</div>
+	        		</form>
+	        		<div class="cb fs14 c-444 myorder-header">
+	        			<span class="s1">订单信息</span>
+	        			<span class="s2">单价</span>
+	        			<span class="s3">小计</span>
+	        			<span class="s4">订单总计</span>
+	        			<span class="s5">收货人</span>
+						<span class="order-status">订单状态</span>
+						<span class="s6">操作</span>
+	        		</div>
+            		<div class="table-myorder" id="order-list">
+						{if condition="$data.data"}
+							{loop="$data.data"}
+								<table data-type="order-li">
+									<thead>
+										<tr>
+											<th colspan="12">
+												订单号： <span class="order-num">{$value['Vc_orderNO']}</span><span class="order-date">{$value['Createtime']}</span><span class="order-name">{$value['shopname']}</span><span class="tel">{$value['Vc_phone']}</span>
+											</th>
+											<th class="delete"><a href="javascript:void(0);" class="ib" data-id="{$value.id}" title="删除订单"></a></th>
+										</tr>
+									</thead>
+									{if condition="$value.I_status==10"}
+										{$space = "";$status = "等待审核";}
+									{elseif condition="$value.I_status==20"}
+										{$space = "";$status = "已完成";}
+									{elseif condition="$value.I_status==70"}
+										{$space = "";$status = "已评价";}
+									{elseif condition="$value.I_status==60"}
+										{$space = "";$status = "已取消";}
+									{/if}
+									<tr>
+										<td width="50">{$value.goods[0]['itemname']}</td>
+										<td width="50">{$value.goods[0]['stuffname']}</td>
+										<td width="100">{$value.goods[0]['specificationname']}</td>
+										<td width="50">{$value.goods[0]['factoryname']}</td>
+										<td width="75">{$value.goods[0]['warehouse']}</td>
+										<td width="50">{$value.goods[0]['N_amount']}件</td>
+										<td width="70">{$value.goods[0]['N_weight']}吨</td>
+										<td width="75">￥{$value.goods[0]['N_price']}</td>
+										<td width="85">￥{$value.goods[0]['N_amount_price']}</td>
+										<td rowspan="{function="count($value.goods);"}" width="75" class="money">{$value.N_amount_price}</td>
+										<td rowspan="{function="count($value.goods);"}" width="50">{$value.Vc_consignee}</td>
+										<td rowspan="{function="count($value.goods);"}" width="65" class="prew status{$value.I_status}">{$status}</td>
+										<td rowspan="{function="count($value.goods);"}">
+											{if condition="$value.I_status==10"}
+												<a href="javascript:void(0);" data-id="{$value.id}" class="cancel">取消订单</a>
+												<a href="/index.php?act=user&m=order&w=detail&id={$value.id}" target="_blank">订单详情</a>
+											{elseif condition="$value.I_status==20"}
+												{if condition="$value.I_isapp==1"}
+													<a href="/index.php?act=user&m=order&w=appraise&id={$value.id}" target="_blank">评价</a>
+												{elseif condition="$value.I_isapp==2"}
+													<a href="/index.php?act=user&m=order&w=appraisal&id={$value.id}" target="_blank">查看评价</a>
+												{/if}
+												<a href="/index.php?act=user&m=order&w=detail&id={$value.id}" target="_blank">查看电子订货函</a>
+												<a href="/index.php?act=user&m=order&w=detail&id={$value.id}" target="_blank">订单详情</a>										
+											{elseif condition="$value.I_status==60"}
+												<a href="/index.php?act=user&m=order&w=detail&id={$value.id}" target="_blank">查看详情</a>
+											{/if}
+										</td>
+									</tr>
+									{loop="$value.goods"}
+										{if condition="$counter>0"}
+											<tr>
+												<td>{$value.itemname}</td>
+												<td>{$value.stuffname}</td>
+												<td>{$value.specificationname}</td>
+												<td>{$value.factoryname}</td>
+												<td>{$value.warehouse}</td>
+												<td>{$value.N_amount}件</td>
+												<td>{$value.N_weight}吨</td>
+												<td>￥{$value.N_price}</td>
+												<td>￥{$value.N_amount_price}</td>
+											</tr>
+										{/if}
+										
+									{/loop}
+								</table>
+							{/loop}
+							<div id="pagestr">{$pagestr}</div>
+						{/if}
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+   	{include="inc/usercenter/footer"}
+    {include="inc/js"}

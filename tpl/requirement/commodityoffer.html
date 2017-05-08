@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>报价</title>
+</head>
+<body>
+
+<h2>右侧采购计划</h2>
+<table>
+{loop="offerlist"}
+	<tr>
+
+	<td>
+	<a href="http://www.bigsm.com/index.php?act=requirement&m=commoditydetail&I_requirementID={$value.id}">
+	{$value.Vc_name}
+	
+	</a></td>
+	</tr>
+{/loop}
+</table>
+
+<h2>中间部分</h2>
+
+
+<form action="http://www.bigsm.com/index.php?act=requirement&m=commodityoffer" method="post">
+<table>
+<tr class="tr1">
+	
+	
+	<td>采购单位</td>
+	<td>联系电话</td>
+	
+	
+	
+</tr>
+<tr class="tr1">
+	{$v=$data.offerinfo}
+	<input type="hidden" name="I_requirementID" value="{$v.id}"/>
+	<input type="hidden" name="cid" value="{$v.I_commodityID}"/>
+	<td>{$v.Vc_company}</td>
+	<td>{$v.Vc_contact_phone}</td>
+	
+	
+</tr>
+
+</table>
+<table>
+<tr class="tr1">
+	
+	<td>品名</td>
+	<td>材质</td>
+	<td>规格</td>
+	<td>数量</td>
+	<td>单位</td>
+	<td>钢厂</td>
+	<td>含税报价（单价/元）</td>
+	<td>出库费</td>
+	<td>库房</td>
+	<td>备注</td>
+	
+	
+</tr>
+
+{loop="data.commoditylist"}
+{$vo=$value}
+<tr data="it" >
+	<input type="hidden" name="corderID[]" value="{$vo.id}"/>
+	<td>{$vo.Vc_item}</td>
+	<td>{$vo.Vc_stuff}</td>
+	<td>{$vo.Vc_specification}</td>
+	<td>{$vo.N_amount}</td>
+	<td>
+	{if="$vo.I_unitType==1"}
+	        件
+   {elseif="$vo.I_unitType==2"}
+		根
+   {elseif="$vo.I_unitType==3"}
+		吨
+  
+	{/if}
+	</td>
+	<td>
+	{if="is_array($vo.Vc_factorys)"}
+		{loop="$vo.Vc_factorys"}
+  		{$f=$value}
+	
+	<input name="factorys[{$vo.id}][]" type="text" value="{$f}" style="border:none"readonly="readonly">
+	{/loop}
+	
+	{/if}
+	
+	</td>
+	<td>
+	{loop="$vo.Vc_factorys"}
+
+	<input name="price[{$vo.id}][]" type="text">
+		{/loop}
+	</td>
+	<td>
+	{loop="$vo.Vc_factorys"}
+	<select name="outType[{$vo.id}][]">
+	  <option value="1">包出</option>
+	  <option value="2">自提</option>
+	</select>
+	
+	{/loop}
+	</td>
+	<td>
+	{loop="$vo.Vc_factorys"}
+	<input name="warehouse[{$vo.id}][]" type="text">
+	
+	{/loop}
+	</td>
+	<td>
+	{loop="$vo.Vc_factorys"}
+	<input name="memo[{$vo.id}][]" type="text">
+	{/loop}
+	</td>
+</tr>
+{/loop}
+<tr>
+    <input name="submit" type="submit"  value="提交">
+</tr>
+
+
+
+</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,55 @@
+	{include="inc/usercenter/css"}
+    <title>卖家中心 - 仓库管理</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+				<div class="crumblenav">
+        			<a href="#">仓库管理</a><span class="current">我的仓库</span>
+        		</div>
+            	<div class="pr content-main-con no">
+					<!--<form class="m-list-search" action="javascript:;" method="POST">
+    					<span class="text text-title">查询内容</span><input type="text" class="keywords"><button type="submit" class="search-submit">查询</button><a href="/index.php?act=shop&m=warehouse&w=add" target="_blank" class="btn">添加仓库</a>
+        			</form>-->
+            		<div class="data-list-table ib-a" id="js-warehouse-list">
+            			<table border="0">
+            				<thead>
+            					<th width="110">序号</th>
+            					<th width="100">仓库名称</th>
+            					<th width="130">仓库地址</th>
+								<th width="100">创建时间</th>
+								<th width="150">操作</th>
+            				</thead>
+            				<tbody>
+							{loop="data.data"}
+							{$vo=$value}
+								<tr data="it" >
+									<td>{$vo.id}</td>
+									<td>{$vo.Vc_name}</td>
+									<td>
+									{if="$vo.proname==$vo.cityname"}
+										{$vo.proname}{$vo.disname}{$vo.Vc_address}
+										{else}
+										{$vo.proname}{$vo.cityname}{$vo.disname}{$vo.Vc_address}
+									{/if}
+									</td>
+									<td>{function="formatTime($vo['Createtime'],'Y-m-d H:i')"}</td>
+									<td><a href="/index.php?act=shop&m=warehouse&w=edit&id={$vo.id}">编辑</a><a href="javascript:;" data-id="{$vo.id}" class="delete">删除</a></td>
+								</tr>
+							{/loop}			
+            				</tbody>
+            			</table>
+						<div id="pagestr">{$pagestr}</div>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

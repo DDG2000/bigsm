@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>{$title}</title>
+{include="jscss_stat"}
+{if="isset($extend.js)"}
+	{$extend.js}
+{/if}
+</head>
+
+<body>
+<div id="main">
+	<div class="address"><strong>当前位置：</strong>
+		{loop="points"}
+			 {if="$key>0"}>{/if}
+			 {if="!is_array($value)"}
+				<a class="a2">{$value}</a>
+			 {else}
+				<a href="{$value.href}" class="a2">{$value.html}</a>
+			 {/if}
+		{/loop}
+	</div>
+
+	<div class="table">
+		<div id="container" style="width:95%;min-width:400px;height:400px;border:1px solid #c0c0c0;margin:5px auto 10px"></div>
+	</div>
+
+	<div class="table">
+	<table>
+	<tr class="tr_bt">
+		<td><strong>提示信息</strong></td>
+	</tr>
+	{loop="helps"}
+	<tr><td>{$key+1}.{$value}</td></tr>
+	{/loop}
+	</table>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+var chart_value;
+var p2psubtitle = '';
+chart_value = {
+	chart: {renderTo: 'container',margin: [74, 80, 20, 90]/* ,zoomType: 'xy' */},
+	title: {
+		text: '项目：申请中、招标中、还款中统计',
+		style: {margin: '10px 0 0 0'}
+	},
+	subtitle: {
+		text: p2psubtitle,
+		style: {margin: '0 0 0 0'}
+	},
+	xAxis: [{
+		categories: []
+	}],
+	yAxis: [{
+		title: {
+			text: '',
+			margin: 40,
+			style: {color: '#4572A7'}
+		},
+		min: 0, 
+		labels: {
+			formatter: function() {
+				return this.value+'个';
+			},
+			style: {color: '#4572A7'}
+		}
+		
+	}],
+	tooltip: {
+		formatter: function() {
+			var unit = {
+				'申请中': '个',
+				'招标中': '个',
+				'还款中': '个'
+			}[this.series.name];
+			return ''+
+				 this.y +' '+ unit;
+		}
+	},
+	legend: {
+		layout: 'vertical',
+		align:'right',
+		verticalAlign:'top',
+		x:-48,
+		y:-8,
+		backgroundColor: '#FFFFFF'
+	},
+	series: [{
+		name: '申请中',
+		color: '#003399',
+		type: 'line',//area
+		yAxis: 0,
+		data: [1]		
+	
+	}, {
+		name: '招标中',
+		type: 'line',
+		color: '#00cc00',
+		//yAxis: 1,
+		data: [0]
+	}, {
+		name: '还款中',
+		color: '#ff6600',
+		type: 'line',
+		//yAxis: 2,
+		data: [0]
+	}]
+};
+
+$(function() {
+	var chart = new Highcharts.Chart(chart_value);
+	var datas='{$stat}';
+	var da = eval('('+datas+')');
+	chart.xAxis[0].setCategories(da.datalist,true);
+	chart.series[0].setData(da.da1list,true);
+	chart.series[1].setData(da.da2list,true);
+	chart.series[2].setData(da.da3list,true);
+});
+
+</script>

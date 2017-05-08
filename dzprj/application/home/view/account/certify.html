@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>云采网 - 认证信息</title>
+    {include file='public/head' /}
+</head>
+<body>
+    <!-- top -->
+    {include file='public/top' /}
+    <!-- top -->
+    <!-- content -->
+    <div class="mwrap auto cc cb mt25">
+        <div class="mside fl">
+            <div class="ms-title">账户设置</div>
+            <ul class="ms-list">
+                <li class="active"><a href="/account/certify">认证信息</a></li>
+                <li><a href="/account/index">个人资料</a></li>
+            </ul>
+        </div>
+        <!-- {$isCertify=$data['I_status']} -->
+        
+        <div class="fl mcontent">
+            <div class="mc-title">认证信息</div>
+            <div class="mc-lwrap auto">
+                <form class="mc-form" method="post" action="{:url('account/save_certify')}" data-success="提交成功">
+                    {if condition="$isCertify==4 || $isCertify==null"}
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>公司名称：</span>
+                            <input type="text" class="ms-finput ms-finput-address" name="Vc_name" value="{$data|output='Vc_name'}" placeholder="公司名称" maxlength="20"/>
+                            <span></span>
+                        </div>
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>公司地址：</span>
+                            <select class="ms-fselect" name="I_provinceID" id="provinceID" data-id="{$data|output='I_provinceID'}">
+                                <option>省</option>
+                                <option value="{$data|output='I_provinceID'}" selected>{$data|output='proname'}</option>
+                            </select>
+                            <select class="ms-fselect" id="cityID" name="I_cityID" data-id="{$data|output='I_cityID'}">
+                                <option>市</option>
+                                <option value="{$data|output='I_cityID'}" selected>{$data|output='cityname'}</option>
+                            </select>
+                            <select class="ms-fselect" id="districtID" name="I_districtID" data-id="{$data|output='I_districtID'}">
+                                <option>县/区</option>
+                                <option value="{$data|output='I_districtID'}" selected>{$data|output='areaname'}</option>
+                            </select>
+                            <input type="text" class="ms-finput ms-finput-address" name="Vc_address" value="{$data|output='Vc_address'}" placeholder="详细地址" maxlength="25"/>
+                            <span></span>
+                        </div>
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>指定联系人：</span>
+                            <input type="text" class="ms-finput" name="Vc_applicantName" value="{$data|output='Vc_applicantName'}" maxlength="15"/>
+                            <span></span>
+                        </div>
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>手机号：</span>
+                            {$_SESSION['user']['Vc_mobile']|sphone}
+                            <input type="hidden" class="ms-finput" value="{$_SESSION['user']['Vc_mobile']}" name="Vc_mobile"/>
+                            <span class="status-info"><i></i>已认证</span>
+                        </div>
+                        <div class="ms-fcategory">
+                            <div class="ms-ftips">注意：上传图片仅支持jpg,png,bmp文件格式大小不超过2M。请确认上传证件真实、有效、清晰，否则审核将不予通过</div>
+                            <!-- 公司logo： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>公司logo：</span>
+                                <input type="hidden" name="Vc_logo" value="{$data|output='Vc_logo'}">
+                                <a href="javascript:;" class="ms-menu-upload">上传图片</a>
+                                <a href="{:url('account/download',['filepath'=>cache('CompanyLogo'),'filename'=>$filenames['CompanyLogo']])}" class="fl ms-menu-link showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="#" class="no-up">
+                                </div>
+                            </div>
+                            <!-- 营业执照： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>营业执照：</span>
+                                <input type="hidden" name="Vc_licence_pic" value="{$data|output='Vc_licence_pic'}">
+                                <a href="javascript:;" class="ms-menu-upload">上传图片</a>
+                                <a href="{:url('account/download',['filepath'=>cache('LicencePic'),'filename'=>$filenames['LicencePic']])}" class="fl ms-menu-link showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="#" class="no-up">
+                                </div>
+                            </div>
+                            <!-- 组织机构代码证： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>组织机构代码证：</span>
+                                <input type="hidden" name="Vc_org_pic" value="{$data|output='Vc_org_pic'}">
+                                <a href="javascript:;" class="ms-menu-upload">上传图片</a>
+                                <a href="{:url('account/download',['filepath'=>cache('OrgPic'),'filename'=>$filenames['OrgPic']])}" class="fl ms-menu-link showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="#" class="no-up">
+                                </div>
+                            </div>
+                            <!-- 税务登记证： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>税务登记证：</span>
+                                <input type="hidden" name="Vc_tax_pic" value="{$data|output='Vc_tax_pic'}">
+                                <a href="javascript:;" class="ms-menu-upload">上传图片</a>
+                                <a href="{:url('account/download',['filepath'=>cache('TaxPic'),'filename'=>$filenames['TaxPic']])}" class="fl ms-menu-link showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="#" class="no-up">
+                                </div>
+                            </div>
+                            <!-- 开户许可证： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>开户许可证：</span>
+                                <input type="hidden" name="Vc_acc_pic" value="{$data|output='Vc_acc_pic'}">
+                                <a href="javascript:;" class="ms-menu-upload">上传图片</a>
+                                <a href="{:url('account/download',['filepath'=>cache('AccPic'),'filename'=>$filenames['AccPic']])}" class="fl ms-menu-link showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="#" class="no-up">
+                                </div>
+                            </div>
+                            <!-- 企业认证授权书： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>企业认证授权书：</span>
+                                <input type="hidden" name="Vc_auth_pic" value="{$data|output='Vc_auth_pic'}">
+                                <div class="fl">
+                                    <div class="cb"><a href="javascript:;" class="ms-menu-upload">上传图片</a></div>
+                                    <a href="{:url('account/download',['filepath'=>cache('AuthWord'),'filename'=>$filenames['AuthWord']])}" class="ms-download ">下载《企业认证授权书》模版</a>
+                                </div>
+                                <a href="{:url('account/download',['filepath'=>cache('AuthPic'),'filename'=>$filenames['AuthPic']])}" class="fl ms-menu-link ms-menu-link1 showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="#" class="no-up">
+                                </div>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img ms-fitem-other">
+                                <span class="ms-ftitle"></span>
+                                <button class="ms-fbutton ms-fbutton-other" type="submit">提交认证</button>
+                            </div>
+                        </div>
+                    {elseif condition="$isCertify==2"}
+                        <!-- 认证中 -->
+                        <input type="hidden" name="I_provinceID" value="{$data|output='I_provinceID'}">
+                        <input type="hidden" name="I_cityID" value="{$data|output='I_cityID'}">
+                        <input type="hidden" name="I_districtID" value="{$data|output='I_districtID'}">
+                        <input type="hidden" name="Vc_address" value="{$data|output='Vc_address'}">
+                        <!-- 通过 -->
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>公司名称：</span>
+                            <input type="text" class="ms-finput ms-finput-address" name="Vc_name" value="{$data|output='Vc_name'}" maxlength="20"/>
+                        </div>
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>公司地址：</span>
+                            <select class="ms-fselect" name="I_provinceID" id="provinceID" data-id="{$data|output='I_provinceID'}"></select>
+                            <select class="ms-fselect" id="cityID" name="I_cityID" data-id="{$data|output='I_cityID'}"></select>
+                            <select class="ms-fselect" id="districtID" name="I_districtID" data-id="{$data|output='I_districtID'}"></select>
+                            <input type="text" class="ms-finput ms-finput-address" name="Vc_address" value="{$data|output='Vc_address'}" placeholder="详细地址" maxlength="25"/>
+                            <span></span>
+                        </div>
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>指定联系人：</span>
+                            <input type="text" class="ms-finput" name="Vc_applicantName" value="{$data|output='Vc_applicantName'}" maxlength="15"/>
+                            <span></span>
+                        </div>
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>手机号：</span>
+                            {$data|output='umobile'|sphone}
+                            <input type="hidden" class="ms-finput" value="{$data|output='umobile'}" name="Vc_mobile"/>
+                            <span class="status-info"><i></i>已认证</span>
+                        </div>
+                        <div class="ms-fcategory">
+                            <div class="ms-ftips">注意：上传图片仅支持jpg,png,bmp文件格式大小不超过2M。请确认上传证件真实、有效、清晰，否则审核将不予通过</div>
+                            <!-- 公司logo： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>公司logo：</span>
+                                <input type="hidden" name="Vc_logo" value="{$data|output='Vc_logo'}">
+                                <a href="javascript:;" class="ms-menu-upload">更改图片</a>
+                                <a href="{:url('account/download',['filepath'=>cache('CompanyLogo'),'filename'=>$filenames['CompanyLogo']])}" class="fl ms-menu-link showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_logo'}">
+                                </div>
+                            </div>
+                            <!-- 营业执照： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>营业执照：</span>
+                                <input type="hidden" name="Vc_licence_pic" value="{$data|output='Vc_licence_pic'}">
+                                <a href="javascript:;" class="ms-menu-upload">更改图片</a>
+                                <a href="{:url('account/download',['filepath'=>cache('LicencePic'),'filename'=>$filenames['LicencePic']])}" class="fl ms-menu-link showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_licence_pic'}">
+                                </div>
+                            </div>
+                            <!-- 组织机构代码证： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>组织机构代码证：</span>
+                                <input type="hidden" name="Vc_org_pic" value="{$data|output='Vc_org_pic'}">
+                                <a href="javascript:;" class="ms-menu-upload">更改图片</a>
+                                <a href="{:url('account/download',['filepath'=>cache('OrgPic'),'filename'=>$filenames['OrgPic']])}" class="fl ms-menu-link showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_org_pic'}">
+                                </div>
+                            </div>
+                            <!-- 税务登记证： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>税务登记证：</span>
+                                <input type="hidden" name="Vc_tax_pic" value="{$data|output='Vc_tax_pic'}">
+                                <a href="javascript:;" class="ms-menu-upload">更改图片</a>
+                                <a href="{:url('account/download',['filepath'=>cache('TaxPic'),'filename'=>$filenames['TaxPic']])}" class="fl ms-menu-link showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_tax_pic'}">
+                                </div>
+                            </div>
+                            <!-- 开户许可证： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>开户许可证：</span>
+                                <input type="hidden" name="Vc_acc_pic" value="{$data|output='Vc_acc_pic'}">
+                                <a href="javascript:;" class="ms-menu-upload">更改图片</a>
+                                <a href="{:url('account/download',['filepath'=>cache('AccPic'),'filename'=>$filenames['AccPic']])}" class="fl ms-menu-link showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_acc_pic'}">
+                                </div>
+                            </div>
+                            <!-- 企业认证授权书： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>企业认证授权书：</span>
+                                <input type="hidden" name="Vc_auth_pic" value="{$data|output='Vc_auth_pic'}">
+                                <div class="fl">
+                                    <div class="cb"><a href="javascript:;" class="ms-menu-upload">更改图片</a></div>
+                                    <a href="{:url('account/download',['filepath'=>cache('AuthWord'),'filename'=>$filenames['AuthWord']])}" class="ms-download">下载《企业认证授权书》模版</a>
+                                </div>
+                                <a href="{:url('account/download',['filepath'=>cache('AuthPic'),'filename'=>$filenames['AuthPic']])}" class="fl ms-menu-link ms-menu-link1 showImg">查看样本</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_auth_pic'}">
+                                </div>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img ms-fitem-other">
+                                <span class="ms-ftitle"></span>
+                                <button class="ms-fbutton ms-fbutton-other" type="submit">提交认证</button>
+                            </div>
+                        </div>
+                    {elseif condition="$isCertify==1"}
+                        <!-- 认证中 -->
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>公司名称：</span>
+                            {$data|output='Vc_name'}
+                            <input type="hidden" class="ms-finput ms-finput-address" name="Vc_name" value="{$data|output='Vc_name'}"/>
+                        </div>
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>公司地址：</span>
+                            {$data|output='proname'}{$data|output='cityname'}{$data|output='areaname'}{$data|output='Vc_address'}
+                        </div>
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>指定联系人：</span>
+                            {$data|output='Vc_applicantName'}
+                            <input type="hidden" class="ms-finput" name="Vc_applicantName" value="{$data|output='Vc_applicantName'}"/>
+                        </div>
+                        <div class="ms-fitem cb">
+                            <span class="ms-ftitle"><em class="warring">*</em>手机号：</span>
+                            {$data|output='umobile'|sphone}
+                            <input type="hidden" class="ms-finput" value="{$data|output='umobile'|sphone}" name="Vc_mobile"/>
+                            <span class="status-info"><i></i>已认证</span>
+                        </div>
+                        <div class="ms-fcategory">
+                            <div class="ms-ftips">注意：上传图片仅支持jpg,png,bmp文件格式大小不超过2M。请确认上传证件真实、有效、清晰，否则审核将不予通过</div>
+                            <!-- 营业执照： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>公司logo：</span>
+                                <input type="hidden" name="Vc_logo" value="{$data|output='Vc_logo'}">
+                                <a href="javascript:;" class="ms-yes">审核中，不可修改</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_logo'}">
+                                </div>
+                            </div>
+                            <!-- 营业执照： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>营业执照：</span>
+                                <input type="hidden" name="Vc_licence_pic" value="{$data|output='Vc_licence_pic'}">
+                                <a href="javascript:;" class="ms-yes">审核中，不可修改</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_licence_pic'}">
+                                </div>
+                            </div>
+                            <!-- 组织机构代码证： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>组织机构代码证：</span>
+                                <input type="hidden" name="Vc_org_pic" value="{$data|output='Vc_org_pic'}">
+                                <a href="javascript:;" class="ms-yes">审核中，不可修改</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_org_pic'}">
+                                </div>
+                            </div>
+                            <!-- 税务登记证： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>税务登记证：</span>
+                                <input type="hidden" name="Vc_tax_pic" value="{$data|output='Vc_tax_pic'}">
+                                <a href="javascript:;" class="ms-yes">审核中，不可修改</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_tax_pic'}">
+                                </div>
+                            </div>
+                            <!-- 开户许可证： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>开户许可证：</span>
+                                <input type="hidden" name="Vc_acc_pic" value="{$data|output='Vc_acc_pic'}">
+                                <a href="javascript:;" class="ms-yes">审核中，不可修改</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_acc_pic'}">
+                                </div>
+                            </div>
+                            <!-- 企业认证授权书： -->
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"><em class="warring">*</em>企业认证授权书：</span>
+                                <input type="hidden" name="Vc_auth_pic" value="{$data|output='Vc_auth_pic'}">
+                                <a href="javascript:;" class="ms-yes">审核中，不可修改</a>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img">
+                                <span class="ms-ftitle"></span>
+                                <div class="ms-fimg">
+                                    <img src="{$Think.config.img_url}{$data|output='Vc_auth_pic'}">
+                                </div>
+                            </div>
+                            <div class="ms-fitem ms-fitem-img ms-fitem-other">
+                                <span class="ms-ftitle"></span>
+                                <a class="ms-fbutton ms-yes" type="submit">审核中，不可修改</a>
+                            </div>
+                        </div>
+                    {elseif condition="$isCertify==3"}
+                    <!-- 通过 -->
+                    <div class="ms-fitem cb">
+                        <span class="ms-ftitle"><em class="warring">*</em>公司名称：</span>
+                        {$data.Vc_erp_name==null?$data.Vc_name:$data.Vc_erp_name}
+                        <input type="hidden" class="ms-finput ms-finput-address" name="Vc_name" value="{$data.Vc_erp_name==null?$data.Vc_name:$data.Vc_erp_name}"/>
+                    </div>
+                    <div class="ms-fitem cb">
+                        <span class="ms-ftitle"><em class="warring">*</em>公司地址：</span>
+                        {$data|output='proname'}{$data|output='cityname'}{$data|output='areaname'}{$data|output='Vc_address'}
+                    </div>
+                    <div class="ms-fitem cb">
+                        <span class="ms-ftitle"><em class="warring">*</em>指定联系人：</span>
+                        {$data|output='Vc_applicantName'}
+                    </div>
+                    <div class="ms-fitem cb">
+                        <span class="ms-ftitle"><em class="warring">*</em>手机号：</span>
+                        {$data|output='umobile'|sphone}
+                        <span class="status-info"><i></i>已认证</span>
+                    </div>
+                    <div class="ms-fcategory">
+                        <div class="ms-ftips">注意：上传图片仅支持jpg,png,bmp文件格式大小不超过2M。请确认上传证件真实、有效、清晰，否则审核将不予通过</div>
+                        <!-- 营业执照： -->
+                        <div class="ms-fitem ms-fitem-img">
+                            <span class="ms-ftitle"><em class="warring">*</em>公司logo：</span>
+                            <input type="hidden" name="Vc_logo" value="{$data|output='Vc_logo'}">
+                            <div class="ms-fimg">
+                                <img src="{$Think.config.img_url}{$data|output='Vc_logo'}">
+                            </div>
+                        </div>
+                        <!-- 营业执照： -->
+                        <div class="ms-fitem ms-fitem-img">
+                            <span class="ms-ftitle"><em class="warring">*</em>营业执照：</span>
+                            <input type="hidden" name="Vc_licence_pic" value="{$data|output='Vc_licence_pic'}">
+                            <div class="ms-fimg">
+                                <img src="{$Think.config.img_url}{$data|output='Vc_licence_pic'}">
+                            </div>
+                        </div>
+                        <!-- 组织机构代码证： -->
+                        <div class="ms-fitem ms-fitem-img">
+                            <span class="ms-ftitle"><em class="warring">*</em>组织机构代码证：</span>
+                            <input type="hidden" name="Vc_org_pic" value="{$data|output='Vc_org_pic'}">
+                            <div class="ms-fimg">
+                                <img src="{$Think.config.img_url}{$data|output='Vc_org_pic'}">
+                            </div>
+                        </div>
+                        <!-- 税务登记证： -->
+                        <div class="ms-fitem ms-fitem-img">
+                            <span class="ms-ftitle"><em class="warring">*</em>税务登记证：</span>
+                            <input type="hidden" name="Vc_tax_pic" value="{$data|output='Vc_tax_pic'}">
+                            <div class="ms-fimg">
+                                <img src="{$Think.config.img_url}{$data|output='Vc_tax_pic'}">
+                            </div>
+                        </div>
+                        <!-- 开户许可证： -->
+                        <div class="ms-fitem ms-fitem-img">
+                            <span class="ms-ftitle"><em class="warring">*</em>开户许可证：</span>
+                            <input type="hidden" name="Vc_acc_pic" value="{$data|output='Vc_acc_pic'}">
+                            <div class="ms-fimg">
+                                <img src="{$Think.config.img_url}{$data|output='Vc_acc_pic'}">
+                            </div>
+                        </div>
+                        <!-- 企业认证授权书： -->
+                        <div class="ms-fitem ms-fitem-img">
+                            <span class="ms-ftitle"><em class="warring">*</em>企业认证授权书：</span>
+                            <input type="hidden" name="Vc_auth_pic" value="{$data|output='Vc_auth_pic'}">
+                            <div class="ms-fimg">
+                                <img src="{$Think.config.img_url}{$data|output='Vc_auth_pic'}">
+                            </div>
+                        </div>
+                        <div class="ms-fitem ms-fitem-img ms-fitem-other">
+                            <span class="ms-ftitle"></span>
+                            <a class="ms-fbutton ms-yes" type="submit">已通过认证</a>
+                        </div>
+                    </div>
+                    {/if}
+                    <div class="ms-fwarring">
+                        <p class="ptitle">企业用户须知</p>
+                        <p>1. 您在认证时时需要提供您所在企业的营业执照、组织机构代码证、税务登记证、开户许可证扫描件，以及加盖贵公司公章的《企业认证授权书》扫描件。只支持2MB以下的jpg、png、jpeg格式的图片。</p>
+                        <p>2. 您在认证时提交的企业资质文件会由云采网企业资质审核人员在1-2个工作日内完成审核，审核通过后即可成为云采认证用户，并可登录云采网。</p>
+                        <p>3. 如认证人员发生人事变动有义务报平台备案，否则因此导致的一切后果与平台无关。</p>
+                        <p>4. 企业认证授权书必须传真或者原件邮寄到云采网，云采网传真号：028-62507719，办公地址：四川省成都市锦江区毕升路256号中加国际22楼。</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="imgMask" class="img-mask">
+        <div class="mask"></div>
+        <div class="img-content">
+            <a href="javascript:;" class="close">X</a>
+            <img src="#" width="100%" height="100%"/>
+        </div>
+    </div>
+    <div id="mask" class="click-mask"></div>
+    <!-- content -->
+    <!-- footer -->
+    {include file='public/foot' /}
+    <script src="{:getResource('home/js/webuploader.min.js')}"></script>
+    <!-- footer -->
+    <script type="text/javascript">
+    
+        $(function(){
+            var $mask = $("#imgMask"),
+                $img = $("img",$mask),
+                $close = $("a.close",$mask),
+                $btn = $("a.showImg");
+                
+                
+            $btn.on("click", function(ev){
+                ev.preventDefault();
+                var src = $(this).attr("href");
+                
+                $img.attr("src",src);
+                $mask.fadeIn(350);
+                
+                return false;
+                
+            });
+            
+            $close.on("click", function(){
+                $mask.fadeOut(350);
+            });
+        });
+        
+    
+        var selected,
+            isClick = false,
+            $mask = $("#mask"),
+            uploader = WebUploader.create({
+
+                // swf文件路径
+                swf:"/static/home/js/Uploader.swf",
+
+                // 文件接收服务端。
+                server: "{:url('file_upload/doUpload')}",
+
+                // 自动上传
+                auto: true,
+                runtimeOrder:'flash,html5',
+
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: {
+                    id:'.mc-lwrap a.ms-menu-upload'
+                },
+
+                // 只允许选择图片文件。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/*'
+                },
+                thumb: {
+                    // 图片质量，只有type为`image/jpeg`的时候才有效。
+                    quality: 70,
+
+                    // 是否允许裁剪。
+                    crop: true
+                },
+
+                compress: {
+                    // 禁掉整个页面的拖拽功能，如果不禁用，图片拖进来的时候会默认被浏览器打开。
+                    disableGlobalDnd:true,
+                    allowMagnify: false
+                    
+                    // 单位字节，如果图片大小小于此值，不会采用压缩。
+                    // compressSize: 0
+                }
+            });
+
+        uploader.on("uploadStart", function(file, percentage){
+            layer.load(2,{
+                shade:[0.2,"#fff"]
+            });
+        });
+        
+        uploader.on("uploadError", function(){
+			layer.closeAll();
+            layre.msg("服务器错误，请稍后再试",{time:1500});
+        });
+        
+        uploader.on("error", function(){
+			layer.closeAll();
+            layre.msg("上传失败，请重新上传",{time:1500});
+        });
+        
+        uploader.on("uploadProgress", function(file, progress){
+            // 上传进度事件~~~
+            // console.log(progress);
+        });
+        
+        uploader.on("onFileQueued", function(){
+            // console.log('onFileQueued');
+        });
+        
+        uploader.on("uploadSuccess", function( file , res){
+            var data = res.data,
+                $this = $(selected),
+                path = data[0].saveName,
+                $parent = $this.closest('.ms-fitem');
+
+            $parent.find("input[type='hidden']").attr("value", path);
+            // console.log($parent);
+            $this.closest('.ms-fitem').next().show().find(".ms-fimg").find("img").attr("src","{$Think.config.img_url}"+path).slideDown('300');
+            layer.closeAll();
+            layer.msg("上传成功",{time:1500});
+            uploader.reset();
+        });
+        
+        // 添加点击一次上传按钮就不能再点 的限制
+        // $(document).on("click",'.ms-menu-upload', function(){
+        //     $("#mask").show();
+        // });
+
+        // 点击这个玩意儿 就用一个遮罩层，防止多次点击
+        {if condition="$isCertify!=3"}
+            $(".mc-form").ajaxForm({
+                type:"POST",
+                successTips:"提交成功",
+                success: function(){
+                    location.reload();
+                }
+            });
+        {/if}
+        // 根据点击的按钮来保存当前上传的对象
+        $(".mc-lwrap a.ms-menu-upload").on("mouseover", function(){
+            selected = this;
+        });
+
+        // 联动
+        $().autoSelectData({
+			'#provinceID':{
+				url:'/comm/getprovince',
+				level:0
+			},
+			'#cityID':{
+				url:'/comm/getCity?pid=',
+				level:1
+			},
+			'#districtID':{
+				url:'/comm/getDistrict?pid=',
+				level:2
+			}
+		});
+    </script>
+</body>
+</html>

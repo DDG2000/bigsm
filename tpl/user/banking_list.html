@@ -1,0 +1,79 @@
+	{include="inc/usercenter/css"}
+    <title>融资管理 - 申请记录</title>
+</head>
+<body>
+	{include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/usercenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="crumblenav">
+        			<a href="#">金融管理</a><span class="current">申请记录</span>
+        		</div>
+            	<div class="data-list-wrapper">
+            		<div class="data-table-query fs0">
+        				<label class="ib"><input type="text" value="2015-9-9" data-type="datepicker"></label><span>至</span><label class="ib"><input type="text" value="2015-9-9" data-type="datepicker"></label>
+    					<select class="ib"><option>未成交</option></select>
+    					<a href="##" class="ib btn-query" type="">查询</a>
+            		</div>
+            		<table class="data-table-review" id="banking-list">
+            			<thead>
+            				<th width="312">类型</th>
+            				<th width="128">申请日期</th>
+            				<th width="280">状态</th>
+            				<th>操作</th>
+            			</thead>
+            			<tbody>
+							{loop="$data.data"}
+								{if condition="$value.I_banking_classID==1"}
+									{$space="";$type="mdyinventory"}
+								{elseif condition="$value.I_banking_classID==2"}
+									{$space="";$type="mdywarehouse"}
+								{elseif condition="$value.I_banking_classID==3"}
+									{$space="";$type="mdyticket"}
+								{/if}
+								<tr>
+									<td>{$value.Vc_name}</td>
+									<td>{$value.Createtime}</td>
+									<td>{$value.status}</td>
+									<td>
+										{if condition="$value.I_status == 10"}
+											<a href="javascript:void(0);" data-event="show" data-type="{$type}" data-type-id="{$value.I_banking_classID}" data-id="{$value.id}">查看</a>
+											<a href="javascript:void(0);" data-event="change" data-type="{$type}" data-type-id="{$value.I_banking_classID}" data-id="{$value.id}">修改</a>
+											<a href="javascript:void(0);" data-event="delete" data-id="{$value.id}" data-type-id="{$value.I_banking_classID}">删除</a>
+										{elseif condition="$value.I_status==20"}
+											<a href="javascript:void(0);" data-event="show" data-type="{$type}" data-type-id="{$value.I_banking_classID}" data-id="{$value.id}">查看</a>
+											<a href="javascript:void(0);" data-event="change" data-type="{$type}" data-type-id="{$value.I_banking_classID}" data-id="{$value.id}">修改</a>
+											<a href="javascript:void(0);" data-event="delete" data-id="{$value.id}" data-type-id="{$value.I_banking_classID}">删除</a>
+											<a href="javascript:void(0);" data-event="reapply" data-id="{$value.id}" data-type-id="{$value.I_banking_classID}">再次申请</a>
+										{elseif condition="$value.I_status==30"}
+											<a href="javascript:void(0);" data-event="show" data-type="{$type}" data-type-id="{$value.I_banking_classID}" data-id="{$value.id}">查看</a>
+											<a href="javascript:void(0);" data-event="delete" data-id="{$value.id}" data-type-id="{$value.I_banking_classID}">删除</a>
+											<a href="javascript:void(0);" data-event="reapply" data-id="{$value.id}" data-type-id="{$value.I_banking_classID}">再次申请</a>
+										{/if}
+									</td>
+								</tr>
+							{/loop}
+            			</tbody>
+            		</table>
+					<div id="pagestr">
+						{$pagestr}
+					</div>
+					<div id="loadMask">
+						<div class="mask-bg"></div>
+						<div class="mask-content" id="p2p-form">
+							<div class="wrap"></div>
+							<a href="javascript:void(0);" class="mask-btn-close" title="关闭"><img src="../image/pop_close.gif"/></a>
+						</div>
+					</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+	
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

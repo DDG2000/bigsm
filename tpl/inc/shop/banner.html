@@ -1,0 +1,17 @@
+<div id="banner" class="w">
+    <!-- 暂时搁置，后面绑数据的同时效果加上-->
+    <ul class="list">
+    {loop="shopslides"}
+        {$vo=$value}
+        <li style="background:url({$vo.Vc_url});"><a href="{$vo.Vc_linkurl}" data-order="{$vo.I_order}"></a></li>
+    {/loop}
+    </ul>
+    <a href="javascript:void(0);" class="btn prev"></a><a href="javascript:void(0);" class="btn next"></a>
+    <!--<div class="dot">
+        <a href="javascript:;" class="active"></a>
+        <a href="javascript:;"></a>
+        <a href="javascript:;"></a>
+        <a href="javascript:;"></a>
+        <a href="javascript:;"></a>
+    </div>-->
+</div>

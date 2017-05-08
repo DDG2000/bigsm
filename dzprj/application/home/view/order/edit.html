@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    {include file='public/head'}
+	<link rel="stylesheet" href="/static/js/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <title>云采网 - 采购下单</title>
+</head>
+<body>
+{include file="public/top-copy"}
+<!-- content -->
+<div class="content project-content">
+    <div class="w1200 cc inner">
+        <ul class="process-line progress-five w1100 cc tac ib-li">
+            <li class="active">
+                <div class="bg">
+                    <span>1</span>
+                </div>
+                <p>选择项目</p>
+            </li>
+            <li class="active">
+                <div class="bg">
+                    <span>2</span>
+                </div>
+                <p>填写订单</p>
+            </li>
+            <li>
+                <div class="bg">
+                    <span>3</span>
+                </div>
+                <p>等待发货</p>
+            </li>
+            <li>
+                <div class="bg">
+                    <span>4</span>
+                </div>
+                <p>确认收货</p>
+            </li>
+            <li>
+                <div class="bg">
+                    <span>5</span>
+                </div>
+                <p>账单还款</p>
+            </li>
+        </ul>
+        <!--form-->
+        <div class="order-form cc form">
+            <form class="cc ajaxForm" action="{:url('order/edit')}" method="post" data-success="提交成功">
+                <input type="hidden" name="uid" value="{$uid}"/>
+				<input type="hidden" name="oid" value="{$data.id}"/>
+                <div class="category">
+                    <div class="category-title">收货信息</div>
+                    <div class="form-items">
+                        <span class="form-items-title"><em class="warring">*</em> 所属项目</span>
+                        <select name="I_projectID" tabindex="1">
+                        	 {volist name="projs" id="vo"}
+                             <option value="{$vo.aid}" {$vo.aid==$data.I_projectID?'selected':''}>{$vo.Vc_ct_name==null?$vo.projname:$vo.Vc_ct_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                    <div class="form-items">
+                        <span class="form-items-title"><em class="warring">*</em> 收货地址</span>
+                       
+                            <div class="item-wrap">
+                                <input type="hidden" name="province" value="{$data|output='proname'}">
+                                <select name="I_provinceID" class="address change_add_name" data-id="{$data|output='I_provinceID'}" id="province" tabindex="2">
+                    			    <option value="{$data|output='I_provinceID'}">{$data|output='proname'}</option>
+                    			</select>
+                            </div>
+                            <div class="item-wrap">
+                                 <input type="hidden" name="city" value="{$data|output='cityname'}" tabindex="3">
+                                <select name="I_cityID" class="address change_add_name" data-id="{$data|output='I_cityID'}" id="city">
+                    			    <option value="{$data|output='I_cityID'}">{$data|output='cityname'}</option>
+                    			</select>
+                            </div>
+                            <div class="item-wrap">
+                                <input type="hidden" name="district" value="{$data|output='areaname'}">
+                                <select name="I_districtID" class="address change_add_name" data-id="{$data|output='I_districtID'}" id="district" tabindex="4">
+                    			    <option value="{$data|output='I_districtID'}">{$data|output='areaname'}</option>
+                    			</select>
+                            </div>
+            			
+                        <div class="item-wrap">
+                            <input type="text" name="Vc_address" value="{$data|output='Vc_address'}" class="address-detail" maxlength="20" placeholder="详细地址" tabindex="5"/>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div class="form-items">
+                        <span class="form-items-title"><em class="warring">*</em> 收货人</span>
+                        <input type="text" name="Vc_contact" value="{$data|output='Vc_contact'}" class="normal-small name" placeholder="请输入收货人姓名" maxlength="15" tabindex="6"/>
+                        <input type="text" name="Vc_phone" value="{$data|output='Vc_phone'}" class="normal-middle" placeholder="请输入收货人联系号码" tel maxLength="11" tabindex="7"/>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="category pt9">
+                    <div class="category-title">采购清单</div>
+                    <div class="form-items">
+                        <span class="form-items-title"><em class="warring">*</em> 行业</span>
+                        <select name="I_industryID" class="normal-middle" tabindex="8">
+                            {volist name="$malls" id="vo"}
+                                <option value="{$vo.id}" {$vo.id==$data.I_industryID?'selected':''}>{$vo.Vc_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                    {if condition="is_array($goods)&&count($goods)>0"}
+                        {volist name="$goods" id="vo"  key="k" }
+                    <div class="form-items">
+                        <span class="form-items-title"><em class="warring">*</em> 货物</span>
+                        <input type="hidden" class="goodsSel" name="Vc_goods_code[]" value="{$vo.Vc_goods_code}">
+                        <input type="text" readonly name="Vc_goods_name[]" value="{$vo.Vc_goods_breed},{$vo.Vc_goods_material},{$vo.Vc_goods_spec}" class="normal-big citySel" tabindex="9"/>
+                        <div class="item-wrap-select">
+                            {if condition="$vo.Vc_goods_uint=='吨'"}
+                                <input type="text" name="N_plan_weight[]" placeholder="输入数量" class="goodsNum" value="{$vo.N_plan_weight}" float tabindex="10"/>
+                            {else}
+                                <input type="text" name="N_plan_weight[]" placeholder="输入数量" class="goodsNum" value="{$vo.N_plan_weight|intval}" number tabindex="10"/>
+                            {/if}
+                            <select name="Vc_goods_unit[]" tabindex="11">
+                				<option value="吨" {$vo.Vc_goods_uint=='吨'?'selected':''}>吨</option>
+                				<option value="件" {$vo.Vc_goods_uint=='件'?'selected':''}>件</option>
+                			</select>
+                        </div>
+                        <a href="javascript:;" class="menu add"></a>
+                        <a href="javascript:;" class="menu delete"></a>
+                    </div>
+                      {/volist}
+                    {else}
+                    <div class="form-items">
+                        <span class="form-items-title"><em class="warring">*</em> 货物</span>
+                        <input type="hidden" class="goodsSel" name="Vc_goods_code[]" value="">
+                        <input type="text" readonly name="Vc_goods_name[]" value="" class="normal-big citySel" tabindex="9"/>
+                        <div class="item-wrap-select">
+                            <input type="text" name="N_plan_weight[]" placeholder="输入数量" class="goodsNum" value="1" float tabindex="10"/>
+                            <select name="Vc_goods_unit[]" tabindex="11">
+                				<option value="吨">吨</option>
+                				<option value="件">件</option>
+                			</select>
+                        </div>
+                        <a href="javascript:;" class="menu add"></a>
+                        <a href="javascript:;" class="menu delete"></a>
+                    </div>
+                    {/if}
+                </div>
+                <div class="category pt9">
+                    <div class="category-title">运输要求</div>
+                    <div class="form-items">
+                        <span class="form-items-title"><em class="warring">*</em> 收货时间</span>
+                        <input type="text" name="D_transport_end" datepicker data-time class="normal-middle" value="{$data|output='D_transport_end'}" tabindex="12"/>
+                        <span></span>
+                    </div>
+                    <div class="form-items">
+                        <span class="form-items-title">备注</span>
+                        <textarea name="T_note" maxlength="120" class="normal-textarea" tabindex="13">{$data|output='T_note'}</textarea>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="category pt9">
+                    <div class="category-title"></div>
+                    <input type="hidden" name="N_judge_totalprice" id="totalPrice" value=""/>
+                    <input type="hidden" name="GoodsJudgePrice" value="{$GoodsJudgePrice}" id="price"/>
+                    <input type="hidden" name="T_judge_info"/>
+                    <div class="total">
+                        <p class="total-info">预估总价：<em><span id="totalPriceView">0</span>元</em></p>
+                        <p class="total-text">含：<span id="goods-list"></span></p>
+                        <p class="total-text">本价格仅供下单参考，实际费用以最终协商为准</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--/form-->
+    </div>
+    <div id="menuContent" class="menuContent">
+        <ul id="ztree" class="ztree"></ul>
+    </div>
+    <div class="form-submit tac">
+        <a href="javascript:;" class="form-submit-menu" id="submit">确定修改</a>
+    </div>
+</div>
+<!-- content -->
+{include file="public/foot"}
+<script type="text/javascript" src="/static/js/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="/static/js/ztree/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript">
+
+    // 货物获取
+    goodsInit('{:url('/index/getGoodsTree')}');
+
+
+    $(document).on("click","a.add", function(){
+        
+        if ($('.form-items').filter(function(){
+            return $(this).find(".add").length
+        }).length < 10 ) {
+            // 不能超过10个
+            var $this = $(this),
+                $parent = $this.closest('.form-items'),
+                html = [
+                    '<div class="form-items">',
+                        '<span class="form-items-title"><em class="warring">*</em> 货物</span>',
+                        '<input type="hidden" class="goodsSel" name="Vc_goods_code[]" value="">',
+                        '<input type="text" readonly="" name="Vc_goods_name[]" value="" class="normal-big citySel">',
+                        '<div class="item-wrap-select">',
+                            '<input type="text" name="N_plan_weight[]" placeholder="输入数量" class="goodsNum" value="1" float>',
+                            '<select name="Vc_unit[]">',
+                				'<option value="吨" selected>吨</option>',
+                				'<option value="件">件</option>',
+                			'</select>',
+                        '</div>',
+                        '<a href="javascript:;" class="menu add"></a>',
+                        '<a href="javascript:;" class="menu delete"></a>',
+                    '</div>'
+                ].join("");
+        
+                $parent.after(html);
+                total();
+        } else {
+            layer.msg("最多可添加10个货物",{time:1500});
+        }
+        
+    });
+
+    //
+    $(document).on("click","a.delete", function(){
+
+        if ($(".form-items").filter(function(){
+            return $(this).find("a.delete").length
+        }).length > 1 ) {
+            $(this).closest('.form-items').fadeOut("fast", function(){
+                $(this).remove();
+                total();
+            });
+        } else {
+            layer.msg("最少一件货物",{time:1500});
+        }
+    });
+
+    $(".ajaxForm").ajaxForm({
+        button:"#submit",
+        noTips:true,
+        success: function(data){
+            location.href=data.url;
+        }
+    });
+
+    ;(function($){
+        var $totalView = $("#totalPriceView"),
+            price = $("#price").val(),
+            $totalPrice = $("#totalPrice");
+
+        window.total = function(){
+            var goodsNum = 0,
+                goodsList = "",
+                $goodList = $("#goods-list"),
+                $goodsNum = $("input.goodsNum"),
+                $goodsSel = $("input.goodsSel"),
+                len = $goodsNum.length;
+
+            if($goodsNum.length){
+                $goodsNum.each(function(index, el) {
+                    if(!!$(this).val() && !!$goodsSel.eq(index).val()) {
+                        (function(index,$this){
+                            var num = Number($this.val());
+                            goodsNum = accAdd(num, goodsNum);
+                            goodsList += (index>0 && index < len ?"&nbsp;&nbsp;+&nbsp;&nbsp;":"")+"货物（"+($this.closest(".form-items").find(".citySel").val())+"）"+accMul(num, price)+"元";
+                        })(index,$(this));
+                    }
+                });
+                $totalPrice.attr("value",accMul(goodsNum, price).toFixed(2));
+                $goodList.html(goodsList);
+                $totalView.text(accMul(goodsNum, price).toFixed(2));
+                
+            }
+        }
+
+        total();
+        $("input.goodsNum").on("change input", function(){
+            total();
+        });
+
+    })(jQuery);
+</script>
+</body>
+</html>

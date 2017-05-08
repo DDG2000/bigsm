@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        {include file='public/head'}
+        <title>云采网 - 我的项目</title>
+    </head>
+<body>
+{include file="public/top"}
+<!-- content -->
+<div class="content w1200 cc cb mt24">
+    {include file="public/sideNav"}
+    <div class="fr w1000 list-page list-page-bill">
+        <div class="list-tab cb">
+            <div class="fl-li fl">
+				<li{$type==4?" class='active'":""}><a href="{:url('listpage',array('type'=>4))}">全部<b>（{$count.all}）</b></a></li>
+                <li{$type==1?" class='active'":""}><a href="{:url('listpage',array('type'=>1))}">进行中的项目<b>（{$count.inpro}）</b></a></li>
+                <li{$type==2?" class='active'":""}><a href="{:url('listpage',array('type'=>2))}">待审核<b>（{$count.wait}）</b></a></li>
+                <li{$type==3?" class='active'":""}><a href="{:url('listpage',array('type'=>3))}">已完成<b>（{$count.finish}）</b></a></li>
+            </div>
+        </div>
+        <!-- 进行中的项目 -->
+        <div class="ctl-progress oh mt25">
+            <ul class="w120 fl-li cb">
+                {volist name='list->items()' id='vo'}
+                <li>
+                    <div class="tolink" onclick="location.href='{:url('/project/detail',['projId'=>$vo.aid])}';">
+						<span class="flag{$vo.I_status==4 || $vo.I_status==5 ||$vo.I_status==1?' end':''}">
+							{if condition="$vo.I_status==0"}
+								待审核
+							{elseif condition="$vo.I_status==1"}
+								审核未通过
+							{elseif condition="$vo.I_status==2"}
+								审核通过
+							{elseif condition="$vo.I_status==4"}
+								已关闭
+							{elseif condition="$vo.I_status==5"}
+								已完成
+							{else}
+								进行中
+							{/if}
+						</span>
+	                    <div class="p-con">
+	                        <p class="p-name">{$vo.Vc_ct_name==null?$vo.projname:$vo.Vc_ct_name}</p>
+							<p class="sn">{$vo.Vc_Sn==''?'&nbsp;':$vo.Vc_Sn}</p>
+	                        <p>可用额度：<span>￥<em>{$vo.N_usable_loan==null?'—':$vo.N_usable_loan.'万'}</em></span></p>
+	                        <p>授信额度：<span>￥<em>{$vo.N_loan_maxprice==null?'—':$vo.N_loan_maxprice.'万'}</em></span></p>
+	                    </div>
+	                    <!-- 原因是：ERP没有这个字段,暂时隐藏结束时间 -->
+	                   <!--  <div class="p-time">结束时间：{$vo.D_end}</div> -->
+	                    <div class="p-progress">
+							{if condition="$vo.N_loan_maxprice==null||$vo.N_loan_maxprice==0"}
+								<div class="p-progress-inner"></div>
+							{else}
+								<div class="p-progress-inner" style="width:{$vo.N_usable_loan/$vo.N_loan_maxprice*100}%;"></div>
+							{/if}
+	                    </div>
+                    </div>
+                    <div class="p-link">
+                        <a href="{:url('/project/billdetail',['projId'=>$vo.aid])}">查看账单</a><em>|</em>
+                        {if condition="$vo.I_status==4"}
+                        	<a href="javascript:showError();">项目下单</a>
+						{elseif condition="$vo.I_status==5"}
+							<a href="javascript:showEndError();">项目下单</a>
+						{elseif condition="$vo.I_status==1 || $vo.I_status==0"}
+							<a href="javascript:showNotError();">项目下单</a>
+                        {else}
+							{if condition="$vo.N_usable_loan=='0'||$vo.N_usable_loan==null"}
+								<a href="javascript:showZeroError();">项目下单</a>
+							{else}
+								<a href="{:url('/order/create',['id'=>$vo.aid])}">项目下单</a>
+							{/if}
+                        {/if}
+                    </div>
+                </li>
+                {/volist}
+				<li>
+					<a href="/project/create" class="add"><i></i><span>点击创建新项目</span></a>
+				</li>
+            </ul>
+        </div>
+		<!-- 分页 -->
+		<div class="cb pager fl-li">
+			<div class="fr">
+				{$list->render()}
+			</div>
+		</div>
+		<!-- 分页 -->
+        <!-- 进行中的项目 -->
+    </div>
+</div>
+<!-- sideBar -->
+{include file="public/sideBar"}
+<!-- sideBar -->
+<!-- content -->
+{include file="public/foot"}
+<script type="text/javascript">
+	function showEndError(){
+		layer.msg("该项目已完成不能继续下单",{time:1500});
+	}
+	function showError(){
+		layer.msg("该项目已关闭，不可下单",{time:1500});
+	}
+	function showNotError(){
+		layer.msg("审核未通过，不可下单",{time:1500});
+	}
+	function showZeroError(){
+		layer.msg("可用余额不足，不可下单",{time:1500});
+	}
+</script>
+</body>
+</html>

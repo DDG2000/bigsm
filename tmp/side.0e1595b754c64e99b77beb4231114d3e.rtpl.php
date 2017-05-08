@@ -1,0 +1,49 @@
+<?php if(!class_exists('raintpl')){exit;}?><!-- 侧边菜单 -->
+    <div class="fl  db-a content-side">
+        <ul>
+            <li>
+                交易管理
+                <div class="content-side-submenu">
+                    <a href="/index.php?act=user&m=order&w=list#">我的订单</a>
+                </div>
+            </li>
+            <li>
+                项目管理
+                <div class="content-side-submenu">
+                    <a href="/index.php?act=user&m=project&w=list#">我的项目</a>
+                    <a href="/index.php?act=user&m=project&w=listusers#">权限分配</a>
+                </div>
+            </li>
+            <li>
+                金融管理
+                <div class="content-side-submenu">
+                    <a href="/index.php?act=user&m=banking&w=list#">金融申请</a>
+                </div>
+            </li>
+            <li>
+                集采管理
+                <div class="content-side-submenu">
+                    <a href="/index.php?act=user&m=concentrated&w=list#">我的集采</a>
+                </div>
+            </li>
+            <li>
+                需求管理
+                <div class="content-side-submenu">
+                    <a href="/index.php?act=user&m=requirecommodity&w=list#">我的产品采购</a>
+                    <a href="/index.php?act=user&m=require&w=listtender#">我的招标需求</a>
+                    <a href="/index.php?act=user&m=require&w=listlogistics#">我的物流需求</a>
+                    <a href="/index.php?act=user&m=require&w=listfinance#">我的融资需求</a>
+                </div>
+            </li>
+            <li>
+                账户管理
+                <div class="content-side-submenu">
+                    <a href="/index.php?act=user&m=account&w=info#">账户信息</a>
+                    <a href="/index.php?act=user&m=account&w=safe#">账户安全</a>
+                    <a href="/index.php?act=user&m=account&w=authcompany#">企业认证</a>
+                    <a href="/index.php?act=user&m=address&w=list#">收获地址</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+<!-- 侧边菜单 -->

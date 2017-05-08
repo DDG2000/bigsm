@@ -1,0 +1,184 @@
+	{include="inc/css"}
+    <title>商铺首页</title>
+</head>
+<body>
+	{include="inc/shop/header"}
+    <!-- banner -->
+    {include="inc/shop/banner"}
+    <!-- banner -->
+    <!-- 中间内容部分 -->
+    <div id="container">
+		<div class="c w1100">
+			<!-- 商铺首页导航 -->
+			{include="inc/shop/nav"}
+			<!-- 商铺首页导航 -->
+			<div class="cb w">
+				<!-- 首页中间部分 -->
+				<div class="fl main-left">
+					<!-- 选择条件进行查询和筛选 -->
+					<div class="filter-condition-form">
+						<div class="filter-condition-wrapper" id="js-shop-click">
+							<div class="cb first filter-condition">
+								<span class="fl filter-condition-name">分类：</span>								
+								<div class="fl ib-a fs0 filter-condition-con" data-type="itemClassID">
+									<a href="javascript:void(0);" class="filter-condition-all">全部</a>
+									{loop="itemClassList"}
+									{$vo=$value}
+										<a href="javascript:void(0);" data-id="{$vo.id}">{$vo.Vc_name}</a>
+									{/loop}
+								</div>
+								<a href="javascript:void(0);" class="fr filter-condition-more">+更多</a>
+							</div>
+							<div class="cb filter-condition">
+								<span class="fl filter-condition-name">品名：</span>
+								<div class="fl ib-a fs0 filter-condition-con" data-type="itemID">
+									<a href="javascript:void(0);" class="filter-condition-all">全部</a>
+									{loop="itemList"}
+									{$vo=$value}
+										<a href="javascript:void(0);" data-id="{$vo.id}">{$vo.Vc_name}</a>								
+									{/loop}
+								</div>
+								<a href="javascript:void(0);" class="fr filter-condition-more">+更多</a>
+							</div>
+							<div class="cb filter-condition">
+								<span class="fl filter-condition-name">材质：</span>
+								<div class="fl ib-a fs0 filter-condition-con" data-type="stuffID">
+									<a href="javascript:void(0);" class="filter-condition-all">全部</a>
+									{loop="stuffList"}
+									{$vo=$value}
+										<a href="javascript:void(0);" data-id="{$vo.id}">{$vo.Vc_name}</a>								
+									{/loop}
+								</div>
+								<a href="javascript:void(0);" class="fr filter-condition-more">+更多</a>
+							</div>
+							<div class="cb filter-condition">
+								<span class="fl filter-condition-name">规格：</span>
+								<div class="fl ib-a fs0 filter-condition-con" data-type="specificationID">
+									<a href="javascript:void(0);" class="filter-condition-all">全部</a>
+									{loop="specificationList"}
+									{$vo=$value}
+										<a href="javascript:void(0);" data-id="{$vo.id}">{$vo.Vc_name}</a>								
+									{/loop}
+								</div>
+								<a href="javascript:void(0);" class="fr filter-condition-more">+更多</a>
+							</div>
+							<div class="cb filter-condition">
+								<span class="fl filter-condition-name">钢厂：</span>
+								<div class="fl ib-a fs0 filter-condition-con" data-type="factoryID">
+									<a href="javascript:void(0);" class="filter-condition-all">全部</a>
+									{loop="factoryList"}
+									{$vo=$value}
+										<a href="javascript:void(0);" data-id="{$vo.id}">{$vo.Vc_name}</a>								
+									{/loop}
+								</div>
+								<a href="javascript:void(0);" class="fr filter-condition-more">+更多</a>
+							</div>
+						</div>
+						<form class="fl-li filter-condition-other" id="js-credit-submit">
+							<input type="hidden" name="id" value="{$id}">
+							<input type="hidden" name="itemClassID" class="itemClassID">
+							<input type="hidden" name="itemID" class="itemID">
+							<input type="hidden" name="stuffID" class="stuffID">
+							<input type="hidden" name="specificationID" class="specificationID">
+							<input type="hidden" name="factoryID" class="factoryID">
+							<ul class="cb first">
+								<li>
+									品名<label><input type="text" class="itemID"></label>
+									<div class="slide-subFilter" data-type="itemID">
+										{loop="itemList"}
+										{$vo=$value}
+											<a href="javascript:void(0);" data-id="{$vo.id}">{$vo.Vc_name}</a>								
+										{/loop}
+									</div>
+								</li>
+								<li>
+									材质<label><input type="text" class="stuffID"></label>
+									<div class="slide-subFilter" data-type="stuffID">
+										{loop="stuffList"}
+										{$vo=$value}
+											<a href="javascript:void(0);" data-id="{$vo.id}">{$vo.Vc_name}</a>								
+										{/loop}
+									</div>
+								</li>
+								<li>
+									规格<label><input type="text" class="specificationID"></label>
+									<div class="slide-subFilter" data-type="specificationID">
+										{loop="specificationList"}
+										{$vo=$value}
+											<a href="javascript:void(0);" data-id="{$vo.id}">{$vo.Vc_name}</a>								
+										{/loop}
+									</div>
+								</li>
+								<li>
+									钢厂<label><input type="text" class="factoryID"></label>
+									<div class="slide-subFilter" data-type="factoryID">
+										{loop="factoryList"}
+										{$vo=$value}
+											<a href="javascript:void(0);" data-id="{$vo.id}">{$vo.Vc_name}</a>								
+										{/loop}
+									</div>
+								</li>
+								<li class="btn-filter-submit-wrapper">
+									<button type="submit" class="fr btn-filter-submit">搜索</button>
+								</li>
+							</ul>
+							<!--<ul class="cb">-->
+								<!--<li>
+									<span class="title">厚度</span><input type="text"><em>—</em><input type="text"/>
+								</li>
+								<li>
+									<span class="title">宽度</span><input type="text"><em>—</em><input type="text"/>
+								</li>-->
+							<!--</ul>-->
+						</form>
+					</div>
+					<!-- 选择条件进行查询和筛选 -->
+					<!-- 筛选结果 -->
+					<table class="filter-results" id="js-filter-results">
+						<thead>
+							<th width="71">品名</th>
+							<th width="84">材质</th>
+							<th width="106">规格</th>
+							<th width="60">钢厂</th>
+							<th width="93">仓库</th>
+							<th width="75">数量</th>
+							<th width="66">件重/吨</th>
+							<th width="86">销售单价</th>
+							<th width="100">发布时间</th>
+							<th></th>
+						</thead>
+						<tbody>
+							{loop="data.data"}
+								{$vo=$value}
+								<tr {if="$counter%2 != 0"}class="even"{/if}>
+									<td>{$vo.itemname}</td>
+									<td>{$vo.stuffname}</td>
+									<td>{$vo.specificationname}</td>
+									<td>{$vo.factoryname}</td>
+									<td>{$vo.warehouse}</td>
+									<td>{$vo.N_amount}</td>
+									<td>{$vo.N_weight}</td>
+									<td>￥{$vo.N_price}</td>
+									<td>{function="formatTime($vo['Createtime'],'Y-m-d')"}</td>
+									<td style="font-size: 0;"><a href="javascript:void(0);" data-id="{$vo.id}">购买</a></td>
+								</tr>
+							{/loop}
+						</tbody>
+					</table>
+					<!-- 筛选结果 -->
+					<!-- 分页 -->
+					<div id="pagestr">
+						{$pagestr}
+					</div>
+					<!-- 分页 -->
+				</div>
+				<!-- 首页中间部分 -->
+				<!-- 首页右侧 -->
+				{include="inc/shop/company"}
+				<!-- 首页右侧 -->
+			</div>
+		</div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

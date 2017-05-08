@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form method="post" action="/index.php?act=user&m=requirecommodity&w=orderletter">
+{$vo=$data}
+<table>
+
+<tr>
+<td>供货单位{$vo.shopname}</td>
+<td>联系电话{$vo.shoptel}</td>
+<input type="hidden" name="I_shopID" value="{$vo.I_shopID}"/>
+</tr>
+</table>
+
+<table>
+
+<tr class="tr1">
+	
+	<td>品名</td>
+	<td>材质</td>
+	<td>规格</td>
+	<td>数量/
+	{if="$vo.I_unitType==1"}
+				件
+	{elseif="$vo.I_unitType==2"}
+			根
+	{elseif="$vo.I_unitType==3"}
+			吨
+	
+		{/if}	<input type="hidden" name="I_unitType" value="{$vo.I_unitType}"/>
+	</td>
+	<td>钢厂</td>
+	<td>含税报价</td>
+	<td>出库费</td>
+	<td>库房</td>
+	<td>备注</td>
+	
+	
+</tr>
+
+<tr data="it" >
+	<input type="hidden" name="I_commodityID" value="{$vo.I_commodityID}"/>
+	<input type="hidden" name="commodityorderID" value="{$vo.I_commodityorderID}"/>
+	<td>{$vo.Vc_item}</td>
+	<td>{$vo.Vc_stuff}</td>
+	<td>{$vo.Vc_specification}</td>
+	<td><input type="num" max="{$vo.N_amount}" name="N_amount" value="{$vo.N_amount}"/></td>
+	
+	<td>
+	<select name="factory">
+		{loop="$vo.Vc_factorys"}
+		<option value="{$value}">{$value}</option>
+			{/loop}
+	</select>
+	
+	</td>
+	
+	<td>
+	<select name="price">
+		{loop="$vo.Vc_meta.price"}
+		<option value="{$value}">{$value}</option>
+			{/loop}
+	</select>
+	
+	</td>
+	<td>
+	<select name="price">
+		{loop="$vo.Vc_meta.outType"}
+		<option value="{$value}">
+		{if="$value==1"}
+				包出
+		{else}
+				自提
+		{/if}
+		</option>
+			{/loop}
+	</select>
+	
+	</td>
+	<td>
+	<select name="warehouse">
+		{loop="$vo.Vc_meta.warehouse"}
+		<option value="{$value}">{$value}</option>
+			{/loop}
+	</select>
+	
+	</td>
+	<td>
+	<select name="memo">
+		{loop="$vo.Vc_meta.memo"}
+		<option value="{$value}">{$value}</option>
+			{/loop}
+	</select>
+	
+	</td>
+	
+</tr>
+<table>
+<tr>
+	<td>采购单位:{$vo.buyername}</td>
+	<td>联系电话:{$vo.buyertel}</td>
+	<td>付款方式:
+	{if="$vo.I_payType==1"}现款{else}银行承兑{/if}
+	</td>
+	<td>交货地：
+	{if="$vo.proname==$vo.cityname"}
+	{$vo.cityname}
+	{else}
+	{$vo.proname}{$vo.cityname}
+	{/if}
+	</td>
+	<td>总金额：为含税报价乘以调整的数量js调整<input type="hidden" name="totalprice" /></td>
+	
+
+</tr>
+
+</table>
+
+<table>
+{if="empty($data)"}
+<tr data="it"><td colspan="3" align="center">无此相关数据！</td></tr>
+{/if}
+</table>
+<input type="submit" name="submit" value="提交" />
+</form>
+</body>
+</html>

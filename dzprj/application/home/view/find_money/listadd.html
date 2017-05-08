@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		{include file='public/head'}
+		<title>云采网 - 找资金订单确认</title>
+	</head>
+	<body>
+	{include file="public/top-copy"}
+		<!-- content -->
+		<div class="content project-content">
+			<div class="w1200 cc inner">
+				<ul class="process-line w1100 cc tac ib-li">
+					<li class="active">
+						<div class="bg">
+							<span>1</span>
+						</div>
+						<p>提交申请</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>2</span>
+						</div>
+						<p>等待审核</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>3</span>
+						</div>
+						<p>平台放款</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>4</span>
+						</div>
+						<p>获得资金</p>
+					</li>
+				</ul>
+				<!--form-->
+				<form class="project-form cc form ajaxForm" action="/find_money/comfirmAdd" method="post">
+					<div class="w1090 cc">
+						<div class="category">
+							<div class="category-title">订单信息确认</div>
+						</div>
+						<div class="project-apply-tips auto">融资额度：<b>{$order.N_needed}万元</b><span>融资周期：<b>{$order.N_days}天</b></span></div>
+						<div class="project-apply-info">
+							{volist name='$tels' id='vo'}
+							<p>联系人：{$vo.Vc_contact}<span>{$vo.Vc_contact_tel}</span></p>
+							{/volist}
+							<table border="0" cellspacing="0" cellpadding="0">
+								<thead>
+									<th width="198" >存货品名</th>
+									<th width="148">数量</th>
+									<th width="249">存货地址</th>
+									<th width="248">货权单位</th>
+									<th width="298">备注</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="tal">{$order.Vc_level}{$order.Vc_ordername}</td>
+										<td>{$order.N_amount}{$order.Vc_unit}</td>
+										<td>{$addr.proname1}{$addr.proname1==$addr.cityname1?'':$addr.cityname1}{$addr.areaname1}{$order.Vc_cave_address}</td>
+										<td>{$addr.proname2}{$addr.proname2==$addr.cityname2?'':$addr.cityname2}{$addr.areaname2}{$order.Vc_belong_address}</td>
+										<td>{$order.T_note}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</form>
+				<!--/form-->
+			</div>
+			<div class="form-submit tac">
+				<a href="/find_money/toform?type=2" class="form-submit-link">修改订单</a><a href="javascript:;" class="form-submit-menu" id="submit">确认</a>
+			</div>
+		</div>
+		<!-- content -->
+		<div class="masker hide masker-info" id="tipsMask">
+	        <div class="mask"></div>
+	        <div class="mask-wrap">
+	            <div class="mask-title cb">
+	                提示
+	                <a href="/find_money/listpage?type=0" class="fr close" title="关闭"><img src="/static/home/img/close.png"></a>
+	            </div>
+	            <div class="mask-content">
+	                <p class="p1"><i></i>创建成功，请耐心等待审核</p>
+	            </div>
+				<div class="mask-footer">
+					<a href="/find_money/listpage?type=0" class="noClick">确认</a>
+				</div>
+	        </div>
+		</div>
+	{include file="public/foot"}
+	<script type="text/javascript">
+		$(".ajaxForm").ajaxForm({
+			button:"#submit",
+			noTips:true,
+			success: function(){
+				$("#tipsMask").fadeIn('400');
+				//  location.href="/find_money/listpage?type=0"
+			}
+		});
+	</script>
+	</body>
+</html>

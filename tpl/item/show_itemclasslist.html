@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table>
+<tr class="tr1">
+	<td>id</td>
+	<td>分类</td>
+	
+</tr>
+{loop="data.itemClassList"}
+{$vo=$value}
+<tr data="it">
+	<td>{$vo.id}</td>
+	<td>{$vo.Vc_name}</td>
+	<!-- <td>{function="formatTime($vo['Createtime'],'Y-m-d H:i:s')"}</td> -->
+</tr>
+{/loop}
+</table>
+</body>
+</html>

@@ -1,0 +1,333 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+<style>
+	.iradio_flat-green ins{
+		z-index:-1;
+	}
+</style>
+<div class="x_content">
+    <div class="x_content">
+        <br>
+        <form  class="form-horizontal form-label-left" novalidate>
+            <input type="hidden" name="id" value="{$data|output='id'}">
+            <input type="hidden" name="Vc_projNo" value="{$data|output='Vc_code'}">
+            
+			 <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">行业</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                    {$data|output='industry'}
+                </h5>
+            </div>
+            
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">项目信息</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                <ul class="list-unstyled">
+	              	<li><i class="fa fa-user fa-fw"></i> 项目创建人：{$data|output='Vc_applicantName'}</li>
+	              	<li><i class="fa fa-university fa-fw"></i> 公司名：{$data|output='Vc_erp_name'}</li>
+	              	<li><i class="fa fa-calendar fa-fw"></i> 申请时间：{$data|output='Createtime'}</li>
+              	</ul>
+                </h5>
+            </div>
+           
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">采购信息</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                 <ul class="list-unstyled">
+                    <li><i class="fa fa-user fa-fw"></i> 采购下单人：{$datanew|output='Vc_applicantName'}</li>
+	              	<li><i class="fa fa-briefcase fa-fw"></i> 所属项目：{$data.ct_projname==null?$data.projname:$data.ct_projname}</li>
+	              	<li><i class="fa fa-jpy fa-fw"></i> 当前可用额度：{$proj.N_usable_loan}万      授信额度：{$proj.N_loan_maxprice}万</li>
+	              	<li><i class="fa fa-map-marker fa-fw"></i> 地址：{$data.proname}{$data.cityname}{$data.areaname}{$data.Vc_address}</li>
+	              	<li><i class="fa fa-user fa-fw"></i> 收货人：{$data|output='Vc_contact'}</li>
+	              	<li><i class="fa fa-phone fa-fw"></i> 联系电话：{$data|output='Vc_phone'}</li>
+              	 </ul>
+                </h5>
+            </div>
+           <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" > 运输要求</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                 <ul class="list-unstyled">
+	              	<li><i class="fa fa-truck fa-fw"></i> 到货时间：{$data.D_transport_end}</li>
+	              	<li><i class="fa fa-tag fa-fw"></i> 备注：{$data|output='T_note'}</li>
+              	 </ul>
+                </h5>
+            </div>
+             <div class="item form-group" }>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">采购信息</label>
+               <h5 class="col-md-6 col-sm-6 col-xs-12">
+                 <ul class="list-unstyled">
+	              	<li><i class="fa fa-jpy fa-fw"></i> 平台-预估货品总额：{$totalGoodsprice} 万
+	              	
+	              	{if condition="$totalGoodsprice>$proj.N_usable_loan"}
+	              	
+	              	<span style="color:red;">已超过可用额度！</span>
+	              	{/if}
+	              	</li>
+	              	<li><i class="fa fa-cubes fa-fw"></i> ERP-预估货品总额：{$acjudgeGoodsprice} 万
+	              
+	              	</li>
+	              	<li><i class="fa fa-cubes fa-fw"></i> ERP-到货货品总额：{$actotalGoodsprice} 万
+	              
+	              	</li>
+              	 </ul>
+                </h5>
+            </div>
+           <div class="item form-group">
+          			<label class="control-label col-md-1 col-sm-1 col-xs-1"></label>
+                    <div class="table-responsive">
+                      <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                          <tr class="headings">
+                            
+                            <th class="column-title">品名</th>
+                            <th class="column-title">材质</th>
+                            <th class="column-title">规格</th>
+                            <th class="column-title">计划数量</th>
+                            <th class="column-title">预估单价(元) </th>
+                            <th class="column-title">预估总价(元)</th>
+                            <!--<th class="column-title">订单状态</th>-->
+                            <th class="column-title">到货数量</th>
+                            <th class="column-title">到货单价(元)</th>
+                            <th class="column-title">到货总价(元)</th>
+                            <th class="column-title">来源</th>
+                            <th class="column-title">订单状态</th>
+                            <th class="column-title">是否确认</th>
+                            <th class="column-title">确认时间</th>
+                            <th class="column-title">操作</th>
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        {volist name="$goods" id="vo"}
+                          <tr class="even pointer">
+                            
+                            <td class=" ">{$vo.Vc_goods_breed}</td>
+                            <td class=" ">{$vo.Vc_goods_material} </td>
+                            <td class=" ">{$vo.Vc_goods_spec} </td>
+                            <td class=" ">{$vo.N_plan_weight}{$vo.Vc_goods_uint}</td>
+                            <td class=" ">{$vo.N_judge_price}</td>
+                            <td class=" ">{$vo.N_judge_totalprice}</td>
+                            <!--<td class=" ">{$vo.Vc_orderstatus}</td>-->
+                            <td class=" ">{$vo.N_ac_weight}</td>
+                            <td class=" ">{$vo.N_ac_price}</td>
+                            <td class=" ">{$vo.N_ac_settlement}</td>
+                            <td class=" ">{$vo.I_goods_src==1?'平台':'ERP'}</td>
+                            <td >
+						
+                                  	{if condition="$vo.I_goods_src==2"}
+                                        <span class="status">{$vo.Vc_orderstatus}</span>
+                                        {else}
+                                        {switch name="$data.I_status"}
+										    {case value="0"}待审核{/case}
+										    {case value="1"}待发货{/case}
+										     {case value="2"}审核通过{/case}
+										    {case value="-1"}审核不通过{/case}
+										    {case value="5"}已冻结{/case}
+										    {case value="6"}已关闭{/case}
+									{/switch}
+                                    {/if}
+                                  			 		
+			 				</td>
+                            <td class=" ">
+                            	{if condition="$vo.I_goods_src==2"}
+	                            {if condition="isset($vo.I_isconfirm)&&$vo.I_isconfirm==1"}
+	 			
+							 				已确认
+							 			{else}
+							 			
+							 		  未确认
+	 								{/if}
+ 							    {/if}
+ 		
+                            
+                            </td>
+                             <td class="">
+                             {if condition="$vo.I_goods_src==2"}
+                             {if condition="isset($vo.I_isconfirm)&&$vo.I_isconfirm==1"}
+                             {$vo.Createtime}
+                              {/if}
+                             {/if}
+                             </td>
+                            <td class=" ">
+                            	{if condition="(checkPopedom('/admin/order/view')) "}
+                            	
+                            	{if condition="$vo.I_goods_src==2"}
+                <a href="{:url('/admin/order/view',['id'=>$vo.id,'orderSn'=>$vo.Vc_orderSn])}" class="btn btn-primary btn-xs">查看物流信息</a>
+                				{/if}
+                		 
+               					{/if}
+                            
+                            </td>
+                           
+                          </tr>
+                           {/volist}
+                        </tbody>
+                      </table>
+                    </div>
+             
+            </div>
+             <div class="item form-group" >
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">平台申请订单号</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                	{$data|output='Vc_Sn'}
+                </h5>
+            </div>
+            {if condition="(in_array($data.I_status, [2,5,6]))"}
+             <div class="item form-group" >
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">ERP订单号</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                	{$data|output='Vc_orderSn'}
+                </h5>
+            </div>
+            {/if}
+             <div class="item form-group" >
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">订单状态</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                	
+                	 {switch name="$data.I_status"}
+										    {case value="0"}待审核{/case}
+										    {case value="1"}待发货{/case}
+										    {case value="2"}已同步ERP，详见列表{/case}
+										    {case value="-1"}审核不通过{/case}
+										    {case value="5"}已冻结{/case}
+										    {case value="6"}已关闭{/case}
+						{/switch}
+                </h5>
+            </div>
+            
+             <div class="item form-group" id="erpdiv" style="display:none;">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">ERP订单号</label>
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                  <input id="Vc_orderSn" name="Vc_orderSn" value="{$data|output='Vc_orderSn'}" {if condition="(in_array($data.I_status, [2,5,6]))"}readonly="readonly"{/if} class=" form-control "  type="text">
+    
+                </div>
+            </div>
+           
+             <div class="item form-group" >
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">时间状态</label>
+                <h5 class="col-md-6 col-sm-6 col-xs-12">
+                 <ul class="list-unstyled">
+	              	<li><i class="fa fa-calendar fa-fw"></i> 审核时间：{$data.D_checktime}</li>
+	              	<li><i class="fa fa-calendar-o fa-fw"></i> 关闭时间：{$data.D_closetime}</li><!-- 项目关闭时间 -->
+	              	<li><i class="fa fa-calendar fa-fw"></i> 冻结时间：{$data.D_freezetime}</li>
+              	 </ul>
+                </h5>
+            </div>
+           
+         
+         
+         
+            
+            <div class="item form-group">
+		         <label class="control-label col-md-3 col-sm-3 col-xs-12">审核状态 <span class="required">*</span></label>
+		         <div class="col-md-6 col-sm-6 col-xs-12">
+		           {if condition="!in_array($data.I_status, [1,2,5,6])"}
+		              <div class="radio pull-left">
+		               <label class="waitdiv">
+		                 <input value="1" name="approved" type="radio" class="flat "  {if condition="(isetn($data.I_status)==1)"}checked{/if}> 审核通过
+		               </label>
+		             </div>
+		             <div class="radio pull-left">
+		               <label>
+		                 <input value="-1" name="approved" type="radio" class="flat "  {if condition="(isetn($data.I_status)==-1)"}checked{/if}> 审核不通过
+		               </label>
+		             </div>
+		               {/if}
+		             {if condition="in_array($data.I_status, [1])"}
+		              <div class="radio pull-left">
+		               <label>
+		                 <input value="-1" name="approved" type="radio" class="flat "  {if condition="(isetn($data.I_status)==-1)"}checked{/if}> 审核不通过
+		               </label>
+		             </div>
+		             <div class="radio pull-left" >
+		               <label id="sentdiv" class="sentdiv">
+		                 <input value="2" name="approved"   type="radio" class="flat " {if condition="(isetn($data.I_status)==2)"}checked{/if}> 录入订单号
+		               </label>
+		             </div>
+		            {/if}
+		             {if condition="in_array($data.I_status, [5])"}
+		             <div class="radio pull-left" >
+		               <label >
+		                 <input value="2" name="approved"   type="radio" class="flat " {if condition="(isetn($data.I_status)==2)"}checked{/if}> 解冻
+		               </label>
+		             </div>
+		            {/if}
+		            {if condition="(isetn($data.I_status)==2)"}
+		             <div class="radio pull-left">
+		               <label>
+		                 <input value="5" name="approved" type="radio" class="flat " {if condition="(isetn($data.I_status)==5)"}checked{/if}> 冻结
+		               </label>
+		             </div>
+		             <div class="radio pull-left">
+		               <label>
+		                 <input value="6" name="approved" type="radio" class="flat " {if condition="(isetn($data.I_status)==6)"}checked{/if}> 关闭
+		               </label>
+		             </div>
+		           {/if}
+		         </div>
+     		</div>
+            
+            <div class="clearfix"></div>
+            <div class="ln_solid"></div>
+            <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                    <button type="button" class="btn btn-success btn-sub">确认</button>
+                    <a href="javascript:history.back(-1)" class="btn btn-danger">取消</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    	 
+    	  var $form = $('form');
+          
+    	  
+    	  $(".sentdiv").on("click", function(){
+    		 
+    		  $("#erpdiv").show();
+    	  })
+    	  $(".waitdiv").on("click", function(){
+    		 $("#Vc_orderSn").val('');
+    		  $("#erpdiv").hide();
+    	  })
+    	//业务提交
+    	//$form.on('blur', 'input[required]', validator.checkField);
+        $(".btn-sub").on("click", function(){
+        	
+        /* 	if(!validator.checkAll($form) ) {
+        		return false;
+        	} */
+    			layer.confirm('确认提交吗？', {
+    				icon: 3, 
+    				btn: ['确认','取消'], //按钮
+    				title:'提示',
+    			}, function(index){
+      				layer.close(index);
+      				$.post("{:url('/admin/order/edit')}",$form.serializeArray(),
+      				function(data){
+      					if(null != data.msg || '' != data.msg){
+      						layer.msg(data.msg);
+      					}
+      					
+      				 	if(data.code==200){
+      						setTimeout(function(){
+      							//window.location.href="{:url('/admin/order/index')}";
+      							location.reload();
+      							},1000);
+      					}
+      				
+      				});
+    			});
+    		
+    	});
+        
+    }) ;
+</script>

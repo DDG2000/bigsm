@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	{include file='public/head'}
+	<title>云采网 - 我的找货列表页</title>
+</head>
+<body>
+{include file="public/top"}
+<!-- content -->
+<div class="content w1200 cc cb mt24">
+	{include file="public/sideNav"}
+	<div class="fr w1000 find-list find-list-goods">
+		<ul class="tab fl-li cb">
+			<li{if condition="$type==0"} class="active"{/if}><a href="/find_goods/listpage?type=0">全部</a></li>
+			<li{if condition="$type==1"} class="active"{/if}><a href="/find_goods/listpage?type=1">审核中<em>（{$count.wait}）</em></a></li>
+			<li{if condition="$type==2"} class="active"{/if}><a href="/find_goods/listpage?type=2">已通过<em>（{$count.pass}）</em></a></li>
+			<li{if condition="$type==3"} class="active"{/if}><a href="/find_goods/listpage?type=3">未通过<em>（{$count.deny}）</em></a></li>
+			<li{if condition="$type==4"} class="active"{/if}><a href="/find_goods/listpage?type=4">已取消<em>（{$count.cancel}）</em></a></li>
+		</ul>
+		<div class="list-header list-header-order">
+			<ul class="cb fl-li">
+				<li style="width:180px;">货物详情</li>
+				<li style="width:150px;">数量</li>
+				<!--<li style="width:90px;">是否报价</li>-->
+				<li style="width:190px;">报价</li>
+				<li style="width:270px;">联系人</li>
+				<li style="width:100px;">订单状态</li>
+				<li style="width:110px;">操作</li>
+			</ul>
+			{if condition="count($listdata)>0"}
+			<!-- <div class="fl-a cb btn-wrap">
+                <div class="fr">
+                    <a href="#" class="btn">上一页</a>
+                    <a href="#" class="btn next">下一页</a>
+                </div>
+            </div> -->
+			{/if}
+		</div>
+		<!-- 进行中的订单 -->
+		{volist name='$listdata' id='vo'}
+		<table class="ctl-table-cars">
+			<thead>
+			<th width="190" class="tal auto pr"><span class="pa ctime"><b>订单号：{$vo.Vc_orderSn}</b></span></th>
+			<th width="150"></th>
+			<th width="230" class="pr"><span class="pa ctime"><b>报名截止时间：{$vo.D_end|strtotime|date="Y-m-d H:i",###}</b></th>
+			<!--<th width="180"></th>-->
+			<th width="180"><b>支付方式：{$findGoodsModel->payArray[$vo.I_paytype]}</b></th>
+			<th width="120"></th>
+			<th width="120" class="pr"><span class="pa ctime"><b>创建时间：{$vo.Createtime}</b></span></th>
+			<th width="120"></th>
+			</thead>
+			<tbody>
+			{volist name='$vo.goods' id='vo2' key="k"}
+			<tr>
+				<td class="auto">
+					<p class="name">{$vo2.Vc_goods_class}&nbsp;&nbsp;&nbsp;{$vo2.Vc_goods_breed}</p>
+					<p class="spec">材质：{$vo2.Vc_goods_material}&nbsp;&nbsp;<span>规格：{$vo2.Vc_goods_spec}</span></p>
+				</td>
+				<td class="tac">
+					{if condition="($vo2.Vc_unit=='件')"}{$vo2.N_plan_weight|intval}{else}{$vo2.N_plan_weight}{/if}&nbsp;{$vo2.Vc_unit}
+				</td>
+				<!--<td class="tac">-->
+					<!--{if condition="($vo.I_status==2)"}-->
+					<!--{$findGoodsModel->goodsChargeArray[$vo2.I_status]}-->
+					<!--{else}<p class="tac">(未报价)</p>{/if}-->
+				<!--</td>-->
+				<td class="tal auto">
+					{if condition="($vo.I_status==2)"}
+					{if condition="($vo2.I_status==2)"}
+					<p>报价数量:
+						{if condition="($vo2.Vc_unit=='件')"}{$vo2.N_offer_amount|intval}{else}{$vo2.N_offer_amount}{/if}&nbsp;{$vo2.Vc_unit}
+					</p>
+					<p>报价单价:{$vo2.N_offer_price}&nbsp;元</p>
+					<p>报价垫资总价:{$vo2.N_offer_totalprice}&nbsp;元</p>
+					{else}<p class="tac">({$findGoodsModel->goodsChargeArray[$vo2.I_status]})</p>{/if}
+					{else}<p class="tac">(暂无)</p>{/if}
+				</td>
+				{if condition="$k==1"}
+				<td class="tal auto" colspan="2" {if condition="$k==1"}rowspan="{$vo.count}"{/if}>
+				<p>联系人：{$vo.Vc_consignee}{$vo.Vc_phone}</p>
+				<p>{$vo.order.proname}{$vo.order.proname==$vo.order.cityname?'':$vo.order.cityname}{$vo.order.areaname}{$vo.Vc_address}</p>
+				</td>
+				<td {if condition="$k==1"}rowspan="{$vo.count}"{/if} class="tac">
+				<span class="status">{$findGoodsModel->statusArray[$vo.I_status]}</span>
+				</td>
+				<td {if condition="$k==1"}rowspan="{$vo.count}"{/if} class="tac">
+				<a href="{:url('/find_goods/orderInfo',['id'=>$vo.id])}" class="link">订单详情</a>
+				{if condition="$vo.I_status==1&&$k==1"}
+				<a href="javascript:void(0);" data-ajax="{:url('/find_goods/checkModifyStatus',['id'=>$vo.id])}" data-id="{$vo.id}" data-toform="find_goods" class="link link-btn modify-order-btn">修改订单</a>
+				<a href="javascript:;" data-ajax="{:url('/find_goods/cancel',['id'=>$vo.id])}" class="link cancel"> 取消订单</a>
+				{/if}
+				</td>
+				{/if}
+			</tr>
+			{/volist}
+			<tr>
+				<td colspan="8" class="comment auto">
+					<b class="fl">备注：{$vo.T_note}</b>
+					
+					{if condition="($vo.I_status==2 && $vo.total!=0)"}
+						<b class="fr">订单总报价：<em class="total">{$vo.total}&nbsp;元</em></b>
+					{/if}
+					
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		{/volist}
+		<!-- 进行中的订单 -->
+		{if condition="count($listdata)>0"}
+		<!-- 分页 -->
+		<div class="cb pager fl-li">
+			<div class="fr">
+				{$list->render()}
+			</div>
+		</div>
+		<!-- 分页 -->
+		{/if}
+	</div>
+</div>
+<!-- content -->
+<!-- sideBar -->
+{include file="public/sideBar"}
+<!-- sideBar -->
+{include file="public/foot"}
+<script type="text/javascript">
+	$(".ctl-table-cars a.cancel").btnAjax({
+		isConfirm:true,
+		btn:["确定","返回"],
+		success:"取消成功"
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+{include file='public/head'}
+<title>云采网 - 物流详情</title>
+</style>
+</head>
+<body>
+<!-- top -->
+{include file="public/top"}
+<!-- top -->
+<!-- header -->
+<div class="crm nbg bd">
+    <div class="w1200 cc">
+        <em class="crm-inner"><!--占位用的，勿删--></em><a href="/">首页</a><em>></em><a href="/workroom/index">我的工作台</a><em>></em><a href="/order/listpage">交易记录</a><em>></em><span>物流详情</span>
+    </div>
+</div>
+<!-- progress -->
+<ul class="process-line w1200 cc tac ib-li progress-logistic">
+    <li{if condition="!empty($data.Dt_checkdate)"} class="has"{/if}>
+        <div class="bg"></div>
+        <p>开始</p>
+    </li>
+    <li{if condition="!empty($data.Dt_purchase)||!empty($data.Dt_senddate)||!empty($data.Dt_arrived)"} class="has"{/if}>
+        <div class="bg"></div>
+        <p>配货</p>
+    </li>
+    <li{if condition="!empty($data.Dt_senddate)||!empty($data.Dt_arrived)"} class="has"{/if}>
+        <div class="bg"></div>
+        <p>运输</p>
+    </li>
+    <li{if condition="!empty($data.Dt_arrived)"} class="has"{/if}>
+        <div class="bg"></div>
+        <p>到达</p>
+    </li>
+</ul>
+<!-- progress -->
+<!-- content -->
+<div class="logic-detail w1200 cc">
+    <div class="logic-wrap">
+        <div class="logic-detail-header">状态</div>
+        <div class="logic-progress-wrap cb">
+            <div class="fl logic-progress-list">
+                {if condition="!empty($data.Dt_arrived)"}
+                    <div class="cb">
+                        <div class="fl progress-time">
+                            <p>{$data.Dt_arrived|getDateStrYmdHi}</p>
+                        </div>
+                        <div class="fl">
+                            <p>您的订单已到货</p>
+                            {if condition="$data.Vc_contact != null"}
+                                <p>{$data.Vc_contact == null?'':'签收人：'.$data.Vc_contact}{$data.Vc_contact_phone==null?'':'，&nbsp;联系电话：'.$data.Vc_contact_phone}</p>
+                            {/if}
+                            {if condition="$data.Vc_arrivedplace!=null"}
+                                <p>到货地址：{$data.Vc_arrivedplace}</p>
+                            {/if}
+                        </div>
+                    </div>
+                {/if}
+                {if condition="!empty($data.Dt_senddate)"}
+                    <div class="cb">
+                        <div class="fl progress-time">
+                            <p>{$data.Dt_senddate|getDateStrYmdHi}</p>
+                        </div>
+                        <div class="fl">
+                            <p>您的订单已发货，&nbsp;运单号：{$data|output='Vc_waybillSn'}</p>
+                            {if condition="!empty($data.Vc_express)"}<p>物流公司：{$data|output='Vc_express'}</p>{/if}
+                            <p>货运人：{$data|output='Vc_shipper'}，&nbsp;联系电话：{$data|output='Vc_shipper_phone'}&nbsp;{$data.Vc_truckID}</p>
+                        </div>
+                    </div>
+                {/if}
+                {if condition="!empty($data.Dt_purchase)"}
+                    <div class="cb">
+                        <div class="fl progress-time">
+                            {$data.Dt_purchase|getDateStrYmdHi}
+                        </div>
+                        <div class="fl">
+                            <p>您的订单已配货</p>
+                        </div>
+                    </div>
+                {/if}
+                {if condition="!empty($data.Dt_checkdate)"}
+                    <div class="fl progress-time">
+                        {$data.Dt_checkdate|getDateStrYmdHi}
+                    </div>
+                    <div class="fl">
+                        <p>您的订单已开始处理</p>
+                    </div>
+                {/if}
+            </div>
+            <div class="fl logic-progress-receive">
+                
+                    <span class="fl receive-title">货品详情</span>
+                    <div class="fl receive-wrap">
+                        <p><em>{$data.Vc_goods_class}</em><em>{$data.Vc_goods_breed}</em><em>{$data.Vc_goods_material}</em><em>{$data.Vc_goods_spec}</em><em>{$data.Vc_goods_factory}</em><span class="current">{$data.N_ac_weight==null||$data.N_ac_weight==0?'':$data.N_ac_weight.$data.Vc_goods_uint}</span></p>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="logic-order-info">
+        {if condition="$data.Vc_waybillSn != null"}
+            <div class="cb">
+                <p class="fl" style="width:280px;">
+                    {$data.Vc_waybillSn == null ?'':'运单号：'.$data.Vc_waybillSn}
+                </p>
+                <p class="fl">
+                    {$data.Vc_express==null?'':'<span>物流公司：'.$data.Vc_express.'</span>'}
+                </p>
+            </div>
+            <div class="cb">
+                <div class="fl" style="width:280px;">
+                    客服电话：{:cache('HotTel')}
+                </div>
+                <div class="fl">
+                    <p>{$data.Vc_shipper == null ?'':'<span>承运司机：'.$data.Vc_shipper.'&nbsp;'.$data.Vc_shipper_phone.'</span>'}</p>
+                </div>
+            </div>
+            <p>{$data.Vc_arrivedplace == null ?'':'到货地：'.$data.Vc_arrivedplace}<a href="{:url('/order/orderInfo',['odn'=>$data.Vc_orderSn])}">[查看订单]</a></p>
+        {/if}
+    </div>
+</div>
+<!-- content -->
+{include file="public/foot-100"}
+</body>
+</html>

@@ -1,0 +1,133 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+                <div class="x_content">
+                
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                      {include file="./sysconfig/_nav" /}
+                      <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+		                   
+		               
+		               
+		               
+		                <form id="" class="form-horizontal form-label-left adminuserform" novalidate>
+		               
+		               <div class="table-responsive">
+		                      
+		                        <table class="table table-striped jambo_table bulk_action">
+		                        <thead>
+									<tr class="headings">
+										<th class="column-title">信息项</th>
+										 <th class="column-title">是否显示</th>
+						                  <th class="column-title">是否必填 </th>
+									</tr>
+		                        </thead>
+		                        <tbody>
+						                 
+						                   <tr class="even pointer">
+											 <td class=" ">提货地址</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[Vc_address]" class="flat" value="Vc_address" {if condition="(strpos_($params['Vc_showfields'],'Vc_address')>0)"}checked="checked"{/if} > 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[Vc_address]" class="flat" value="Vc_address" {if condition="(strpos_($params['Vc_requirefields'],'Vc_address')>0)"}checked="checked"{/if} > 
+						                     </td>
+										  </tr>
+						                   <tr class="even pointer">
+											 <td class=" ">提货人姓名</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[Vc_contact]" class="flat" value="Vc_contact" {if condition="(strpos_($params['Vc_showfields'],'Vc_contact')>0)"}checked="checked"{/if} > 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[Vc_contact]" class="flat" value="Vc_contact" {if condition="(strpos_($params['Vc_requirefields'],'Vc_contact')>0)"}checked="checked"{/if} > 
+						                     </td>
+										  </tr>
+						                   <tr class="even pointer">
+											 <td class=" ">提货人手机号</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[Vc_phone]" class="flat" value="Vc_phone" {if condition="(strpos_($params['Vc_showfields'],'Vc_phone')>0)"}checked="checked"{/if}> 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[Vc_phone]" class="flat" value="Vc_phone" {if condition="(strpos_($params['Vc_requirefields'],'Vc_phone')>0)"}checked="checked"{/if}  > 
+						                     </td>
+										  </tr>
+						                   <tr class="even pointer">
+											 <td class=" ">运输到货起止时间</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[D_transport_start]" class="flat" value="D_transport_start" {if condition="(strpos_($params['Vc_showfields'],'D_transport_start')>0)"}checked="checked"{/if}> 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[D_transport_start]" class="flat" value="D_transport_start" {if condition="(strpos_($params['Vc_requirefields'],'D_transport_start')>0)"}checked="checked"{/if}  > 
+						                     </td>
+										  </tr>
+						                   <tr class="even pointer">
+											 <td class=" ">备注</td>
+											 <td class=" ">
+									                 <input type="checkbox" name="show[T_note]" class="flat" value="T_note" {if condition="(strpos_($params['Vc_showfields'],'T_note')>0)"}checked="checked"{/if}> 
+											 </td>
+						                     <td class=" ">
+									                 <input type="checkbox" name="require[T_note]" class="flat" value="T_note" {if condition="(strpos_($params['Vc_requirefields'],'T_note')>0)"}checked="checked"{/if}  > 
+						                     </td>
+										  </tr>
+						                  
+											 
+		                        </tbody>
+		                        </table>
+		                    </div>
+		                    
+		              
+		               <div class="ln_solid"></div>
+		               
+		                <div class="form-group">
+					       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+					       	 <input type="hidden" name="table" value="sm_company">
+					         <button type="submit" class="btn btn-success">确认</button>
+					         <button type="reset" class="btn  btn-danger">取消</button>
+					       </div>
+					     </div>
+		               
+		               
+		               
+		               </form>
+		                    
+                        </div>
+                        
+                      </div>
+                    </div>
+               		
+                    
+                    
+                </div>
+           
+
+{include file='public/rightEnd,public/footer' /}
+<script type="text/javascript">
+
+$(function(){
+		
+	var isSubmited = false;
+	$("form").submit(function(e){
+        e.preventDefault();
+        if(isSubmited) {
+            layer.msg("提交中...") ;
+            return false;
+    	}
+      
+       	isSubmited = true ;
+        $.post("{:url('/admin/sysconfig/suborderajax')}",$('form').serialize()).then(onSubmited) ;
+    });
+	function onSubmited(d) {
+        layer.msg(d.msg) ;
+        if (d.code==200) {
+        	//window.location.href = "/adminuser/showlist";
+            new xxx.Url("{:url('/admin/sysconfig/index',['type'=>'orderCreate'])}").delayGo(2) ;
+        }
+        isSubmited = false ;
+    }
+	
+	
+}); 
+
+
+</script>

@@ -1,0 +1,29 @@
+
+body{font-size: 14px;}
+.content{ margin: 0 auto; min-width: 940px;overflow: hidden;}
+#strtWrap{margin: 10px;}
+.strt-part{text-align:center;float:left;position:relative;margin: 0 auto;}
+.strt-part .line-v{position:relative;height:20px;width:100%;}
+.strt-part .line-v span{display:block;background:#ccc;position:absolute;top:0;font-size:0;line-height:1px;width:1px;height:20px;left:50%;}
+.strt-name{display:inline-block;padding:4px 10px;height:24px;line-height:24px;border:1px solid #ccc;margin:0 10px;border-radius:3px;background:#f8f8f8;}
+.strt-part .line-h{height:1px;display:block;background:#ccc;position:absolute;top:0;font-size:0;}
+.strt-part .line-h-l{width:50%;left:0;}
+.strt-part .line-h-c{width:100%;left:0;}
+.strt-part .line-h-r{width:50%;right:0;}
+.strt-part .line-h-r{width:50%;right:0;} 
+.strt-part ul{margin-top: 10px;} 
+.strt-part li{line-height: 22px;}
+
+.no-border {border: none;}
+
+.content .left-menu {float: left;width: 168px;border: 1px solid #ccc;padding: 15px;}
+.content .left-menu ul li {border-bottom: 1px solid #ccc;padding: 10px 10px 10px 30px;}
+.content .left-menu ul li a {font-weight: bold;color: #333;}
+.content .left-menu ul li a.select, .content .left-menu ul li a:hover {color: #009dd9;}
+
+.w940 {width: 940px; margin: 0 auto;}
+.content .right-cnt {width: 725px;margin-left: 15px;float: right;}
+.content .right-cnt .level-table {width: 300px;border: 1px solid #ccc;}
+.content .right-cnt .level-table th {background: #eee;line-height: 30px;height: 30px;text-align: center;border: 1px solid #ccc;}
+.content .right-cnt .level-table td {border: 1px solid #ccc;line-height: 30px;height: 30px;padding-left: 5px;text-align: center;}
+.content .right-cnt table {margin: 0 auto;}

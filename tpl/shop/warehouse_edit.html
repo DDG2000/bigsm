@@ -1,0 +1,36 @@
+	{include="inc/usercenter/css"}
+    <title>修改仓库信息</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="pr content-main-con no">
+                    <div class="cb content-main-con-head line">
+            			<span class="head-title">仓库信息修改</span>
+            		</div>
+                    {$vo=$data}
+            		<form class="m-form-slide" id="js-warehouse-edit">
+						<ul>
+                            <input type="hidden" name="id" value="{$vo.id}"/>
+							<li><label class="form-slide-title">仓库名称：</label><input type="text" name="Vc_name"  value="{$vo.Vc_name}"/></li>
+							<li><label class="form-slide-title">仓库地址：</label>
+                                <select name="I_provinceID"><option value="{$vo.I_provinceID}">{$vo.proname}</option></select>
+                                <select name="I_cityID"><option value="{$vo.I_cityID}">{$vo.cityname}</option></select>
+                                <select name="I_districtID"><option value="{$vo.I_districtID}">{$vo.disname}</option></select>
+                            </li>
+							<li><label class="form-slide-title">详细地址：</label><input type="text" name="Vc_address" value="{$vo.Vc_address}" /></li>
+							<li><button type="submit">保存</button></li>
+						</ul>
+					</form>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

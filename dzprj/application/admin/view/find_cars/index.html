@@ -1,0 +1,170 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="table-responsive">
+        <form class="form-horizontal">
+         	<div class="col-md-2 col-sm-12 col-xs-12 form-group">
+            	{if condition="(checkPopedom('/admin/find_cars/add')) "}
+                <a href="{:url('/admin/find_cars/add')}" class="btn btn-sm btn-success" type="button"><i class="fa fa-plus-square"></i> 新增</a>
+                {/if}
+            </div>
+            <div class="input-group col-md-3 col-sm-4 col-xs-12 form-group pull-right">
+                <input type="text" name="keywords" id="nameSearch" class="form-control form-param-to" placeholder="订单号/用户名/发货人/收货人" value="{$param.keywords}">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" id="nameSearchButton">搜索</button>
+                </span>
+            </div>
+           <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+                <select  x-listen  class="form-control form-param-to" name="applystatus">
+                    <option value="">项目状态</option>
+                    {volist name="$findcars->statusArray" id="vo"}
+                  
+                   	 <option value="{$key}" {$key==$param.applystatus?"selected":""}>{$vo}</option>
+                   
+                    {/volist}
+                </select>
+            </div>
+        </form>
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+                <tr class="headings">
+                    <!-- <th>
+                        <input type="checkbox" id="check-all" class="flat"> 
+                    </th>-->
+                    <th class="column-title" style="width: 2%">ID </th>
+                    <!--<th class="column-title">行业</th>-->
+                    <th class="column-title" style="width: 6%">订单号</th>
+                    <th class="column-title" style="width: 6%">用户名</th>
+                    <th class="column-title" style="width: 7%">发货人</th>
+                    <th class="column-title" style="width: 7%">收货人</th>
+                    <th class="column-title" style="width: 10%">期望价格</th>
+                    <!--<th class="column-title" style="width: 7%">运输距离</th>-->
+                    <th class="column-title" style="width: 10%">需求</th>
+                    <th class="column-title" style="width: 10%">日期</th>
+                    <!--<th class="column-title" style="width: 5%">预估总运费</th>-->
+                    <th class="column-title" style="width: 8%">申请时间</th>
+                    <th class="column-title" style="width: 7%">审核状态</th>
+                    <th class="column-title no-link last"><span class="nobr">操作</span>
+                    </th>
+                    <!-- <th class="bulk-actions" colspan="7">
+                        <a class="antoo" style="color:#fff; font-weight:500;">批量操作 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                    </th> -->
+                </tr>
+            </thead>
+
+            <tbody>
+                 {volist name="$page->items()" id="vo"}
+                <tr class="even pointer">
+                <!-- 	<td class="a-center ">
+                        <input type="checkbox" class="flat" name="table_records">
+                    </td> -->
+                    <td class=" ">{$vo.id}</td>
+                    <td class=" ">{$vo.Vc_orderSn}</td>
+                    <td class=" ">{$vo.username}</td>
+                    <td class=" ">{$vo.Vc_senter}<br/>{$vo.Vc_sent_tel}<br/>
+                        <!--{$vo.proname1}{$vo.cityname1}{$vo.areaname1}{$vo.Vc_sent_address}-->
+                    </td>
+                    <td class=" ">{$vo.Vc_receiver}<br/>{$vo.Vc_receiver_tel}<br/>
+                        <!--{$vo.proname2}{$vo.cityname2}{$vo.areaname2}{$vo.Vc_receive_address}-->
+                    </td>
+                    <td class=" ">
+                        {if condition="($vo.I_offertype==1)"}单价<br>{$vo.N_expectprice}元/吨{elseif condition="($vo.I_offertype==2)" /}一口价<br>{$vo.N_expectprice}元{/if}
+                    </td>
+                    <td class=" ">
+                        {if condition="($vo.I_plus_tax==1)"}含税{else}不含税{/if}<br/>
+                        {if condition="($vo.I_plus_dumper==1)"}自卸车{else}不自卸车{/if}<br/>
+                        {if condition="($vo.I_plus_deliveryfee==1)"}垫出库费{else}不垫出库费{/if}
+                    </td>
+                    <td class=" ">到货日期:<br/>{$vo.D_arrived_start|strtotime|date="Y-m-d H:i",###}<br/>
+                        <!--提货日期:<br/>{$vo.D_arrived_end}-->
+                    </td>
+                    <!--<td class=" ">{$vo.N_judge_totalprice}元</td>-->
+                    <td class=" ">{$vo.Createtime}</td>
+                    <td class=" ">{$findcars->statusArray[$vo.I_status]}</td>
+                    <td class=" last">
+            			{if condition="(checkPopedom('/admin/find_cars/edit')) "}
+                        {if condition="($vo.I_status!=4)"}
+                        <a href="javascript:void(0);" class="btn btn-info btn-xs btn-success" id_val="{$vo.id}" status_val="{$vo.I_status}" st_val='1'><i class="fa fa-pencil"></i> 通过</a>
+                        <a href="javascript:void(0);" class="btn btn-info btn-xs btn-warning" id_val="{$vo.id}" status_val="{$vo.I_status}" st_val="2"><i class="fa fa-pencil"></i> 不通过</a>
+                        {/if}
+                        <a href="{:url('/admin/find_cars/edit',['id'=>$vo.id])}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 审核编辑</a>
+                        {/if}
+                    </td>
+                </tr>
+                
+                {/volist}
+            </tbody>
+        </table>
+    </div>
+    {$page->render()}
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select[x-listen]').change(onListPageSelectionChange) ;
+        
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                url = new xxx.Url().removeParam('page') ;
+            
+            url.setParam('keywords',encodeURIComponent(name)).go() ;
+        }) ;
+
+        //审核
+        $(".btn-success,.btn-warning").bind('click',function(){
+            if($(this).attr("sending")==1){
+                return;
+            }
+            var st_val = $(this).attr('st_val');
+            var status_val = $(this).attr('status_val');
+            var id_val = '';
+            if($(this).hasClass("btn-audit-checkbox")){
+                var vals = getCheckBoxVals("#listForm table tbody");
+                id_val = vals.join();
+            }else{
+                id_val = parseInt($(this).attr('id_val'));
+            }
+            submitForm(id_val,st_val,status_val);
+        });
+
+        function submitForm(id_val,st_val,status_val){
+            if(null == id_val || '' == id_val || id_val <= 0){
+                layer.msg("请先选择");
+            }
+            if(st_val==(status_val-1)){
+                layer.msg("审核状态未改变");
+                return false;
+            }
+            layer.confirm('确认审核吗？', {
+                icon: 3,
+                btn: ['确认','取消'], //按钮
+                title:'提示',
+            }, function(index){
+                $(this).attr("sending",1);
+                layer.close(index);
+                $.getJSON("{:url('/find_cars/check')}",{id:id_val,check:st_val},
+                        function(data){
+                            if(null != data.msg || '' != data.msg){
+                                layer.msg(data.msg);
+                            }
+
+                            if(data.code==200){
+                                window.location.reload();
+                            }else if(null != data.url || '' != data.url){
+                                window.location.href = data.url;
+                            }else{
+                                $(this).removeAttr("sending");
+                            }
+                        });
+            });
+        }
+
+
+
+
+    }) ;
+</script>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    {include file='public/head'}
+		<title>云采网 - 我的找车详情页</title>
+	</head>
+	<body>
+	{include file="public/top"}
+		<!-- content -->
+		<div class="content w1200 cc cb mt12">
+			{include file="public/sideNav"}
+			<div class="fr w1000 find-detail">
+				<ul class="tab fl-li cb">
+					<li class="active"><a>找车订单详情</a></li>
+					<li>订单编号{$data.Vc_orderSn}</li>
+				</ul>
+				<div class="detail-recived">
+                    <p><b>订单信息</b></p>
+                    <p>订单状态：{$model->statusArray[$data.I_status]}</p>
+                    <p>报价：{$data.I_offertype==1?'单价':'一口价'}{if condition="($data.I_offertype==1)"}{$data.N_expectprice}元/吨{else}{$data.N_expectprice}元{/if}</p>
+					<p><b>发货信息：</b></p>
+					<p>{$data.Vc_senter}<span>{$data.Vc_sent_tel}</span><span>{$data.proname1}{$data.proname1==$data.cityname1?'':$data.cityname1}{$data.areaname1}{$data.Vc_sent_address}</span></p>
+					<p><b>收货信息：</b></p>
+					<p>{$data.Vc_receiver}<span>{$data.Vc_receiver_tel}</span><span>{$data.proname2}{$data.proname2==$data.cityname2?'':$data.cityname2}{$data.areaname2}{$data.Vc_receive_address}</span></p>
+					<p>是否含税：{$data.I_plus_tax==1?'含税':'不含税'}</p>
+					<p>{$data.I_plus_dumper==1?'自卸车：&nbsp;需要':'自卸车:&nbsp;不需要'}</p>
+					<p>{$data.I_plus_deliveryfee==1?'垫出库费：&nbsp;要':'垫出库费:&nbsp;不要'}</p>
+					<p>期望收货时间：{$data.D_arrived_start|strtotime|date="y-m-d H:i",###}</p>
+				</div>
+				<table class="detail-table">
+					<thead>
+						<th width="234">货物属性</th>
+						<!--<th width="160">数量（吨）</th>-->
+						<th width="175">总重量（吨）</th>
+						<th width="419">备注</th>
+					</thead>
+					<tbody>
+						{volist name="$data.goods" id="vo"}
+							<tr>
+								<td class="name">
+									<b>{$vo.Vc_goods_class}&nbsp;&nbsp;&nbsp;{$vo.Vc_goods_breed}</b>材质：{$vo.Vc_goods_material},规格：{$vo.Vc_goods_spec}
+								</td>
+								<!--<td>10000</td>-->
+								<td>
+									{if condition="($vo.Vc_unit=='件')"}{$vo.N_plan_weight|intval}{else}{$vo.N_plan_weight}{/if}&nbsp;{$vo.Vc_unit}
+								</td>
+                                {if condition="$key==0"}
+                                    <td rowspan="{$data.goods | count}">
+                                        {$data.T_note==""?'无':$data.T_note}
+                                    </td>
+                                {/if}
+							</tr>
+						{/volist}
+					</tbody>
+				</table>
+				<div class="detail-menu tac">
+					<a href="/find_cars/listPage">返回订单</a>
+				</div>
+			</div>
+		</div>
+		<!-- content -->
+		{include file="public/foot"}
+	</body>
+</html>

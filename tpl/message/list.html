@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>标题</th>
+                <th>内容</th>
+                <th>其他链接</th>
+                <th>已读</th>
+                <th>时间</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+	    {loop="page.data"}
+	    {$o=$value}
+	        <tr>
+			    <td>{$o['id']}</td>
+			    <td>{$o['Vc_title']}</td>
+			    <td>{$o['Vc_content']}</td>
+			    <td>{$o['Vc_url']}</td>
+			    <td>{$o['I_read']==1?'已读':'未读'}</td>
+			    <td>{$o['Createtime']}</td>
+			    <td>
+                    <a href="/index.php?act=message&m=info&mid={$o['id']}">查看详情</a>
+			    </td>
+			</tr>
+	    {/loop}
+        </tbody>
+    </table>
+    <hr/>
+    <div>总数：{$page.count}；总页数：{$page.pcount}；当前页：{$page.page}</div>
+</body>
+</html>

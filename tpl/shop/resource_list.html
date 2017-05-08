@@ -1,0 +1,64 @@
+	{include="inc/usercenter/css"}
+    <title>卖家中心 - 我的资源单</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+				{if="empty($data.info)"}
+					<div class="w cb">
+						<a href="javascript:;" id="js-uploadResource" class="fr uploadfile-btn-link">立即上传资源单</a>
+					</div>
+				{/if}
+            	<div class="pr content-main-con no">
+            		<div class="data-list-table ib-a">
+            			<table border="0">
+            				<thead>
+            					<th width="110">资源单名称</th>
+            					<th width="100">主营品种</th>
+            					<th width="130">资源单说明</th>
+								<th width="100">联系人</th>
+								<th width="110">上传时间</th>
+								<th width="80">下载次数</th>
+            					<th width="150">操作</th>
+            				</thead>
+            				<tbody>
+								<tr>
+								{if="!empty($data.info)"}
+									{$info=$data.info}
+									<td>{$info.Vc_name}</td>k
+									<td class="list">
+										{loop="$data.itemList"}
+											{$value.Vc_name}
+										{/loop}
+									</td>
+									<td class="list">
+										{$info.Vc_desc}
+									</td>
+									<td class="list">
+										<p>{$info.Vc_contact}</p>
+										<p>{$info.Vc_contact_phone}</p>
+									</td>
+									<td>
+										{function="formatTime($info.Createtime,'Y-m-d')"}
+									</td>
+									<td>{$info.I_downloadtimes}</td>
+									<td><!--<a href="javascript:;">预览</a>|--><a href="{$data.info.Vc_res_file}">下载</a>|<a href="javascript:;" data-id="{$info.id}" class="delete" id="js-deleteResource">删除</a>|<a href="javascript:;" id="js-uploadResource">重新上传</a></td>
+								{else}
+									<td colspan="7">没有资源单哦，快上传一份吧</td>
+								{/if}
+								</tr>						
+            				</tbody>
+            			</table>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

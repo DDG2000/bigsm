@@ -1,0 +1,158 @@
+{include file='public/header,public/left,public/top,public/rightStart' /}
+
+
+<div class="x_content">
+    <div class="table-responsive">
+        <form class="form-horizontal">
+         	
+            <div class="input-group col-md-3 col-sm-4 col-xs-12 form-group pull-right">
+                <input type="text" name="uname" id="nameSearch" class="form-control form-param-to" placeholder="订单号/货物属性" value="{if condition="isset($param.keyword)"}{$param.keyword}{/if}">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" id="nameSearchButton">搜索</button>
+                </span>
+            </div>
+           <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+                <select  x-listen  class="form-control form-param-to" name="orderStatus">
+                        <option value="-1">账单状态</option>
+                         {volist name="$model->statusArray" id="vo"}
+                   	 <option value="{$key}" {if condition="isset($param.orderStatus)"}{$key==$param.orderStatus?"selected":""}{/if}>{$vo}</option>
+                   
+                    {/volist}
+                </select>
+            </div>
+           <div class="col-md-2 col-sm-12 col-xs-12 form-group pull-right">
+                 <select  x-listen  class="form-control " name="industryId">
+                    <option value="-1">所属行业</option>
+                    {volist name="$malls" id="vo"}
+                   	 <option value="{$vo.Vc_industry}" {if condition="isset($param.industryId)"}{$vo['Vc_industry']==$param.industryId?"selected":""}{/if}>{$vo.Vc_industry}</option>
+                   
+                    {/volist}
+                </select>
+            </div>
+           
+        </form>
+        <table class="table table-striped jambo_table bulk_action" id="menus-table">
+            <thead>
+                <tr class="headings">
+	 		
+                    <th class="column-title">ID</th>
+                    <th class="column-title">申请人</th>
+                    <th class="column-title" colspan="2">货物详情</th>
+                    <th class="column-title">到货日期</th>
+                    <th class="column-title">还款日期</th>
+                    <th class="column-title">垫资金额</th>
+                    <th class="column-title">垫资天数</th>
+                    <th class="column-title">垫资利息(元)</th>
+                    <th class="column-title">结算金额</th>
+                    <th class="column-title">账单状态</th>
+                    <th class="column-title">确认状态</th>
+                   
+                   
+                </tr>
+            </thead>
+
+            <tbody>
+              {volist name='$listdata' id='vo' key="k"}
+                <tr class="even pointer " id="node-{$vo.Vc_orderSn}">
+               
+                   <td style='padding-left:20px;'><input name='listorders[]' type='text' readonly="readonly" size='3' value='{$vo.id}' class='input input-order'></td>
+                    <td>{$vo.Vc_applicantName}</td>
+                    <td>{$vo.Createtime|getDateStrYmd}</td>
+			 		<td colspan="2">订单号：{$vo.Vc_orderSn==null?$vo.Vc_Sn:$vo.Vc_orderSn}</td>
+			 		<td></td>
+			 		<td colspan="2">
+			 		所属项目：
+			 		{$vo.ct_projname==null?$vo.projname:$vo.ct_projname}
+			 		</td>
+			 		<td></td>
+			 		<td></td>
+			 		<td></td>
+			 		<td></td>
+                  
+                   
+                </tr>
+                {volist name='$vo.billlist' id='vo2' }
+                <tr class="even pointer  child-of-node-{$vo2.Vc_orderSn}" id="node-{$vo2.id}" >
+                   <td style='padding-left:20px;'><input name='listorders[]' type='text' readonly="readonly" size='3' value='{$vo2.id}' class='input input-order'></td>
+			 		
+			 		<td></td>
+                   <td  colspan="2"> {$vo2.Vc_goods_breed} 材质-{$vo2.Vc_goods_material} 规格-{$vo2.Vc_goods_spec}<br>产地-{$vo2.Vc_goods_factory}</td>
+			 			
+			 		<td>{$vo2.Dt_arrived|getDateStrYmd}</td>
+			 		<td>{$vo2.Dt_repayment|getDateStrYmd} </td>
+			 		<td>{$vo2.N_loan_amount}</td>
+			 		<td >{$vo2.I_loan_days}</td>
+			 		
+			 		<td >{$vo2.N_loan_interest}</td>
+			 		<td >{$vo2.N_settlement}</td>
+			 		<td>
+			 		<span style="color:{if condition="$vo2.Vc_billstatus=='已还款'"}
+			 		
+			 		green
+			 		{elseif condition="$vo2.Vc_billstatus=='已逾期'"}
+			 		red
+			 		{elseif condition="$vo2.Vc_billstatus=='待还款'"}
+			 		blue
+			 		{/if};">
+			 		{$vo2.Vc_billstatus}
+			 		
+			 		</span></td>
+			 		<td >
+			 			{if condition="isset($vo2.I_isconfirm)&&$vo2.I_isconfirm==1"}
+			 			
+			 				<span style="color:green;">已确认</span>
+			 			{else}
+			 			<span style="color:blue;">未确认</span>
+			 			
+			 			{/if}
+			 		  
+			 		</td>
+			                  
+                   
+                </tr>
+                 	
+  					{/volist}
+               {/volist}
+            </tbody>
+        </table>
+    </div>
+       {$pages->render()}
+</div>
+
+
+{include file='public/rightEnd,public/footer' /}
+<link href="//cdn.bootcss.com/jquery-treetable/3.2.0/css/jquery.treetable.min.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/jquery-treetable/3.2.0/jquery.treetable.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+    	
+    	/* Wind.css('treeTable');
+		Wind.use('treeTable', function() {
+		 $("#menus-table").treeTable({
+				indent : 20
+			}); 
+		}); */
+		Wind.css('treeTable');
+		Wind.use('treeTable', function() {
+			$("#menus-table").treeTable({
+				indent : 20
+			});
+		});
+	
+        $('select[x-listen]').change(onListPageSelectionChange) ;
+        
+        $('#nameSearchButton').click(function(){
+            var name = $('#nameSearch').val() ,
+                url = new xxx.Url().removeParam('page') ;
+            
+            url.setParam('keyword',encodeURIComponent(name)).go() ;
+        }) ;
+        
+        
+        
+        
+   // $(".expander").trigger("click", );
+        
+        
+    }) ;
+</script>

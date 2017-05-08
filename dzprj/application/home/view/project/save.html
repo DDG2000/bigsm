@@ -1,0 +1,142 @@
+	<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>云采网 - 项目确认</title>
+			{include file='public/head' /}
+	</head>
+	<body>
+		<!-- top -->
+		{include file='public/top-copy' /}
+		<!-- top -->
+		<!-- content -->
+		<div class="content project-content">
+			<div class="w1200 cc inner">
+				<ul class="process-line w1100 cc tac ib-li">
+					<li class="active">
+						<div class="bg">
+							<span>1</span>
+						</div>
+						<p>创建项目</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>2</span>
+						</div>
+						<p>等待审核</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>3</span>
+						</div>
+						<p>项目下单</p>
+					</li>
+					<li>
+						<div class="bg">
+							<span>4</span>
+						</div>
+						<p>提货</p>
+					</li>
+				</ul>
+				<!--form-->
+
+				<div class="project-form cc form">
+					<div class="w1090 cc">
+						<div class="category">
+							<div class="category-title">项目信息</div>
+						</div>
+						<div class="project-apply-tips auto">申请额度：<b>{$form.N_loan_amount}万</b><span>融资周期：<b>{$form.I_loan_life}天</b></span></div>
+						<div class="project-apply-info nopd">
+							{volist name="formcontact" id="vo"}
+								<p>联系人:{$vo.Vc_contactName}&nbsp;&nbsp;&nbsp;&nbsp;{$vo.Vc_phone}</p>
+							{/volist}
+							<table border="0" cellspacing="0" cellpadding="0">
+								<thead>
+									<th width="169">项目名称</th>
+									<th width="107">企业类型</th>
+									<th width="122">开发面积</th>
+									<th width="130">预计用量</th>
+									<th width="281">项目地址</th>
+									<th width="282">项目周期</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="more">{$form.Vc_name}</td>
+										<td>
+										 {volist name="$orgclass" id="vo"}
+										 {$vo.id==$form.I_project_org_classID?$vo.Vc_name:''}
+									{/volist}
+										</td>
+										<td>{$form.N_usearea}㎡</td>
+										<td>{$form.N_weight}吨</td>
+										<td class="more">
+										{$form.province}{$form.province==$form.city?'':$form.city}{$form.district}{$form.Vc_address}
+										</td>
+										<td>{$form.D_start}&nbsp;至&nbsp;{$form.D_end}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!--/form-->
+			</div>
+			 <form method="post" action="{:url('project/save')}" class="ajaxForm">
+				<input type="hidden" name="uid" value="{$form.I_userID}">
+				<input type="hidden" name="Vc_name" value="{$form.Vc_name}">
+				<input type="hidden" name="I_project_org_classID" value="{$form.I_project_org_classID}">
+				<input type="hidden" name="I_provinceID" value="{$form.I_provinceID}">
+				<input type="hidden" name="I_cityID" value="{$form.I_cityID}">
+				<input type="hidden" name="I_districtID" value="{$form.I_districtID}">
+				<input type="hidden" name="Vc_address" value="{$form.Vc_address}">
+				<input type="hidden" name="D_start" value="{$form.D_start}">
+				<input type="hidden" name="D_end" value="{$form.D_end}">
+				<input type="hidden" name="N_usearea" value="{$form.N_usearea}">
+				<input type="hidden" name="N_weight" value="{$form.N_weight}">
+				<input type="hidden" name="N_loan_amount" value="{$form.N_loan_amount}">
+				<input type="hidden" name="I_loan_life" value="{$form.I_loan_life}">
+				<input type="hidden" name="Vc_Sn" value="{$form.Vc_Sn}">
+				{volist name="$formcontact" id="vo" key="k"}
+					<input type="hidden" name="Vc_contactName[]" value="{$vo.Vc_contactName}" />
+					<input type="hidden" name="Vc_phone[]" value="{$vo.Vc_phone}"/>
+				{/volist}
+				<div class="form-submit tac">
+					<a href="/project/create?type=2" class="form-submit-link">修改订单</a><a href="javascript:;" class="form-submit-menu" id="submit">确认</a>
+				</div>
+			</form>
+		</div>
+		<!-- content -->
+		<div class="masker hide masker-info" id="tipsMask">
+	        <div class="mask"></div>
+	        <div class="mask-wrap">
+	            <div class="mask-title cb">
+	                提示
+	                <a href="/project/listpage?type=2" class="fr close" title="关闭"><img src="/static/home/img/close.png"></a>
+	            </div>
+	            <div class="mask-content">
+	                <p class="p1"><i></i>创建成功，请耐心等待审核</p>
+	            </div>
+				<div class="mask-footer">
+					<a href="/project/listpage?type=2" class="noClick">确认</a>
+				</div>
+	        </div>
+		</div>
+		<!-- footer -->
+		{include file='public/foot' /}
+		<!-- footer -->
+		<script type="text/javascript">
+			$("#submit").on("click", function(ev){
+				$.post('{:url('project/save')}', $(".ajaxForm").serialize(), function(re){
+					if(re.code == 200) {
+						$("#tipsMask").fadeIn('400');
+						// layer.alert("创建成功，请耐心等待审核", function(){
+						// 	location.href="/project/listpage?type=2"
+						// });
+					} else {
+						layer.msg(re.msg);
+					}
+				});
+			})
+		</script>
+	</body>
+</html>

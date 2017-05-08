@@ -1,0 +1,93 @@
+	{include="inc/usercenter/css"}
+    <title>卖家中心 - 产品报价</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="pr content-main-con no">
+            		<form class="data-table-query fs0" action="/index.php?act=shop&m=requirecommodity&w=list" method="POST">
+						<input type="hidden" name="I_mallClassID">
+        				<label class="ib"><input type="text" name="starttime" value="{function="iset($starttime)"}" data-type="datepicker"></label>
+						<span>至</span><label class="ib"><input type="text" name="endtime" value="{function="iset($endtime)"}" data-type="datepicker"></label>
+    					<select class="ib" name="I_publish_status">
+							<option value="1"{if="$I_publish_status==1"} selected{/if}>已成交</option>
+							<option value="2"{if="$I_publish_status==2"} selected{/if}>未成交</option>
+						</select>
+						<select class="ib" name="I_offer_status">
+							<option value="1"{if="$I_offer_status==1"} selected{/if}>已报价</option>
+							<option value="2"{if="$I_offer_status==2"} selected{/if}>未报价</option>
+							<option value="3"{if="$I_offer_status==3"} selected{/if}>请确认订货函</option>
+							<option value="4"{if="$I_offer_status==4"} selected{/if}>已成交</option>
+						</select>
+    					<button class="ib btn-query" type="submit">查询</button>
+    					<a href="/index.php?act=shop&m=requirecommodity&w=offerset" class="ib btn-setting">设置接收报价的产品类别</a>
+        			</form>
+            		<div class="data-list-table ib-a">
+            			<table border="0">
+            				<thead>
+            					<th width="120">采购编号</th>
+            					<th width="118">采购日期</th>
+            					<th width="82">截止日期</th>
+            					<th width="88">采购人</th>
+            					<th width="126">采购单位</th>
+            					<th width="100">采购状态</th>
+            					<th width="90">报价状态</th>
+            					<th width="180">操作</th>
+            				</thead>
+            				<tbody>
+								{loop="data.data"}
+									{$vo=$value}
+									{if="$vo.I_undelete>0"}
+										<tr{if="$counter%2!=0"} class="even"{/if}>
+											<td>{$vo.Vc_orderSn}</td>
+											<td>{function="formatTime($vo['Createtime'],'Y-m-d')"}</td>
+											<td>{function="formatTime($vo['D_end'],'Y-m-d')"}</td>
+											<td>{$vo.Vc_contact}</td>
+											<td>{$vo.Vc_company}</td>
+											<td class="status">{if="$vo.I_publish_status==5"}已成交{else}未成交{/if}</td>
+											<td>
+												{if="$vo.I_offer_status==1"}
+													已报价
+												{elseif="$vo.I_offer_status==2"}
+													未报价
+												{elseif="$vo.I_offer_status==3"}
+													<a href="/index.php?act=shop&m=requirecommodity&w=detail&id={$vo.id}&cid={$vo.cid}">请确认订货函</a>
+												{elseif="$vo.I_offer_status==4"}
+													已成交
+												{/if}
+											</td>
+											<td>
+												<a href="/index.php?act=shop&m=requirecommodity&w=detail&id={$vo.id}&cid={$vo.cid}" class="data-list-btn-watch">查看</a>
+												{if="$vo.I_offer_status==2"}
+													|<a href="/index.php?act=shop&m=requirecommodity&w=edit&id={$vo.id}&cid={$vo.cid}" class="data-list-btn-change">报价</a>
+												{else}
+													{if="(strtotime($vo.D_end)>strtotime($nowtime))&&($vo.I_offer_status<3)"}
+														|<a href="/index.php?act=shop&m=requirecommodity&w=edit&id={$vo.id}&cid={$vo.cid}" class="data-list-btn-change">修改报价</a>{else}|<a>修改报价</a>
+													{/if}
+												{/if}
+												{if="($vo.I_publish_status==5)&&($vo.I_offer_status==4)"}
+													|<a href="javascript:;" class="data-list-btn-delete">删除</a>
+												{/if}
+											</td>
+										</tr>
+									{/if}
+								{/loop}
+            				</tbody>
+            			</table>
+						<div id="pagestr">
+							{$pagestr}
+						</div>
+            		</div>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}

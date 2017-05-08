@@ -1,0 +1,166 @@
+/**
+ * 网页背景色
+ */
+@bg-gangcai:#F8FBFB;
+@bgColor:#F6F5F5;
+ #content,
+ #header,#footer{
+     background: @bgColor;
+ }
+#header{
+    &.index{
+        background: @bg-gangcai;
+    }
+}
+
+/**
+ * 顶部
+ */
+
+@menu-link-hover-color:#c00;
+@menu-link-color:#666;
+
+.top a{
+    color: @menu-link-color;
+} 
+
+.top a, .header-con-nav a{
+    &:hover{
+        color: @menu-link-hover-color;
+    }
+}
+
+/**
+ *  头部导航区块
+ */ 
+ 
+@header-con-bgColor:#1279C5;
+@header-con-bgColor-index:#fff;
+.header-con{
+    background: @header-con-bgColor;
+    &.index{
+        background: @header-con-bgColor-index;
+    }
+}
+
+/**
+ * 页脚
+ */
+@footer-bgColor:#464646;
+@footer-links-color:#b2b2b2;
+@footer-link-hover-color:#c00;
+@footer-hr-color:#7d7d7d;
+@footer-abt-color:#fff;
+@footer-nav-color:#666;
+.footer-abt{
+    background: @footer-bgColor;
+}
+.footer-abt-links .fl a{
+    color: @footer-links-color;
+}
+.footer-abt-links .fl{
+    color: @footer-links-color;
+}
+.footer-abt-links{
+    border-bottom: 1px solid #7D7D7D
+}
+.footer-nav dl a{
+    color: @footer-nav-color;
+}
+.footer-abt-links .fl a,
+.footer-abt-links .fr a,
+.footer-abt-cprt a,
+.footer-nav dl a,
+.m-form-full a.btn{
+    &:hover{
+        color:@footer-link-hover-color;
+    }
+}
+.footer-abt-links .fr a,
+.footer-abt-cprt a,
+.footer-abt-cprt{
+    color: @footer-abt-color;
+}
+
+/**
+ * 侧边菜单
+ */
+@side-color:#222;
+@side-link-color:#666;
+@side-link-hover-color:#c00;
+.content-side li{
+    color:@side-color;
+}
+.content-side-submenu a{
+    .content-side-submenu a{
+        color: @side-link-color;
+    }
+    &:hover{
+        color:@side-link-hover-color;
+        &:before{
+            color:@side-link-hover-color;
+        }
+    }
+}
+
+.opacity(@opacity:0){
+    opacity: @opacity;
+    filter: alpha(opacity=(@opacity*100));
+}
+
+//  自定义checkbox
+
+.wg-checkbox{
+    margin-right: 13px;
+    position: relative;
+    padding-left: 26px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #666;
+    input{
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    &:before,&:after{
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 13px;
+    }
+    &:after{
+      left: 3px;
+      top: 2px;
+      content: "√";
+      line-height: 13px;
+      color: #c00;
+      opacity: 0;
+      filter: alpha(opacity=0);
+      transition: all 0.3s linear;
+      -webkit-transition: all 0.3s linear;
+    }
+    &:before{
+      top: 1px;
+      left: 0;
+      width: 13px;
+      content: "";
+      border: 1px solid #dfdfdf;
+      border-radius: 1px;
+    }
+    &.selected{
+        &:after{
+             .opacity(1);
+        }
+        &:before{
+             border-color: #c00;
+        }
+    }
+}
+
+/**
+ * @example:<label class="wg-checkbox selected"><input type="checkbox"/>品名</label>
+ * @descption 统一整站自定义checkbox样式,需引用skin.css
+ * @date 2016.05.20
+ * @author tang
+ * 
+ */

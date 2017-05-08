@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    {include file='public/head'}
+		<title>云采网 - 我的找货详情页</title>
+	</head>
+	<body>
+		{include file="public/top"}
+		<!-- content -->
+		<div class="content w1200 cc cb mt10">
+			{include file="public/sideNav"}
+			<div class="fr w1000 find-detail">
+				<ul class="tab fl-li cb">
+					<li class="active"><a href="#">找货订单详情</a></li>
+					<li>订单编号  {$data.Vc_orderSn}</li>
+				</ul>
+				<div class="detail-header">
+					<p class="title">行业：钢铁</p>
+				</div>
+                <div class="detail-recived">
+                    <p class="title">{$model->statusArray[$vo.I_status]}</p>
+                    <div class="wrap">
+                        <p>联系人：{$data.Vc_consignee}{$data.Vc_phone}<span>{$data.proname}{$data.proname==$data.cityname?'':$data.cityname}{$data.areaname}{$data.Vc_address}</span>
+                        <p>支付方式：{$model->payArray[$data.I_paytype]}</p></p>
+                        <p>报名截止时间：{$data.D_end|strtotime|date="Y-m-d",###}</p>
+                    </div>
+                </div>
+				<table class="detail-table">
+					<thead>
+						<th width="200">货物属性</th>
+						<th width="200">数量</th>
+						<th width="200">报价数量</th>
+						<th width="200">报价单价</th>
+						<th width="203">报价垫资总额</th>
+					</thead>
+					<tbody>
+						{volist name="$data.goods" id="vo"}
+							<tr>
+								<td class="name">
+									<b>{$vo.Vc_goods_class}&nbsp;&nbsp;&nbsp;{$vo.Vc_goods_breed}</b>
+                                    <span>材质：{$vo.Vc_goods_material}</span>
+                                    <span>规格：{$vo.Vc_goods_spec}</span>
+								</td>
+								<td>{if condition="($vo.Vc_unit=='件')"}{$vo.N_plan_weight|intval}{else}{$vo.N_plan_weight}{/if}&nbsp;{$vo.Vc_unit}
+								</td>
+								<td>{if condition="($vo.I_status==2)"}{if condition="($vo.Vc_unit=='件')"}{$vo.N_offer_amount|intval}{else}{$vo.N_offer_amount}{/if}&nbsp;{$vo.Vc_unit}{else}-{/if}</td>
+								<td>{if condition="($vo.I_status==2)"}{$vo.N_offer_price}&nbsp;元{else}-{/if}</td>
+								<td>{if condition="($vo.I_status==2)"}{$vo.N_offer_totalprice}&nbsp;元{else}-{/if}</td>
+							</tr>
+						{/volist}
+						<tr>
+							<td colspan="4" class="comment auto" style="padding-left: 10px;">
+								<b class="fl">备注：{$data.T_note}</b>
+							</td>
+                            <td style="padding-right: 10px;">
+                                {if condition="($data.I_status==2)"}
+								<b class="fr">订单总报价：{$data.total}元</b>
+								{else}-
+								{/if}
+                            </td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="detail-menu tac">
+					<a href="javascript:history.go(-1)">返回订单</a>
+				</div>
+			</div>
+		</div>
+		<!-- content -->
+		{include file="public/foot"}
+	</body>
+</html>

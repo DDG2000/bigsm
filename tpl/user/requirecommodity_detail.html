@@ -1,0 +1,257 @@
+{include="inc/usercenter/css"}
+<title>卖家中心 - 需求管理 - 新增采购</title>
+</head>
+<body>
+    {include="inc/usercenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+            <!-- 内容区 -->
+            <!-- 面包屑导航 -->
+    		<div class="crumblenav">
+    			<a href="#">需求管理</a><a href="#">我的采购</a><span class="current">新增采购</span>
+    		</div>
+    		<!-- 面包屑导航 -->
+    		<div class="content-wrapper">
+				{if="!empty($data)"}
+					{$v=$data.offerinfo}
+						<!-- 编号日期等信息 -->
+						<table border="0" class="data-head-info">
+							<tr>
+								<td width="65">采购编号：</td>
+								<td width="177">{$v.Vc_orderSn}</td>
+								<td width="65">付款方式：</td>
+								<td width="161">{if="$v.I_payType==1"}现款{else}银行承兑{/if}</td>
+								<td width="65">交货地：</td>
+								<td>{if="$v.Vc_province==$v.Vc_city"}{$v.Vc_province}{else}{$v.Vc_province}{$v.Vc_city}{/if}</td>
+							</tr>
+							<tr>
+								<td>采购日期：</td>
+								<td>{function="formatTime($v['Createtime'],'Y-m-d')"}</td>
+								<td>截止日期：</td>
+								<td>{function="formatTime($v['D_end'],'Y-m-d')"}</td>
+								<td>状态：</td>
+								<td>{if="$v.I_publish_status==5"}已成交{else}未成交{/if}</td>
+							</tr>
+							<tr>
+								<td>采购链接：</td>
+								<td colspan="5"><input type="text" value="/index.php?act=requirement&m=commoditydetail&I_requirementID={$v.id}" id="purchase-link"/><a href="##" class="ib btn-copy" id="btn-copy">复制链接</a></td>
+							</tr>
+							<tr>
+								<td>采购反馈：</td>
+							</tr>
+						</table>
+						<!-- 编号日期等信息 -->
+					
+						{loop="data.commodityorderlist.data"}
+						{$vo=$value}
+						<!-- 数据列表 -->
+						<table class="collection-data-head">
+							<tr>
+								<th>品名</th>
+								<th>材质</th>
+								<th>规格</th>
+								<th>数量</th>
+								<th>单位</th>
+								<th>钢厂</th>
+							</tr>
+							<tr>
+								<td>{$vo.Vc_item}</td>
+								<td>{$vo.Vc_stuff}</td>
+								<td>{$vo.Vc_specification}</td>
+								
+								<td>{$vo.N_amount}</td>
+								<td>{if="$vo.I_unitType==1"}
+										件
+							{elseif="$vo.I_unitType==2"}
+									根
+							{elseif="$vo.I_unitType==3"}
+									吨
+							
+								{/if}</td>
+								<td>
+								
+								{loop="$vo.Vc_factorys"}
+								{$v=$value}&nbsp;&nbsp;
+								{$v}
+								{/loop}
+								</td>
+								
+							</tr>
+						</table>
+						
+						<table class="collection-list">
+							<tr class="head-info">
+								<td colspan="2"></td>
+								
+								
+								{loop="$vo.Vc_factorys"}
+								
+								<td colspan="4" class="name">{$value}</td>
+								
+								{/loop}
+								{if="count($vo.Vc_factorys)==1"}
+								<td colspan="4"></td>
+								<td colspan="4"></td>
+								{elseif="count($vo.Vc_factorys)==2"}
+								<td colspan="4"></td>
+								{/if}
+								<td></td>
+							</tr>
+							<tr class="head-title">
+								<td width="113">供货单位</td>
+								<td width="112" class="skin-border">联系电话</td>
+								{loop="$vo.Vc_factorys"}
+								<td width="78"><a href="javascript:void(0);" class="down">含税报价</a></td>
+								<td width="60"><a href="javascript:void(0);" class="top">出库费</a></td>
+								<td width="55"><a href="javascript:void(0);" class="top">库房</a></td>
+								<td width="70" class="skin-border">备注</td>
+								{/loop}
+								
+								{if="count($vo.Vc_factorys)==1"}
+								
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+						
+								{elseif="count($vo.Vc_factorys)==2"}
+								
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+								{elseif="count($vo.Vc_factorys)==0"}
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+								
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+								
+								
+								
+						
+								{/if}
+								<td width="44">操作</td>
+							</tr>
+							{loop="$vo.shoplist.data"}
+							{$s=$value}
+							<tr class="body-content">
+								<input name="shopid" type="hidden" value="{$s.I_shopID}"/>
+								<td>{$s.Vc_name}</td>
+								<td class="skin-border">{$s.Vc_phone}</td>
+								
+							
+							{loop="$s.metalist"}
+							 {$s1=$value}
+								
+									
+								{loop="$vo.Vc_factorys"}
+								
+									{if="$s1.factorys==$value"}
+									
+									<td>{$s1.price}</td>
+									<td>
+									
+									{if="$s1.outType==1"}
+									包出
+									{else}
+									自提
+									{/if}
+									
+									</td>
+									<td>{$s1.warehouse}</td>
+									<td class="skin-border">{$s1.memo}</td>
+									
+									 {/if}
+								
+									{/loop}
+								
+								
+								{/loop} 
+								
+								{if="count($s.metalist)==1"}
+								
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+						
+								{elseif="count($s.metalist)==2"}
+								
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+								
+								{elseif="(count($s.metalist)==0)||empty($s.metalist)"}
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+								
+								<td width="78"></td>
+								<td width="60"></td>
+								<td width="55"></td>
+								<td width="70" class="skin-border"></td>
+								{/if}
+								<td>
+								{if="$s.isHaveLetter==1"}
+									<a href="/index.php?act=user&m=requirecommodity&w=lookletter&I_commodityID={$data.offerinfo.I_commodityID}&commodityorderID={$vo.id}&I_shopID={$s.I_shopID}">查看订货函</a>
+								{else}
+										{if="$vo.isEqualNum==1"}
+											选择
+										{else}
+										<a href="/index.php?act=user&m=requirecommodity&w=orderletter&I_commodityID={$data.offerinfo.I_commodityID}&commodityorderID={$vo.id}">选择</a>
+										{/if}
+								{/if}
+								
+								
+								
+								
+								</td>
+							</tr>
+							{/loop}
+							
+							<tr class="body-footer">
+								<td colspan="15">
+									<a href="#" class="ib load-more">点击加载更多</a>
+								</td>
+							</tr>
+						</table>
+						{/loop} 	
+       				<div id="pagestr">
+						{$pagestr}
+					</div>
+       			<!-- 数据列表 -->
+				{else}
+					{include="error"}
+				{/if}
+				
+    		</div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    <!-- 中间内容部分 -->
+    {include="inc/footer"}
+	{include="inc/js"}

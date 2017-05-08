@@ -1,0 +1,30 @@
+	{include="inc/usercenter/css"}
+    <title>仓库添加</title>
+</head>
+<body>
+    {include="inc/shopcenter/header"}
+    <!-- 中间内容部分 -->
+    <div id="content">
+        <div class="w1100 c cb">
+			{include="inc/shopcenter/side"}
+            <!-- 内容区 -->
+            <div class="fr content-main">
+            	<div class="pr content-main-con no">
+                    <div class="cb content-main-con-head line">
+            			<span class="head-title">仓库添加</span>
+            		</div>
+            		<form class="m-form-slide" id="js-warehouse-add">
+						<ul>
+							<li><label class="form-slide-title">仓库名称：</label><input type="text" name="Vc_name"  value=""/></li>
+							<li><label class="form-slide-title">仓库地址：</label><select name="I_provinceID"><option>请选择</option></select><select name="I_cityID"><option>请选择</option></select><select name="I_districtID"><option>请选择</option></select></li>
+							<li><label class="form-slide-title">详细地址：</label><input type="text" name="Vc_address" value="" /></li>
+							<li><button type="submit">保存</button></li>
+						</ul>
+					</form>
+            	</div>
+            </div>
+            <!-- 内容区 -->
+        </div>
+    </div>
+    {include="inc/usercenter/footer"}
+    {include="inc/js"}
